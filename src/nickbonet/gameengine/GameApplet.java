@@ -22,7 +22,8 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		while(true) {
-			gameLoopLogic();
+			checkForCollision();
+			mainGameLogic();
 			repaint();
 			try {
 				Thread.sleep(16); // should result in 60FPS.
@@ -33,7 +34,12 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 	/*
 	 * Method that can be overridden, will run in the engine's thread loop.
 	 */
-	public void gameLoopLogic() { }
+	public void mainGameLogic() { }
+	
+	/*
+	 * Same as above, except for the purpose of collision detection code.
+	 */
+	public void checkForCollision() { }
 
 	@Override
 	public void keyTyped(KeyEvent e) { }
