@@ -21,8 +21,8 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void run() {
-		while(true) {
-			checkForCollision();
+		while (true) {
+			initObjects();
 			mainGameLogic();
 			repaint();
 			try {
@@ -37,10 +37,10 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 	public void mainGameLogic() { }
 	
 	/*
-	 * Same as above, except for the purpose of collision detection code.
+	 * Method that can be overridden, takes care of any necessary object initialization.
 	 */
-	public void checkForCollision() { }
-
+	public void initObjects() { }
+	
 	@Override
 	public void keyTyped(KeyEvent e) { }
 

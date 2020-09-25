@@ -10,15 +10,7 @@ import java.awt.Graphics;
 public class Rect {
 	int x, y, width, height;
 	int diagX, diagY;
-	private boolean colliding;
-	
-	public boolean isColliding() {
-		return colliding;
-	}
-
-	public void setColliding(boolean colliding) {
-		this.colliding = colliding;
-	}
+	int prevX, prevY;
 
 	public Rect(int x, int y, int width, int height) {
 		this.x = x;
@@ -30,12 +22,22 @@ public class Rect {
 	}
 	
 	public void move(int dx, int dy) {
-		if (!colliding) {
-			x += dx;
-			y += dy;
-			diagX += dx;
-			diagY += dy;
-		}
+		prevX = x;
+		prevY = y;
+		x += dx;
+		y += dy;
+		diagX += dx;
+		diagY += dy;
+	}
+	
+	/**
+	 * Restores x and y to previous values before a move() call was made.
+	 */
+	public void undoMove() {
+		x = prevX;
+		y = prevY;
+		diagX = x + width;
+		diagY = y + height;
 	}
 	
 	public boolean overlaps(Rect r) {
