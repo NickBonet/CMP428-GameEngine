@@ -21,8 +21,9 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void run() {
+		initObjects();
+		
 		while (true) {
-			initObjects();
 			mainGameLogic();
 			repaint();
 			try {
