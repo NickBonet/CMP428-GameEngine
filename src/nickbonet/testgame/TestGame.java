@@ -8,10 +8,11 @@ import java.util.List;
 import nickbonet.gameengine.GameApplet;
 import nickbonet.gameengine.Rect;
 
+@SuppressWarnings("serial")
 public class TestGame extends GameApplet {
 	
 	private transient Rect playerRect = new Rect(10, 10, 50, 60);
-	private transient List<Rect> rectangleObjects = new ArrayList<Rect>(); // keep all the rectangles in a neat list for iteration purposes
+	private transient List<Rect> rectangleObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 
 	@Override
 	public void mainGameLogic() {

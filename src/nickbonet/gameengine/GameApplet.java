@@ -7,12 +7,15 @@ package nickbonet.gameengine;
 
 import java.applet.Applet;
 import java.awt.event.*;
+import java.util.logging.*;
 
+@SuppressWarnings("serial")
 public class GameApplet extends Applet implements Runnable, KeyListener {
 	
 	private transient Thread mainGameThread = new Thread(this);
+	private final transient Logger logger = Logger.getLogger(GameApplet.class.getName(), null);
 	private boolean isRunning = true;
-	protected static final boolean[] pressedKey = new boolean[255];
+	protected final boolean[] pressedKey = new boolean[255];
 
 	@Override
 	public void init() {
@@ -30,24 +33,31 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 			repaint();
 			try {
 				Thread.sleep(16); // should result in 60FPS.
-			} catch (InterruptedException ex) {};
+			} catch (InterruptedException ex) {
+				logger.log(Level.SEVERE, ex.getMessage());
+				Thread.currentThread().interrupt();
+			}
 		}
 	}
 	
 	public void mainGameLogic() {
 		/*
 		 * Main logic for the game, should override in own game implementation.
-		*/
+		 */
 	}
 	
 	public void initObjects() {
 		/*
 		 * Every game requires objects of some sort, override this to handle those. 
-		*/
+		 */
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent e) { }
+	public void keyTyped(KeyEvent e) {
+		/*
+		 * Will be implemented later.
+		 */
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
