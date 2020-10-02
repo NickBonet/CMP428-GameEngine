@@ -11,7 +11,8 @@ import java.awt.event.*;
 public class GameApplet extends Applet implements Runnable, KeyListener {
 	
 	private transient Thread mainGameThread = new Thread(this);
-	public boolean[] pressedKey = new boolean[255];
+	private boolean isRunning = true;
+	protected static final boolean[] pressedKey = new boolean[255];
 
 	@Override
 	public void init() {
@@ -24,7 +25,7 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 	public void run() {
 		initObjects();
 		
-		while (true) {
+		while (isRunning) {
 			mainGameLogic();
 			repaint();
 			try {
@@ -33,15 +34,17 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 		}
 	}
 	
-	/*
-	 * Method that can be overridden, will run in the engine's thread loop.
-	 */
-	public void mainGameLogic() { }
+	public void mainGameLogic() {
+		/*
+		 * Main logic for the game, should override in own game implementation.
+		*/
+	}
 	
-	/*
-	 * Method that can be overridden, takes care of any necessary object initialization.
-	 */
-	public void initObjects() { }
+	public void initObjects() {
+		/*
+		 * Every game requires objects of some sort, override this to handle those. 
+		*/
+	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) { }
