@@ -10,7 +10,6 @@ import java.awt.Graphics;
 public class Rect {
 	int x, y, width, height;
 	int diagX, diagY;
-	int prevX, prevY;
 
 	public Rect(int x, int y, int width, int height) {
 		this.x = x;
@@ -22,27 +21,15 @@ public class Rect {
 	}
 	
 	public void move(int dx, int dy) {
-		prevX = x;
-		prevY = y;
 		x += dx;
 		y += dy;
 		diagX += dx;
 		diagY += dy;
 	}
 	
-	/**
-	 * Restores x and y to previous values before a move() call was made.
-	 */
-	public void undoMove() {
-		x = prevX;
-		y = prevY;
-		diagX = x + width;
-		diagY = y + height;
-	}
-	
-	public boolean overlaps(Rect r) {
-		return !(this.x > r.diagX || this.y > r.diagY || 
-				r.x > this.diagX || r.y > this.diagY); 
+	public boolean overlaps(Rect r, int dx, int dy) {
+		return !(this.x + dx > r.diagX || this.y + dy > r.diagY || 
+				r.x > this.diagX + dx || r.y > this.diagY + dy); 
 	}
 	
 	public void draw(Graphics g) {

@@ -10,9 +10,10 @@ import java.awt.event.*;
 
 public class GameApplet extends Applet implements Runnable, KeyListener {
 	
-	private Thread mainGameThread = new Thread(this);
+	private transient Thread mainGameThread = new Thread(this);
 	public boolean[] pressedKey = new boolean[255];
 
+	@Override
 	public void init() {
 		requestFocus();
 		addKeyListener(this);
