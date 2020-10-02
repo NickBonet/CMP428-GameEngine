@@ -13,8 +13,8 @@ import java.util.logging.*;
 public class GameApplet extends Applet implements Runnable, KeyListener {
 	
 	private transient Thread mainGameThread = new Thread(this);
-	private final transient Logger logger = Logger.getLogger(GameApplet.class.getName(), null);
 	private boolean isRunning = true;
+	protected final transient Logger logger = Logger.getLogger(GameApplet.class.getName(), null);
 	protected final boolean[] pressedKey = new boolean[255];
 
 	@Override

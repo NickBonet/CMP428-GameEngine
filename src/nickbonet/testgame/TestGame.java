@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import nickbonet.gameengine.GameApplet;
 import nickbonet.gameengine.Rect;
@@ -32,9 +33,11 @@ public class TestGame extends GameApplet {
 		Rect testRect2 = new Rect(61, 71, 50, 60);
 		Rect testRect3 = new Rect(150, 150, 70, 100);
 		Rect testRect4 = new Rect(250, 250, 50, 51);
+		Rect testRect5 = new Rect(480, 250, 50, 51);
 		rectangleObjects.add(testRect2);
 		rectangleObjects.add(testRect3);
 		rectangleObjects.add(testRect4);
+		rectangleObjects.add(testRect5);
 	}
 	
 	private void checkPlayerMovement() {
@@ -68,6 +71,7 @@ public class TestGame extends GameApplet {
 			if (playerRect.overlaps(rectangleObjects.get(i), dx, dy)) {
 				dx = 0;
 				dy = 0;
+				logger.log(Level.INFO, "Player collision detected!");
 			}
 		}
 		playerRect.move(dx, dy);
