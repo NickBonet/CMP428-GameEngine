@@ -6,7 +6,6 @@
 package nickbonet.gameengine;
 
 import java.applet.Applet;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.*;
@@ -17,7 +16,6 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 	
 	private transient Thread mainGameThread = new Thread(this);
 	private boolean isRunning = true;
-	private Image doubleBuffer;
 	protected final transient Logger logger = Logger.getLogger(GameApplet.class.getName(), null);
 	protected final boolean[] pressedKey = new boolean[255];
 
@@ -42,23 +40,6 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 				Thread.currentThread().interrupt();
 			}
 		}
-	}
-	
-	@Override
-	public void update(Graphics g) {
-	    Dimension size = getSize();
-	    if (doubleBuffer == null || doubleBuffer.getWidth(this) != size.width || doubleBuffer.getHeight(this) != size.height) {
-	        doubleBuffer = createImage(size.width, size.height);
-	    }
-
-	    if (doubleBuffer != null) {
-	        paint(doubleBuffer.getGraphics());
-	        doubleBuffer.getGraphics().dispose();
-	        g.drawImage(doubleBuffer, 0, 0, null);
-	    }
-	    else {
-	        paint(g);
-	    }
 	}
 	
 	public void mainGameLogic() {
