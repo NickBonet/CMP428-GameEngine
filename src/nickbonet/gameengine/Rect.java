@@ -1,9 +1,9 @@
-package nickbonet.gameengine;
 /**
  * Rectangle - simple abstraction of a rectangle for the engine.
  * @author Nicholas Bonet
  * 
  */
+package nickbonet.gameengine;
 
 import java.awt.Graphics;
 
