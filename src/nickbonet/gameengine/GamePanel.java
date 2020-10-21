@@ -13,10 +13,10 @@ import java.util.logging.*;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements KeyListener {
+public abstract class GamePanel extends JPanel implements KeyListener {
 	
 	private boolean isRunning = true;
-	protected final transient Logger logger = Logger.getLogger(GamePanel.class.getName(), null);
+	protected final transient Logger logger = Logger.getLogger("GameEngine", null);
 	protected final boolean[] pressedKey = new boolean[255];
 
 	public GamePanel() {
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements KeyListener {
 		addKeyListener(this);
 	}
 
-	public void runGame() {
+	protected void runGame() {
 		initObjects();
 		
 		while (isRunning) {
@@ -39,17 +39,14 @@ public class GamePanel extends JPanel implements KeyListener {
 		}
 	}
 	
-	public void mainGameLogic() {
-		/*
-		 * Main logic for the game, should override in own game implementation.
-		 */
-	}
-	
-	public void initObjects() {
-		/*
-		 * Every game requires objects of some sort, override this to handle those. 
-		 */
-	}
+	/*
+	 * Main logic for the game, up to you to implement this in your game of course.
+	 */
+	protected abstract void mainGameLogic();
+	/*
+	 * Every game requires objects of some sort, implement that logic in this method.
+	 */
+	protected abstract void initObjects();
 	
 	@Override
 	public void keyTyped(KeyEvent e) {

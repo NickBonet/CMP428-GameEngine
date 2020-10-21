@@ -8,8 +8,8 @@ package nickbonet.gameengine;
 import java.awt.Graphics;
 
 public class Rect {
-	int x, y, width, height;
-	int diagX, diagY;
+	private int x, y, width, height;
+	private int diagX, diagY;
 
 	public Rect(int x, int y, int width, int height) {
 		this.x = x;

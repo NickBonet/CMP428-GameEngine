@@ -1,0 +1,44 @@
+package nickbonet.testgame;
+
+import java.io.File;
+import java.awt.event.KeyEvent;
+
+import nickbonet.gameengine.Animation;
+import nickbonet.gameengine.Sprite;
+
+public class Pacman extends Sprite {
+	public Pacman(int x, int y) {
+		super(x, y);
+	}
+	
+	protected void initAnimations() {
+		File restFrame = new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_closed.png");
+		Animation leftAnim = new Animation(65);
+		leftAnim.addFrame(restFrame);
+		leftAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_left_1.png"));
+		leftAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_left_2.png"));
+		leftAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_left_1.png"));
+		animDict.put(KeyEvent.VK_A, leftAnim);
+		
+		Animation upAnim = new Animation(65);
+		upAnim.addFrame(restFrame);
+		upAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_up_1.png"));
+		upAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_up_2.png"));
+		upAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_up_1.png"));
+		animDict.put(KeyEvent.VK_W, upAnim);
+		
+		Animation downAnim = new Animation(65);
+		downAnim.addFrame(restFrame);
+		downAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_down_1.png"));
+		downAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_down_2.png"));
+		downAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_down_1.png"));
+		animDict.put(KeyEvent.VK_S, downAnim);
+		
+		Animation rightAnim = new Animation(65);
+		rightAnim.addFrame(restFrame);
+		rightAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_right_1.png"));
+		rightAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_right_2.png"));
+		rightAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_right_1.png"));
+		animDict.put(KeyEvent.VK_D, rightAnim);
+	}
+}
