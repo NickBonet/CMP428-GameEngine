@@ -60,7 +60,7 @@ public class GameApplet extends Applet implements Runnable, KeyListener {
 	// Decided to override update to abstract the bufferGraphics clearing away from the actual game applet.
 	public void update(Graphics g) {
 		bufferGraphics.setColor(Color.white);
-		bufferGraphics.clearRect(0, 0, getWidth(), getHeight());
+		bufferGraphics.fillRect(0, 0, getWidth(), getHeight());
 		paint(g);
 	}
 	

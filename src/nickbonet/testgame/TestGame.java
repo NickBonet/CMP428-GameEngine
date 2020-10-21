@@ -23,7 +23,7 @@ public class TestGame extends GameApplet {
 	
 	@Override
 	public void paint(Graphics g) {
-		bufferGraphics.setColor(Color.red);
+		bufferGraphics.setColor(Color.blue);
 		playerRect.draw(bufferGraphics);
 		for (int i = 0; i < rectangleObjects.size(); i++) {
 			rectangleObjects.get(i).draw(bufferGraphics);
