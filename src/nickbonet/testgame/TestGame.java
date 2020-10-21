@@ -1,5 +1,6 @@
 package nickbonet.testgame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -22,10 +23,12 @@ public class TestGame extends GameApplet {
 	
 	@Override
 	public void paint(Graphics g) {
-		playerRect.draw(g);
+		bufferGraphics.setColor(Color.red);
+		playerRect.draw(bufferGraphics);
 		for (int i = 0; i < rectangleObjects.size(); i++) {
-			rectangleObjects.get(i).draw(g);
+			rectangleObjects.get(i).draw(bufferGraphics);
 		}
+		g.drawImage(bufferImage, 0, 0, null);
 	}
 
 	@Override
