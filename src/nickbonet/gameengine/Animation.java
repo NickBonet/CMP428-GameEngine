@@ -22,10 +22,6 @@ public class Animation {
 	private Timer timer;
 	private int delay = 500; 
 	private int currentFrame = 0;
-	
-	public BufferedImage getCurrentFrame() {
-		return frames.get(currentFrame);
-	}
 
 	public Animation(int delay) {
 		this.delay = delay;
@@ -40,6 +36,10 @@ public class Animation {
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Error loading image for animation frame.");
 		}
+	}
+	
+	public BufferedImage getCurrentFrame() {
+		return frames.get(currentFrame);
 	}
 	
 	private class AnimateTask extends TimerTask {
