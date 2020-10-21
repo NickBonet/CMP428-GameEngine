@@ -1,5 +1,5 @@
 /**
- * Sprite - edit me!
+ * Sprite - Baisc abstraction of a 2D game sprite.
  * @author Nicholas Bonet
  *
  */

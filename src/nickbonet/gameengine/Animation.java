@@ -1,5 +1,5 @@
 /**
- * Animation - edit me!
+ * Animation - Basic animation handling via array list and timer.
  * @author Nicholas Bonet
  *
  */
