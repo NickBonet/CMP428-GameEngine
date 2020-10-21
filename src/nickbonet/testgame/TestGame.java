@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import nickbonet.gameengine.GameApplet;
+import javax.swing.JFrame;
+
+import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.Rect;
 
 @SuppressWarnings("serial")
-public class TestGame extends GameApplet {
+public class TestGame extends GamePanel {
 	
 	private transient Rect playerRect = new Rect(10, 10, 50, 60);
-	private transient List<Rect> rectangleObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
+	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 
 	@Override
 	public void mainGameLogic() {
@@ -22,13 +24,12 @@ public class TestGame extends GameApplet {
 	}
 	
 	@Override
-	public void paint(Graphics g) {
-		bufferGraphics.setColor(Color.blue);
-		playerRect.draw(bufferGraphics);
-		for (int i = 0; i < rectangleObjects.size(); i++) {
-			rectangleObjects.get(i).draw(bufferGraphics);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		playerRect.draw(g);
+		for (int i = 0; i < rectObjects.size(); i++) {
+			rectObjects.get(i).draw(g);
 		}
-		g.drawImage(bufferImage, 0, 0, null);
 	}
 
 	@Override
@@ -37,10 +38,10 @@ public class TestGame extends GameApplet {
 		Rect testRect3 = new Rect(150, 150, 70, 100);
 		Rect testRect4 = new Rect(250, 250, 50, 51);
 		Rect testRect5 = new Rect(480, 250, 50, 51);
-		rectangleObjects.add(testRect2);
-		rectangleObjects.add(testRect3);
-		rectangleObjects.add(testRect4);
-		rectangleObjects.add(testRect5);
+		rectObjects.add(testRect2);
+		rectObjects.add(testRect3);
+		rectObjects.add(testRect4);
+		rectObjects.add(testRect5);
 	}
 	
 	private void checkPlayerMovement() {
@@ -70,13 +71,24 @@ public class TestGame extends GameApplet {
 	}
 	
 	private void checkPlayerCollision(int dx, int dy) {
-		for (int i = 0; i < rectangleObjects.size(); i++) {
-			if (playerRect.overlaps(rectangleObjects.get(i), dx, dy)) {
+		for (int i = 0; i < rectObjects.size(); i++) {
+			if (playerRect.overlaps(rectObjects.get(i), dx, dy)) {
 				dx = 0;
 				dy = 0;
 				logger.log(Level.INFO, "Player collision detected!");
 			}
 		}
 		playerRect.move(dx, dy);
+	}
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Test Game");
+		TestGame game = new TestGame();
+		game.setBackground(Color.white);
+		frame.add(game);
+		frame.setSize(1024, 768);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.runGame();
 	}
 }
