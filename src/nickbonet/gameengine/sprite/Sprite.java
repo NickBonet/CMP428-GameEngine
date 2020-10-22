@@ -34,9 +34,12 @@ public abstract class Sprite {
 				getFirstAnimation().getCurrentFrame().getHeight());
 	}
 	
+	// For initializing anymore animations besides 4 basic ones for the sprite.
 	protected abstract void initAnimations();
 	
-	private void loadBaseAnimations(String prefix, int delay) {
+	// Takes care of initializing animations for the 4 basic directions the sprite would face.
+	// Can always override this to fit the needs of your sprite.
+	protected void loadBaseAnimations(String prefix, int delay) {
 		String[] directions = {"up", "down", "left", "right"};
 		for (int i = 0; i < directions.length; i++) {
 			Animation anim = new Animation(delay, String.join("_", prefix, directions[i]), getSpriteDir());
@@ -44,6 +47,7 @@ public abstract class Sprite {
 		}
 	}
 	
+	// Draws the sprite's current image based on its current state.
 	public void draw(Graphics g) {
 		if (animDict.containsKey(spriteCurrentAnim)) {
 			g.drawImage(animDict.get(spriteCurrentAnim).getCurrentFrame(), x, y, null);
@@ -52,12 +56,12 @@ public abstract class Sprite {
 			g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
 		}
 		
-		// For debug purposes.
+		// For debug purposes, draw the bounding box of the sprite.
 		g.setColor(Color.blue);
 		boundsRect.draw(g);
 	}
 	
-	protected Animation getFirstAnimation() {
+	private Animation getFirstAnimation() {
 		Optional<Animation> firstAnim = animDict.values().stream().findFirst();
 		if (firstAnim.isPresent()) {
 			return firstAnim.get();

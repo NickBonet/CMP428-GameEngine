@@ -10,5 +10,8 @@ public class Pacman extends Sprite {
 	}
 	
 	protected void initAnimations() {
+		/*
+		 * Don't need anything here yet.
+		 */
 	}
 }
