@@ -14,7 +14,7 @@ import nickbonet.gameengine.Rect;
 @SuppressWarnings("serial")
 public class TestGame extends GamePanel {
 	
-	private transient Pacman player = new Pacman(500, 500);
+	private transient Pacman player = new Pacman(500, 500, "pac", 65);
 	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 	
 	@Override

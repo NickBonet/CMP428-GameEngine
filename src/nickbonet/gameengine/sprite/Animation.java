@@ -23,23 +23,41 @@ public class Animation {
 	private int delay = 500; 
 	private int currentFrame = 0;
 
-	public Animation(int delay) {
+	public Animation(int delay, String prefix, String directory) {
 		this.delay = delay;
+		loadFrames(prefix, directory);
 		timer = new Timer();
 		AnimateTask task = new AnimateTask();
 		timer.scheduleAtFixedRate(task, 0, this.delay);
 	}
 	
+	public void loadFrames(String prefix, String folder) {
+		File directory = new File(folder);
+		File[] frameFiles = directory.listFiles(file->file.getName().startsWith(prefix));
+		if (frameFiles.length == 0) {
+			logger.log(Level.INFO, "No images file found for {0}.", prefix);
+		}
+		for (File f: frameFiles) {
+			this.addFrame(f);
+		}
+	}
+	
 	public void addFrame(File frame) {
 		try {
 			frames.add(ImageIO.read(frame));
+			logger.log(Level.INFO, "Loaded image file {0}.", frame.getName());
 		} catch (IOException e) {
-			logger.log(Level.WARNING, "Error loading image for animation frame.");
+			logger.log(Level.SEVERE, "Error loading image for animation frame.");
 		}
 	}
 	
 	public BufferedImage getCurrentFrame() {
-		return frames.get(currentFrame);
+		try {
+			return frames.get(currentFrame);
+		} catch (IndexOutOfBoundsException e) {
+			logger.log(Level.SEVERE, "No image files loaded for the current animation!");
+			return null;
+		}
 	}
 	
 	private class AnimateTask extends TimerTask {
