@@ -1,9 +1,9 @@
 /**
- * Sprite - Baisc abstraction of a 2D game sprite.
+ * Sprite - Basic abstraction of a 2D game sprite.
  * @author Nicholas Bonet
  *
  */
-package nickbonet.gameengine;
+package nickbonet.gameengine.sprite;
 
 import java.awt.Graphics;
 import java.util.HashMap;
@@ -11,7 +11,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.event.KeyEvent;
+
+import nickbonet.gameengine.Rect;
 
 public abstract class Sprite {
 	private int x, y;

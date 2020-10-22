@@ -1,10 +1,9 @@
 package nickbonet.testgame;
 
 import java.io.File;
-import java.awt.event.KeyEvent;
 
-import nickbonet.gameengine.Animation;
-import nickbonet.gameengine.Sprite;
+import nickbonet.gameengine.sprite.Animation;
+import nickbonet.gameengine.sprite.Sprite;
 
 public class Pacman extends Sprite {
 	public Pacman(int x, int y) {

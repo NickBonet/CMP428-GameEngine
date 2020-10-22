@@ -3,7 +3,7 @@
  * @author Nicholas Bonet
  *
  */
-package nickbonet.gameengine;
+package nickbonet.gameengine.sprite;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
