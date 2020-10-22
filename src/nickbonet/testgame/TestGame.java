@@ -50,25 +50,25 @@ public class TestGame extends GamePanel {
 		if (pressedKey[KeyEvent.VK_W]) {
 			dx = 0;
 			dy = -1;
-			player.setSpriteDirection(KeyEvent.VK_W);
+			player.setSpriteAnim("up");
 		}
 		
 		if (pressedKey[KeyEvent.VK_S]) { 
 			dx = 0;
 			dy = 1;
-			player.setSpriteDirection(KeyEvent.VK_S);
+			player.setSpriteAnim("down");
 		}
 		
 		if (pressedKey[KeyEvent.VK_A]) { 
 			dx = -1;
 			dy = 0;
-			player.setSpriteDirection(KeyEvent.VK_A);
+			player.setSpriteAnim("left");
 		}
 		
 		if (pressedKey[KeyEvent.VK_D]) {
 			dx = 1;
 			dy = 0;
-			player.setSpriteDirection(KeyEvent.VK_D);
+			player.setSpriteAnim("right");
 		}
 		checkPlayerCollision(dx, dy);
 	}

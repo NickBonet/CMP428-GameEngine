@@ -18,27 +18,27 @@ public class Pacman extends Sprite {
 		leftAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_left_1.png"));
 		leftAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_left_2.png"));
 		leftAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_left_1.png"));
-		animDict.put(KeyEvent.VK_A, leftAnim);
+		animDict.put("left", leftAnim);
 		
 		Animation upAnim = new Animation(65);
 		upAnim.addFrame(restFrame);
 		upAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_up_1.png"));
 		upAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_up_2.png"));
 		upAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_up_1.png"));
-		animDict.put(KeyEvent.VK_W, upAnim);
+		animDict.put("up", upAnim);
 		
 		Animation downAnim = new Animation(65);
 		downAnim.addFrame(restFrame);
 		downAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_down_1.png"));
 		downAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_down_2.png"));
 		downAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_down_1.png"));
-		animDict.put(KeyEvent.VK_S, downAnim);
+		animDict.put("down", downAnim);
 		
 		Animation rightAnim = new Animation(65);
 		rightAnim.addFrame(restFrame);
 		rightAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_right_1.png"));
 		rightAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_right_2.png"));
 		rightAnim.addFrame(new File("C:\\Users\\nbonet\\Desktop\\pacman sprites\\pac_right_1.png"));
-		animDict.put(KeyEvent.VK_D, rightAnim);
+		animDict.put("right", rightAnim);
 	}
 }

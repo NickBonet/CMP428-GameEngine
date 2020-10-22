@@ -16,15 +16,15 @@ import java.awt.event.KeyEvent;
 public abstract class Sprite {
 	private int x, y;
 	protected Logger logger = Logger.getLogger("GameEngine", null);
-	protected int spriteDirection;
-	protected HashMap<Integer, Animation> animDict = new HashMap<>();
+	protected String spriteCurrentAnim;
+	protected HashMap<String, Animation> animDict = new HashMap<>();
 	protected Rect boundsRect;
 	
 	public Sprite(int x, int y) {
 		this.x = x;
 		this.y = y;
 		initAnimations();
-		this.spriteDirection = KeyEvent.VK_A;
+		this.spriteCurrentAnim = "left";
 		Animation firstAnim = getFirstAnimation();
 		this.boundsRect = new Rect(this.x, this.y, 
 				firstAnim.getCurrentFrame().getWidth(), firstAnim.getCurrentFrame().getHeight());
@@ -33,8 +33,8 @@ public abstract class Sprite {
 	protected abstract void initAnimations();
 	
 	public void draw(Graphics g) {
-		if (animDict.containsKey(spriteDirection)) {
-			g.drawImage(animDict.get(spriteDirection).getCurrentFrame(), x, y, null);
+		if (animDict.containsKey(spriteCurrentAnim)) {
+			g.drawImage(animDict.get(spriteCurrentAnim).getCurrentFrame(), x, y, null);
 		} else {
 			Animation firstAnim = getFirstAnimation();
 			g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
@@ -61,11 +61,11 @@ public abstract class Sprite {
 		return boundsRect;
 	}
 	
-	public int getSpriteDirection() {
-		return spriteDirection;
+	public String getSpriteAnim() {
+		return spriteCurrentAnim;
 	}
 
-	public void setSpriteDirection(int spriteDirection) {
-		this.spriteDirection = spriteDirection;
+	public void setSpriteAnim(String animIndex) {
+		this.spriteCurrentAnim = animIndex;
 	}
 }
