@@ -5,6 +5,7 @@
  */
 package nickbonet.gameengine.sprite;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -15,7 +16,8 @@ import java.util.logging.Logger;
 import nickbonet.gameengine.Rect;
 
 public abstract class Sprite {
-	private int x, y;
+	protected int x;
+	protected int y;
 	protected Logger logger = Logger.getLogger("GameEngine", null);
 	protected String spriteCurrentAnim;
 	protected HashMap<String, Animation> animDict = new HashMap<>();
@@ -25,9 +27,9 @@ public abstract class Sprite {
 		this.x = x;
 		this.y = y;
 		initAnimations();
-		Animation firstAnim = getFirstAnimation();
 		this.boundsRect = new Rect(this.x, this.y, 
-				firstAnim.getCurrentFrame().getWidth(), firstAnim.getCurrentFrame().getHeight());
+				getFirstAnimation().getCurrentFrame().getWidth(), 
+				getFirstAnimation().getCurrentFrame().getHeight());
 	}
 	
 	protected abstract void initAnimations();
@@ -39,9 +41,13 @@ public abstract class Sprite {
 			Animation firstAnim = getFirstAnimation();
 			g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
 		}
+		
+		// For debug purposes.
+		g.setColor(Color.blue);
+		boundsRect.draw(g);
 	}
 	
-	private Animation getFirstAnimation() {
+	protected Animation getFirstAnimation() {
 		Optional<Animation> firstAnim = animDict.values().stream().findFirst();
 		if (firstAnim.isPresent()) {
 			return firstAnim.get();

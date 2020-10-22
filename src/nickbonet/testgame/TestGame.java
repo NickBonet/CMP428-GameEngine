@@ -70,6 +70,8 @@ public class TestGame extends GamePanel {
 			dy = 0;
 			player.setSpriteAnim("right");
 		}
+		dx *= 2;
+		dy *= 2;
 		checkPlayerCollision(dx, dy);
 	}
 	

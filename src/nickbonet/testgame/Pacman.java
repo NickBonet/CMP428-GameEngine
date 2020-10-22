@@ -2,12 +2,14 @@ package nickbonet.testgame;
 
 import java.io.File;
 
+import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.sprite.Animation;
 import nickbonet.gameengine.sprite.Sprite;
 
 public class Pacman extends Sprite {
 	public Pacman(int x, int y) {
 		super(x, y);
+		this.boundsRect = new Rect(this.x, this.y, 45, 41);
 	}
 	
 	protected void initAnimations() {

@@ -31,7 +31,7 @@ public class Rect {
 		return !(this.x + dx > r.diagX || this.y + dy > r.diagY || 
 				r.x > this.diagX + dx || r.y > this.diagY + dy); 
 	}
-	
+
 	public void draw(Graphics g) {
 		g.drawRect(x, y, width, height);
 	}
