@@ -24,7 +24,6 @@ public abstract class Sprite {
 		this.x = x;
 		this.y = y;
 		initAnimations();
-		this.spriteCurrentAnim = "left";
 		Animation firstAnim = getFirstAnimation();
 		this.boundsRect = new Rect(this.x, this.y, 
 				firstAnim.getCurrentFrame().getWidth(), firstAnim.getCurrentFrame().getHeight());
