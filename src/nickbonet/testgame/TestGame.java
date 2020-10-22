@@ -15,12 +15,14 @@ import nickbonet.gameengine.Rect;
 public class TestGame extends GamePanel {
 	
 	private transient Pacman player = new Pacman(500, 500, "pac", 65);
+	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		player.draw(g);
+		redGhost.draw(g);
 		g.setColor(Color.red);
 		for (int i = 0; i < rectObjects.size(); i++) {
 			rectObjects.get(i).draw(g);
@@ -36,11 +38,16 @@ public class TestGame extends GamePanel {
 		rectObjects.add(testRect3);
 		rectObjects.add(testRect4);
 		rectObjects.add(testRect5);
+		rectObjects.add(redGhost.getBounds());
+		redGhost.setSpriteAnim("up");
 	}
 	
 	@Override
 	protected void mainGameLogic() {
 		playerMovement();
+		if (redGhost.getX() >= 400 && redGhost.getY() > 50) {
+			redGhost.move(0, -2);
+		}
 	}
 	
 	private void playerMovement() {
