@@ -8,7 +8,15 @@
  */
 package nickbonet.gameengine;
 
+import com.google.gson.Gson;
+import nickbonet.gameengine.tile.Tile;
+import nickbonet.gameengine.tile.TileMap;
+import nickbonet.gameengine.tile.TileMapModel;
+
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.logging.*;
 import javax.swing.JPanel;
 
@@ -36,6 +44,17 @@ public abstract class GamePanel extends JPanel implements KeyListener {
 				logger.log(Level.SEVERE, ex.getMessage());
 				Thread.currentThread().interrupt();
 			}
+		}
+	}
+
+	public TileMap loadTileMap(String mapJson) throws FileNotFoundException {
+		Gson gson = new Gson();
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(TileMapModel.MAP_FOLDER + mapJson));
+			TileMapModel mapModel = gson.fromJson(reader, TileMapModel.class);
+			return new TileMap(mapModel);
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException("JSON file not found.");
 		}
 	}
 	

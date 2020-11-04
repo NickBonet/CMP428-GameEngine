@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.Rect;
+import nickbonet.gameengine.tile.TileMap;
 
 @SuppressWarnings("serial")
 public class TestGame extends GamePanel {
@@ -17,19 +18,28 @@ public class TestGame extends GamePanel {
 	private transient Pacman player = new Pacman(500, 500, "pac", 65);
 	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
+	private transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		/*
 		player.draw(g);
 		redGhost.draw(g);
 		g.setColor(Color.red);
 		for (int i = 0; i < rectObjects.size(); i++) {
 			rectObjects.get(i).draw(g);
-		}
+		}*/
+		maps.get(0).drawMap(g);
 	}
 
+	@Override
 	protected void initObjects() {
+		try {
+			maps.add(loadTileMap("1.json"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Rect testRect2 = new Rect(61, 71, 50, 60);
 		Rect testRect3 = new Rect(150, 150, 70, 100);
 		Rect testRect4 = new Rect(250, 250, 50, 51);
