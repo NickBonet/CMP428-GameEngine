@@ -1,15 +1,14 @@
 package nickbonet.tilemapeditor;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.gameengine.tile.TileSet;
 import nickbonet.tilemapeditor.components.MapEditorView;
 import nickbonet.tilemapeditor.components.TileMapEditorMenuBar;
 import nickbonet.tilemapeditor.model.TileMapEditorModel;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
 public class TileMapEditorController {
     private TileMapEditorModel model;
@@ -39,6 +38,14 @@ public class TileMapEditorController {
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("JSON file not found.");
         }
+    }
+
+    public void saveTileMapJson(String mapJson) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Writer writer = new FileWriter(mapJson);
+        gson.toJson(model.getMapModel(), writer);
+        writer.flush();
+        writer.close();
     }
 
     public MapEditorView getMapEditorView() {
