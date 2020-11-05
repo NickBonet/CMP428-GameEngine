@@ -1,14 +1,14 @@
-package nickbonet.tilemapeditor.components;
+package nickbonet.mapeditor.components;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @SuppressWarnings("java:S110")
-public class TileButton extends JButton {
+public class MapEditorTileButton extends JButton {
     private transient BufferedImage tileButtonImg;
 
-    public TileButton(BufferedImage tileButtonImg) {
+    public MapEditorTileButton(BufferedImage tileButtonImg) {
         this.tileButtonImg = tileButtonImg;
         this.setIcon(new ImageIcon(this.tileButtonImg));
         this.setPreferredSize(new Dimension(tileButtonImg.getWidth(), tileButtonImg.getHeight()));

@@ -1,4 +1,4 @@
-package nickbonet.tilemapeditor.components;
+package nickbonet.mapeditor.components;
 
 import nickbonet.gameengine.tile.Tile;
 
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapEditorView extends JPanel {
-    private ArrayList<TileButton> tilesOnScreen = new ArrayList<>();
+    private ArrayList<MapEditorTileButton> tilesOnScreen = new ArrayList<>();
     private JPanel tileButtonContainer;
 
-    public void setupPanelLayout() {
+    public MapEditorView() {
         tileButtonContainer = new JPanel();
         tileButtonContainer.setLayout(new GridBagLayout());
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -28,11 +28,11 @@ public class MapEditorView extends JPanel {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
                 Tile currentTile = tileArray.get(mapLayout[row][col]);
-                TileButton tileButton = new TileButton(currentTile.getTileImage());
-                tilesOnScreen.add(tileButton);
+                MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile.getTileImage());
+                tilesOnScreen.add(mapEditorTileButton);
                 constraints.gridx = col;
                 constraints.gridy = row;
-                tileButtonContainer.add(tileButton, constraints);
+                tileButtonContainer.add(mapEditorTileButton, constraints);
             }
         }
         revalidate();

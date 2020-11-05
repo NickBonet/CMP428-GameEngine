@@ -1,13 +1,15 @@
-package nickbonet.tilemapeditor;
+package nickbonet.mapeditor;
 
 import javax.swing.*;
 
-public class TileMapEditorMain {
+public class Main {
     public static void main(String[] args) {
-        TileMapEditorController editorController = new TileMapEditorController();
+        MapEditorController editorController = new MapEditorController();
         JFrame frame = new JFrame("Tile Map Editor");
         JScrollPane scrollMapPane = new JScrollPane(editorController.getMapEditorView());
-        frame.add(scrollMapPane);
+        JScrollPane tileSetPane = new JScrollPane(editorController.getMapEditorTileSetView());
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollMapPane, tileSetPane);
+        frame.add(splitPane);
         frame.setJMenuBar(editorController.getMapEditorMenuBar());
         frame.pack();
         frame.setVisible(true);

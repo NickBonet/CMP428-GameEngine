@@ -1,9 +1,9 @@
-package nickbonet.tilemapeditor.model;
+package nickbonet.mapeditor.model;
 
 import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.gameengine.tile.TileSet;
 
-public class TileMapEditorModel {
+public class MapEditorModel {
     private TileMapModel mapModel;
     private TileSet tileSet;
 
