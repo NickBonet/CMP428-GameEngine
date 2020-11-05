@@ -21,7 +21,9 @@ public class MapEditorView extends JPanel {
         this.setBackground(Color.white);
     }
 
-    public void initMapView(int rows, int columns, List<Tile> tileArray, int[][] mapLayout) {
+    public void loadInitialMapView(int rows, int columns, List<Tile> tileArray, int[][] mapLayout) {
+        tileButtonContainer.removeAll();
+        tilesOnScreen.clear();
         GridBagConstraints constraints = new GridBagConstraints();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
@@ -33,5 +35,7 @@ public class MapEditorView extends JPanel {
                 tileButtonContainer.add(tileButton, constraints);
             }
         }
+        revalidate();
+        repaint();
     }
 }
