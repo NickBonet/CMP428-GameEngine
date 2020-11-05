@@ -16,9 +16,7 @@ public class MapEditorView extends JPanel {
         tileButtonContainer.setLayout(new GridBagLayout());
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         this.add(tileButtonContainer);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setPreferredSize(new Dimension((int)(screenSize.getWidth() * 0.4), (int)(screenSize.getHeight() * 0.5)));
-        this.setBackground(Color.white);
+        this.setBackground(Color.gray);
     }
 
     public void loadInitialMapView(int rows, int columns, List<Tile> tileArray, int[][] mapLayout) {
