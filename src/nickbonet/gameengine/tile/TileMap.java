@@ -17,8 +17,6 @@ public class TileMap {
     }
 
     public void drawMap(Graphics g) {
-        int xPos = 0;
-        int yPos = 0;
         BufferedImage map = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
         Graphics gMap = map.getGraphics();
         for (int row = 0; row < mapStruct.getMapRows(); row++) {

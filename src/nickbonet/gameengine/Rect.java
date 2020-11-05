@@ -1,15 +1,19 @@
-/**
- * Rectangle - simple abstraction of a rectangle for the engine.
- * @author Nicholas Bonet
- * 
- */
 package nickbonet.gameengine;
 
 import java.awt.Graphics;
 
+/**
+ * Rectangle - simple abstraction of a rectangle for the engine.
+ * @author Nicholas Bonet
+ *
+ */
 public class Rect {
-	private int x, y, width, height;
-	private int diagX, diagY;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	private int diagX;
+	private int diagY;
 
 	public Rect(int x, int y, int width, int height) {
 		this.x = x;

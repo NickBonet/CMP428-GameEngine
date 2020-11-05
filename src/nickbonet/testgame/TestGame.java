@@ -1,7 +1,6 @@
 package nickbonet.testgame;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +11,13 @@ import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.tile.TileMap;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
 	
 	private transient Pacman player = new Pacman(500, 500, "pac", 65);
 	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
-	private transient List<TileMap> maps = new ArrayList<>();
+	private final transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
 	public void paintComponent(Graphics g) {
@@ -65,13 +64,11 @@ public class TestGame extends GamePanel {
 		int dy = 0;
 		
 		if (pressedKey[KeyEvent.VK_W]) {
-			dx = 0;
 			dy = -1;
 			player.setSpriteAnim("up");
 		}
 		
-		if (pressedKey[KeyEvent.VK_S]) { 
-			dx = 0;
+		if (pressedKey[KeyEvent.VK_S]) {
 			dy = 1;
 			player.setSpriteAnim("down");
 		}
@@ -93,8 +90,8 @@ public class TestGame extends GamePanel {
 	}
 	
 	private void checkPlayerCollision(int dx, int dy) {
-		for (int i = 0; i < rectObjects.size(); i++) {
-			if (player.getBounds().overlaps(rectObjects.get(i), dx, dy)) {
+		for (Rect rectObject : rectObjects) {
+			if (player.getBounds().overlaps(rectObject, dx, dy)) {
 				dx = 0;
 				dy = 0;
 				logger.log(Level.INFO, "Player collision detected!");
@@ -106,11 +103,12 @@ public class TestGame extends GamePanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Test Game");
 		TestGame game = new TestGame();
+		game.setPreferredSize(new Dimension(1024, 768));
 		game.setBackground(Color.black);
 		frame.add(game);
-		frame.setSize(1024, 768);
+		frame.pack();
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		game.runGame();
 	}
 }

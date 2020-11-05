@@ -1,16 +1,14 @@
 package nickbonet.gameengine.tile;
 
-import nickbonet.gameengine.Rect;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
     private boolean collisionEnabled = false;
     private boolean isObject = false;
-    private BufferedImage tileImage;
+    private final BufferedImage tileImage;
 
     public Tile(int width, int height, BufferedImage image) {
         this.width = width;

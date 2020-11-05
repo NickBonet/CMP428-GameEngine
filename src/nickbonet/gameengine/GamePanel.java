@@ -1,15 +1,6 @@
-/**
- * GameApplet - where all the magic is brought together!
- * NOTE: This is simply the JPanel for the game. Must create a JFrame
- * and create an instance of your extension of this class and add it to the JFrame,
- * then execute the runGame() method of the instance.
- * @author Nicholas Bonet
- *
- */
 package nickbonet.gameengine;
 
 import com.google.gson.Gson;
-import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 import nickbonet.gameengine.tile.TileMapModel;
 
@@ -20,6 +11,14 @@ import java.io.FileReader;
 import java.util.logging.*;
 import javax.swing.JPanel;
 
+/**
+ * GameApplet - where all the magic is brought together!
+ * NOTE: This is simply the JPanel for the game. Must create a JFrame
+ * and create an instance of your extension of this class and add it to the JFrame,
+ * then execute the runGame() method of the instance.
+ * @author Nicholas Bonet
+ *
+ */
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel implements KeyListener {
 	
