@@ -3,8 +3,9 @@ package nickbonet.mapeditor;
 import javax.swing.*;
 import java.awt.*;
 
-public class Main {
+public class MapEditorMain {
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.opengl", "true");
         SwingUtilities.invokeLater(() -> {
             // Initialize main controller for the map editor.
             MapEditorController editorController = new MapEditorController();

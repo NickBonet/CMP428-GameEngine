@@ -101,6 +101,7 @@ public class TestGame extends GamePanel {
 	}
 	
 	public static void main(String[] args) {
+		System.setProperty("sun.java2d.opengl", "true");
 		JFrame frame = new JFrame("Test Game");
 		TestGame game = new TestGame();
 		game.setPreferredSize(new Dimension(1024, 768));

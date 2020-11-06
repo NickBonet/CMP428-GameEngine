@@ -17,8 +17,12 @@ public class MapEditorTileButton extends JLabel {
         this.tile = tile;
         this.mapRow = row;
         this.mapCol = col;
-        this.setIcon(new ImageIcon(this.tile.getTileImage()));
-        this.setPreferredSize(new Dimension(this.tile.getTileImage().getWidth(), this.tile.getTileImage().getHeight()));
+        if(tile != null) {
+            this.setIcon(new ImageIcon(this.tile.getTileImage()));
+            this.setPreferredSize(new Dimension(this.tile.getTileImage().getWidth(), this.tile.getTileImage().getHeight()));
+        } else {
+            this.setIcon(new ImageIcon());
+        }
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {

@@ -30,8 +30,14 @@ public class MapEditorView extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
-                Tile currentTile = tileArray.get(mapLayout[row][col]);
+                Tile currentTile = null;
+                if(mapLayout[row][col] != -1) currentTile = tileArray.get(mapLayout[row][col]);
                 MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile, row, col);
+                if(currentTile == null) {
+                    Dimension tileSize = new Dimension(tileArray.get(0).getWidth(), tileArray.get(1).getHeight());
+                    mapEditorTileButton.setPreferredSize(tileSize);
+                }
+
                 mapEditorTileButton.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
