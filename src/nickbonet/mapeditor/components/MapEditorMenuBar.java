@@ -15,13 +15,13 @@ public class MapEditorMenuBar extends JMenuBar {
         this.editorController = controller;
         JMenu fileMenu = new JMenu("File");
         this.add(fileMenu);
-
-        JMenuItem openFile = new JMenuItem("Open File...");
+        // TODO: Create UI component for creating new map, add action listener to item afterwards
+        JMenuItem newFile = new JMenuItem("Create Map");
+        JMenuItem openFile = new JMenuItem("Open Map..");
+        JMenuItem saveFile = new JMenuItem("Save Map..");
+        fileMenu.add(newFile);
         fileMenu.add(openFile);
-
-        JMenuItem saveFile = new JMenuItem("Save File...");
         fileMenu.add(saveFile);
-
         setupActionListeners(openFile, saveFile);
     }
 

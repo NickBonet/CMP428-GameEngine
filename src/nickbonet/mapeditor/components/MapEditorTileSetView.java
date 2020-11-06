@@ -48,7 +48,7 @@ public class MapEditorTileSetView extends JPanel {
 
     private void setTileSelected(MapEditorTileButton button) {
         if(this.selectedTileButton != null) {
-            this.selectedTileButton.setBorder(UIManager.getBorder("Button.border"));
+            this.selectedTileButton.setBorder(UIManager.getBorder("Label.border"));
         }
         this.selectedTileButton = button;
         button.setBorder(BorderFactory.createLineBorder(Color.blue));
