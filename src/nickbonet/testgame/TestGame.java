@@ -35,7 +35,7 @@ public class TestGame extends GamePanel {
 	@Override
 	protected void initObjects() {
 		try {
-			maps.add(loadTileMap("1.json"));
+			maps.add(loadTileMap("2.json"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

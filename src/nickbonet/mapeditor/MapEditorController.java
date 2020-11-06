@@ -2,6 +2,7 @@ package nickbonet.mapeditor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.gameengine.tile.TileSet;
 import nickbonet.mapeditor.components.MapEditorView;
@@ -16,11 +17,12 @@ public class MapEditorController {
     private final MapEditorView mapEditorView;
     private final MapEditorMenuBar mapEditorMenuBar;
     private final MapEditorTileSetView mapEditorTileSetView;
+    private Tile selectedTile;
 
     public MapEditorController() {
         this.model = new MapEditorModel();
-        this.mapEditorView = new MapEditorView();
-        this.mapEditorTileSetView = new MapEditorTileSetView();
+        this.mapEditorView = new MapEditorView(this);
+        this.mapEditorTileSetView = new MapEditorTileSetView(this);
         this.mapEditorMenuBar = new MapEditorMenuBar(this);
         if (model.getMapModel() != null) {
             this.mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
@@ -51,6 +53,10 @@ public class MapEditorController {
         writer.close();
     }
 
+    public void updateTileInMap(int row, int col) {
+        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileArrayList().indexOf(selectedTile);
+    }
+
     public MapEditorView getMapEditorView() {
         return mapEditorView;
     }
@@ -61,5 +67,13 @@ public class MapEditorController {
 
     public MapEditorTileSetView getMapEditorTileSetView() {
         return mapEditorTileSetView;
+    }
+
+    public Tile getSelectedTile() {
+        return selectedTile;
+    }
+
+    public void setSelectedTile(Tile selectedTile) {
+        this.selectedTile = selectedTile;
     }
 }

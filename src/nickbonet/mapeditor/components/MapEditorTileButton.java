@@ -1,20 +1,38 @@
 package nickbonet.mapeditor.components;
 
+import nickbonet.gameengine.tile.Tile;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 @SuppressWarnings("java:S110")
 public class MapEditorTileButton extends JButton {
-    private transient BufferedImage tileButtonImg;
+    private transient Tile tile;
+    private int mapRow;
+    private int mapCol;
 
-    public MapEditorTileButton(BufferedImage tileButtonImg) {
-        this.tileButtonImg = tileButtonImg;
-        this.setIcon(new ImageIcon(this.tileButtonImg));
-        this.setPreferredSize(new Dimension(tileButtonImg.getWidth(), tileButtonImg.getHeight()));
+    public MapEditorTileButton(Tile tile, int row, int col) {
+        this.tile = tile;
+        this.mapRow = row;
+        this.mapCol = col;
+        this.setIcon(new ImageIcon(this.tile.getTileImage()));
+        this.setPreferredSize(new Dimension(this.tile.getTileImage().getWidth(), this.tile.getTileImage().getHeight()));
     }
 
-    public void setTileButtonImg(BufferedImage tileButtonImg) {
-        this.tileButtonImg = tileButtonImg;
+    public void setTile(Tile tile) {
+        this.tile = tile;
+        this.setIcon(new ImageIcon((this.tile.getTileImage())));
+    }
+
+    public Tile getTile() {
+        return tile;
+    }
+
+    public int getMapRow() {
+        return mapRow;
+    }
+
+    public int getMapCol() {
+        return mapCol;
     }
 }

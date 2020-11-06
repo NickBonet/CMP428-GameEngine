@@ -6,12 +6,15 @@ import nickbonet.mapeditor.MapEditorController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class MapEditorTileSetView extends JPanel {
-    private transient MapEditorController editorController;
-    private JPanel tilesInSet;
+    private final transient MapEditorController editorController;
+    private MapEditorTileButton selectedTileButton;
+    private final JPanel tilesInSet;
 
-    public MapEditorTileSetView() {
+    public MapEditorTileSetView(MapEditorController controller) {
+        this.editorController = controller;
         tilesInSet = new JPanel();
         tilesInSet.setLayout(new GridBagLayout());
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -26,7 +29,8 @@ public class MapEditorTileSetView extends JPanel {
             for (int col = 0; col < tileSet.getTileSetColumns(); col++) {
                 int tileIndex = (row * tileSet.getTileSetColumns()) + col;
                 Tile currentTile = tileSet.getTileArrayList().get(tileIndex);
-                MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile.getTileImage());
+                MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile, row, col);
+                mapEditorTileButton.addActionListener((ActionEvent e) -> setTileSelected(mapEditorTileButton));
                 constraints.gridx = col;
                 constraints.gridy = row;
                 tilesInSet.add(mapEditorTileButton, constraints);
@@ -34,5 +38,14 @@ public class MapEditorTileSetView extends JPanel {
         }
         revalidate();
         repaint();
+    }
+
+    private void setTileSelected(MapEditorTileButton button) {
+        if(this.selectedTileButton != null) {
+            this.selectedTileButton.setBorder(UIManager.getBorder("Button.border"));
+        }
+        this.selectedTileButton = button;
+        button.setBorder(BorderFactory.createLineBorder(Color.blue));
+        this.editorController.setSelectedTile(button.getTile());
     }
 }
