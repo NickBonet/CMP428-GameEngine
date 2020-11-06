@@ -22,8 +22,8 @@ public class Main {
 
             // Setup sizing for each component in the main window, and the split pane view.
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            mapEditPane.getViewport().setPreferredSize(new Dimension((int) (screenSize.getWidth() * 0.4),
-                    (int) (screenSize.getHeight() * 0.5)));
+            mapEditPane.getViewport().setPreferredSize(new Dimension((int) (screenSize.getWidth() * 0.6),
+                    (int) (screenSize.getHeight() * 0.75)));
             tileSetPane.getViewport().setPreferredSize(new Dimension((int) (mapEditPane.getViewport().getPreferredSize().getWidth() * 0.4),
                     (int) (mapEditPane.getViewport().getPreferredSize().getHeight() * 0.5)));
             JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mapEditPane, tileSetPane);
