@@ -6,7 +6,8 @@ import nickbonet.mapeditor.MapEditorController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MapEditorTileSetView extends JPanel {
     private final transient MapEditorController editorController;
@@ -30,7 +31,12 @@ public class MapEditorTileSetView extends JPanel {
                 int tileIndex = (row * tileSet.getTileSetColumns()) + col;
                 Tile currentTile = tileSet.getTileArrayList().get(tileIndex);
                 MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile, row, col);
-                mapEditorTileButton.addActionListener((ActionEvent e) -> setTileSelected(mapEditorTileButton));
+                mapEditorTileButton.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        setTileSelected(mapEditorTileButton);
+                    }
+                });
                 constraints.gridx = col;
                 constraints.gridy = row;
                 tilesInSet.add(mapEditorTileButton, constraints);

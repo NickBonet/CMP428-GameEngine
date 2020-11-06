@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 @SuppressWarnings("java:S110")
-public class MapEditorTileButton extends JButton {
+public class MapEditorTileButton extends JLabel {
     private transient Tile tile;
     private int mapRow;
     private int mapCol;
@@ -20,8 +20,10 @@ public class MapEditorTileButton extends JButton {
     }
 
     public void setTile(Tile tile) {
-        this.tile = tile;
-        this.setIcon(new ImageIcon((this.tile.getTileImage())));
+        if (tile != null) {
+            this.tile = tile;
+            this.setIcon(new ImageIcon((this.tile.getTileImage())));
+        }
     }
 
     public Tile getTile() {
