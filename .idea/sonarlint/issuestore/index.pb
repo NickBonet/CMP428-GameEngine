@@ -35,3 +35,7 @@ e
 5src/nickbonet/mapeditor/components/MapEditorView.java,d\c\dc603ba09517cf734c5c91e75c3537bb2cbde946
 Q
 !src/nickbonet/mapeditor/Main.java,a\3\a3df12241956c2e4c27cf3dd344aacfc84a83cf5
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+B
+assets/maps/2.json,0\7\07598e4a012a7658ad050044d8529b67440415e3
