@@ -41,4 +41,20 @@ public class TileSet {
     public List<Tile> getTileArrayList() {
         return tileArrayList;
     }
+
+    public int getTileSetRows() {
+        return tileSetImage.getHeight() / perTileHeight;
+    }
+
+    public int getTileSetColumns() {
+        return tileSetImage.getWidth() / perTileWidth;
+    }
+
+    public int getPerTileHeight() {
+        return perTileHeight;
+    }
+
+    public int getPerTileWidth() {
+        return perTileWidth;
+    }
 }

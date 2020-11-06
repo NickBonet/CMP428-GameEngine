@@ -14,12 +14,14 @@ public class Main {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         JScrollPane tileSetPane = new JScrollPane(editorController.getMapEditorTileSetView(),
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        mapEditPane.getVerticalScrollBar().setUnitIncrement(16);
+        tileSetPane.getVerticalScrollBar().setUnitIncrement(16);
 
         // Setup sizing for each component in the main window, and the split pane view.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         mapEditPane.getViewport().setPreferredSize(new Dimension((int)(screenSize.getWidth() * 0.4),
                 (int)(screenSize.getHeight() * 0.5)));
-        tileSetPane.getViewport().setPreferredSize(new Dimension((int)(mapEditPane.getViewport().getPreferredSize().getWidth() * 0.25),
+        tileSetPane.getViewport().setPreferredSize(new Dimension((int)(mapEditPane.getViewport().getPreferredSize().getWidth() * 0.4),
                 (int)(mapEditPane.getViewport().getPreferredSize().getHeight() * 0.5)));
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mapEditPane, tileSetPane);
         splitPane.setResizeWeight(1.0);

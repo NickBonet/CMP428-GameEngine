@@ -1,11 +1,11 @@
 package nickbonet.mapeditor.components;
 
 import nickbonet.gameengine.tile.Tile;
+import nickbonet.gameengine.tile.TileSet;
 import nickbonet.mapeditor.MapEditorController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class MapEditorTileSetView extends JPanel {
     private transient MapEditorController editorController;
@@ -19,12 +19,13 @@ public class MapEditorTileSetView extends JPanel {
         this.setBackground(Color.gray);
     }
 
-    public void initTileSetView(List<Tile> tileArray) {
+    public void initTileSetView(TileSet tileSet) {
         tilesInSet.removeAll();
         GridBagConstraints constraints = new GridBagConstraints();
-        for (int row = 0; row < tileArray.size() / 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Tile currentTile = tileArray.get((row*8)+col);
+        for (int row = 0; row < tileSet.getTileSetRows(); row++) {
+            for (int col = 0; col < tileSet.getTileSetColumns(); col++) {
+                int tileIndex = (row * tileSet.getTileSetColumns()) + col;
+                Tile currentTile = tileSet.getTileArrayList().get(tileIndex);
                 MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile.getTileImage());
                 constraints.gridx = col;
                 constraints.gridy = row;

@@ -37,7 +37,7 @@ public class MapEditorController {
                                         model.getMapModel().getTileSetFile()));
             mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
                     model.getTileSet().getTileArrayList(), model.getMapModel().getMapLayout());
-            mapEditorTileSetView.initTileSetView(model.getTileSet().getTileArrayList());
+            mapEditorTileSetView.initTileSetView(model.getTileSet());
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("JSON file not found.");
         }
