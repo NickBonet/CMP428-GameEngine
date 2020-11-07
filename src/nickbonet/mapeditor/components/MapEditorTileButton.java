@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 @SuppressWarnings("java:S110")
 public class MapEditorTileButton extends JLabel {
     private transient Tile tile;
+    private boolean isSelected;
     private int mapRow;
     private int mapCol;
 
@@ -27,13 +28,13 @@ public class MapEditorTileButton extends JLabel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 MapEditorTileButton button = (MapEditorTileButton) e.getSource();
-                button.setBorder(BorderFactory.createLineBorder(Color.white));
+                if(!button.isSelected) button.setBorder(BorderFactory.createLineBorder(Color.white));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 MapEditorTileButton button = (MapEditorTileButton) e.getSource();
-                button.setBorder(UIManager.getBorder("Label.border"));
+                if(!button.isSelected) button.setBorder(UIManager.getBorder("Label.border"));
             }
         });
     }
@@ -55,5 +56,9 @@ public class MapEditorTileButton extends JLabel {
 
     public int getMapCol() {
         return mapCol;
+    }
+
+    public void setSelected(boolean state) {
+        this.isSelected = state;
     }
 }
