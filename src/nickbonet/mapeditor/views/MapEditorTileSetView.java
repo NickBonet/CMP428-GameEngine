@@ -55,6 +55,6 @@ public class MapEditorTileSetView extends JPanel {
         }
         this.selectedTileButton = button;
         button.setBorder(BorderFactory.createLineBorder(Color.blue));
-        this.editorController.setSelectedTile(button.getTile());
+        this.editorController.setSelectedPaintModeTile(button.getTile());
     }
 }

@@ -65,7 +65,7 @@ public class MapEditorView extends JPanel {
     }
 
     private void changeTile(MapEditorTileButton button) {
-        button.setTile(editorController.getSelectedTile());
+        button.setTile(editorController.getSelectedPaintModeTile());
         editorController.updateTileInMap(button.getMapRow(), button.getMapCol());
     }
 }

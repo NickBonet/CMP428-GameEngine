@@ -17,7 +17,7 @@ public class MapEditorController {
     private final MapEditorView mapEditorView;
     private final MapEditorMenuBar mapEditorMenuBar;
     private final MapEditorTileSetView mapEditorTileSetView;
-    private Tile selectedTile;
+    private Tile selectedPaintModeTile;
 
     public MapEditorController() {
         this.model = new MapEditorModel();
@@ -66,7 +66,7 @@ public class MapEditorController {
     }
 
     public void updateTileInMap(int row, int col) {
-        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileArrayList().indexOf(selectedTile);
+        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileArrayList().indexOf(selectedPaintModeTile);
     }
 
     public MapEditorView getMapEditorView() {
@@ -81,11 +81,11 @@ public class MapEditorController {
         return mapEditorTileSetView;
     }
 
-    public Tile getSelectedTile() {
-        return selectedTile;
+    public Tile getSelectedPaintModeTile() {
+        return selectedPaintModeTile;
     }
 
-    public void setSelectedTile(Tile selectedTile) {
-        this.selectedTile = selectedTile;
+    public void setSelectedPaintModeTile(Tile selectedPaintModeTile) {
+        this.selectedPaintModeTile = selectedPaintModeTile;
     }
 }
