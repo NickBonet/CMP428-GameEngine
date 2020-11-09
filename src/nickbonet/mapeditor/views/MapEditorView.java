@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MapEditorView extends JPanel {
     private ArrayList<MapEditorTileButton> tilesOnScreen = new ArrayList<>();
-    private transient MapEditorController editorController;
+    private final transient MapEditorController editorController;
     private final JPanel tileButtonContainer;
 
     public MapEditorView(MapEditorController controller) {

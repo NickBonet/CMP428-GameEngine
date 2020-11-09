@@ -18,7 +18,7 @@ public class TileMapModel {
         this.mapLayout = new int[mapRows][mapColumns];
 
         for(int row = 0; row < mapRows; row++) {
-            for(int col =0; col < mapColumns; col++) {
+            for(int col = 0; col < mapColumns; col++) {
                 mapLayout[row][col] = -1;
             }
         }
