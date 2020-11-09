@@ -6,6 +6,12 @@ import java.awt.*;
 public class MapEditorMain {
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
         SwingUtilities.invokeLater(() -> {
             // Initialize main controller for the map editor.
             MapEditorController editorController = new MapEditorController();
