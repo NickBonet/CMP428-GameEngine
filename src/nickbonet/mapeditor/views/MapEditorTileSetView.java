@@ -1,8 +1,9 @@
-package nickbonet.mapeditor.components;
+package nickbonet.mapeditor.views;
 
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileSet;
 import nickbonet.mapeditor.MapEditorController;
+import nickbonet.mapeditor.components.MapEditorTileButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ public class MapEditorTileSetView extends JPanel {
         this.editorController = controller;
         tilesInSet = new JPanel();
         tilesInSet.setLayout(new GridBagLayout());
+        tilesInSet.setBackground(Color.gray);
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         this.add(tilesInSet);
         this.setBackground(Color.gray);
@@ -39,6 +41,7 @@ public class MapEditorTileSetView extends JPanel {
                 });
                 constraints.gridx = col;
                 constraints.gridy = row;
+                constraints.insets = new Insets(0, 0, 1 , 1);
                 tilesInSet.add(mapEditorTileButton, constraints);
             }
         }
@@ -49,11 +52,9 @@ public class MapEditorTileSetView extends JPanel {
     private void setTileSelected(MapEditorTileButton button) {
         if(this.selectedTileButton != null) {
             this.selectedTileButton.setBorder(UIManager.getBorder("Label.border"));
-            this.selectedTileButton.setSelected(false);
         }
         this.selectedTileButton = button;
         button.setBorder(BorderFactory.createLineBorder(Color.blue));
-        button.setSelected(true);
         this.editorController.setSelectedTile(button.getTile());
     }
 }

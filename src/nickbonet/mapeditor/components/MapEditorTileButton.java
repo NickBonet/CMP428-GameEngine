@@ -4,13 +4,11 @@ import nickbonet.gameengine.tile.Tile;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 @SuppressWarnings("java:S110")
 public class MapEditorTileButton extends JLabel {
     private transient Tile tile;
-    private boolean isSelected;
     private int mapRow;
     private int mapCol;
 
@@ -24,19 +22,6 @@ public class MapEditorTileButton extends JLabel {
         } else {
             this.setIcon(new ImageIcon());
         }
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                MapEditorTileButton button = (MapEditorTileButton) e.getSource();
-                if(!button.isSelected) button.setBorder(BorderFactory.createLineBorder(Color.white));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                MapEditorTileButton button = (MapEditorTileButton) e.getSource();
-                if(!button.isSelected) button.setBorder(UIManager.getBorder("Label.border"));
-            }
-        });
     }
 
     public void setTile(Tile tile) {
@@ -56,9 +41,5 @@ public class MapEditorTileButton extends JLabel {
 
     public int getMapCol() {
         return mapCol;
-    }
-
-    public void setSelected(boolean state) {
-        this.isSelected = state;
     }
 }

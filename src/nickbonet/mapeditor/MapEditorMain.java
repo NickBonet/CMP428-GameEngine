@@ -40,6 +40,7 @@ public class MapEditorMain {
             frame.add(splitPane);
             frame.setJMenuBar(editorController.getMapEditorMenuBar());
             frame.pack();
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         });

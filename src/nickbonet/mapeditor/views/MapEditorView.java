@@ -1,12 +1,14 @@
-package nickbonet.mapeditor.components;
+package nickbonet.mapeditor.views;
 
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.mapeditor.MapEditorController;
+import nickbonet.mapeditor.components.MapEditorTileButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +36,15 @@ public class MapEditorView extends JPanel {
                 if(mapLayout[row][col] != -1) currentTile = tileArray.get(mapLayout[row][col]);
                 MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile, row, col);
                 if(currentTile == null) {
-                    Dimension tileSize = new Dimension(tileArray.get(0).getWidth(), tileArray.get(1).getHeight());
+                    int iconWidth = tileArray.get(0).getWidth();
+                    int iconHeight = tileArray.get(0).getHeight();
+                    BufferedImage image = new BufferedImage(iconWidth, iconHeight, BufferedImage.TYPE_INT_RGB);
+                    Graphics g = image.createGraphics();
+                    g.setColor(Color.lightGray);
+                    g.fillRect (0, 0, iconWidth, iconHeight);
+                    Dimension tileSize = new Dimension(iconWidth, iconHeight);
                     mapEditorTileButton.setPreferredSize(tileSize);
+                    mapEditorTileButton.setIcon(new ImageIcon(image));
                 }
 
                 mapEditorTileButton.addMouseListener(new MouseAdapter() {
@@ -47,6 +56,7 @@ public class MapEditorView extends JPanel {
                 tilesOnScreen.add(mapEditorTileButton);
                 constraints.gridx = col;
                 constraints.gridy = row;
+                constraints.insets = new Insets(0, 0, 1 , 1);
                 tileButtonContainer.add(mapEditorTileButton, constraints);
             }
         }

@@ -15,20 +15,21 @@ public class MapEditorMenuBar extends JMenuBar {
         this.editorController = controller;
         JMenu fileMenu = new JMenu("File");
         this.add(fileMenu);
-        // TODO: Create UI component for creating new map, add action listener to item afterwards
-        JMenuItem newFile = new JMenuItem("Create Map");
+        JMenuItem newFile = new JMenuItem("Create Map..");
         JMenuItem openFile = new JMenuItem("Open Map..");
         JMenuItem saveFile = new JMenuItem("Save Map..");
         fileMenu.add(newFile);
         fileMenu.add(openFile);
         fileMenu.add(saveFile);
-        setupActionListeners(openFile, saveFile);
+        setupActionListeners(newFile, openFile, saveFile);
     }
 
-    private void setupActionListeners(JMenuItem openFile, JMenuItem saveFile) {
+    private void setupActionListeners(JMenuItem newFile, JMenuItem openFile, JMenuItem saveFile) {
+        newFile.addActionListener((ActionEvent event) -> new NewMapDialog(editorController));
+
         openFile.addActionListener((ActionEvent event) -> {
             JFileChooser fileChooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files", "json");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files (.json)", "json");
             fileChooser.setFileFilter(filter);
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -43,7 +44,7 @@ public class MapEditorMenuBar extends JMenuBar {
 
         saveFile.addActionListener((ActionEvent event) -> {
             JFileChooser fileChooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files", "json");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files (.json)", "json");
             fileChooser.setFileFilter(filter);
             int returnVal = fileChooser.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {

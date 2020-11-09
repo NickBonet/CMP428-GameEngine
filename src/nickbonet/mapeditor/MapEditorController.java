@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.gameengine.tile.TileSet;
-import nickbonet.mapeditor.components.MapEditorView;
+import nickbonet.mapeditor.views.MapEditorView;
 import nickbonet.mapeditor.components.MapEditorMenuBar;
-import nickbonet.mapeditor.components.MapEditorTileSetView;
+import nickbonet.mapeditor.views.MapEditorTileSetView;
 import nickbonet.mapeditor.model.MapEditorModel;
 
 import java.io.*;
@@ -45,8 +45,20 @@ public class MapEditorController {
         }
     }
 
+    public void createTileMap(String file, int perTileWidth, int perTileHeight, int mapRows, int mapColumns) {
+        model.setMapModel(new TileMapModel(file, perTileWidth, perTileHeight, mapRows, mapColumns));
+        model.setTileSet(new TileSet(model.getMapModel().getPerTileWidth(), model.getMapModel().getPerTileHeight(),
+                model.getMapModel().getTileSetFile()));
+        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
+                model.getTileSet().getTileArrayList(), model.getMapModel().getMapLayout());
+        mapEditorTileSetView.initTileSetView(model.getTileSet());
+    }
+
     public void saveTileMapJson(String mapJson) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        if(!mapJson.endsWith(".json")) {
+            mapJson += ".json";
+        }
         Writer writer = new FileWriter(mapJson);
         gson.toJson(model.getMapModel(), writer);
         writer.flush();
