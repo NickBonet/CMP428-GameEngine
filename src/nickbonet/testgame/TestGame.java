@@ -22,23 +22,24 @@ public class TestGame extends GamePanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		/*
+		maps.get(0).drawMap(g);
 		player.draw(g);
-		redGhost.draw(g);
+		/*redGhost.draw(g);
 		g.setColor(Color.red);
 		for (int i = 0; i < rectObjects.size(); i++) {
 			rectObjects.get(i).draw(g);
 		}*/
-		maps.get(0).drawMap(g);
 	}
 
 	@Override
 	protected void initObjects() {
 		try {
-			maps.add(loadTileMap("2.json"));
+			maps.add(loadTileMap("emerald test map.json"));
+			maps.get(0).initializeMap();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/*
 		Rect testRect2 = new Rect(61, 71, 50, 60);
 		Rect testRect3 = new Rect(150, 150, 70, 100);
 		Rect testRect4 = new Rect(250, 250, 50, 51);
@@ -49,6 +50,7 @@ public class TestGame extends GamePanel {
 		rectObjects.add(testRect5);
 		rectObjects.add(redGhost.getBounds());
 		redGhost.setSpriteAnim("up");
+		*/
 	}
 	
 	@Override

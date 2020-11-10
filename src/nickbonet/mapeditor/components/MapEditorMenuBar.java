@@ -20,6 +20,13 @@ public class MapEditorMenuBar extends JMenuBar {
         setupEditorModeMenu();
 
         JMenu editMenu = new JMenu("Edit");
+        JMenuItem fillOption = new JMenuItem("Fill");
+        KeyStroke fillShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_A,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        fillOption.setAccelerator(fillShortcut);
+
+        fillOption.addActionListener((ActionEvent event) -> editorController.fillMapWithSelectedTile());
+
+        editMenu.add(fillOption);
         this.add(editMenu);
 
     }

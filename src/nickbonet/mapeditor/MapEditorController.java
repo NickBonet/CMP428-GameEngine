@@ -27,10 +27,6 @@ public class MapEditorController {
         this.mapEditorTileSetView = new MapEditorTileSetView(this);
         this.mapEditorMenuBar = new MapEditorMenuBar(this);
         this.editorMode = EditorMode.PAINT;
-        if (model.getMapModel() != null) {
-            this.mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
-                    model.getTileSet().getTileArrayList(), model.getMapModel().getMapLayout());
-        }
     }
 
     public void loadTileMapJson(String mapJson) throws FileNotFoundException {
@@ -64,14 +60,30 @@ public class MapEditorController {
         model.setTileSet(new TileSet(model.getMapModel().getPerTileWidth(), model.getMapModel().getPerTileHeight(),
                 model.getMapModel().getTileSetFile()));
         mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
-                model.getTileSet().getTileArrayList(), model.getMapModel().getMapLayout());
+                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
         mapEditorTileSetView.initTileSetView(model.getTileSet());
         this.editorMode = EditorMode.PAINT;
         this.selectedPaintModeTile = null;
     }
 
     public void updateTileInMap(int row, int col) {
-        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileArrayList().indexOf(selectedPaintModeTile);
+        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedPaintModeTile.getTileImage());
+    }
+
+    public boolean updateCollisionTileInMap(int row, int col) {
+        boolean currentValue = model.getMapModel().getCollisionMap()[row][col];
+        model.getMapModel().getCollisionMap()[row][col] = !currentValue;
+        return !currentValue;
+    }
+
+    public void fillMapWithSelectedTile() {
+        for(int row = 0; row < model.getMapModel().getMapRows(); row++) {
+            for(int col = 0; col < model.getMapModel().getMapColumns(); col++) {
+                updateTileInMap(row, col);
+            }
+        }
+        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
+                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
     }
 
     public MapEditorView getMapEditorView() {

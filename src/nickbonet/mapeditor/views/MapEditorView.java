@@ -26,26 +26,20 @@ public class MapEditorView extends JPanel {
         this.setBackground(Color.gray);
     }
 
-    public void loadInitialMapView(int rows, int columns, List<Tile> tileArray, int[][] mapLayout) {
+    public void loadInitialMapView(int rows, int columns, List<BufferedImage> tileArray, int[][] mapLayout, boolean[][] collisionMap) {
         tileButtonContainer.removeAll();
         tilesOnScreen.clear();
         GridBagConstraints constraints = new GridBagConstraints();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
                 Tile currentTile = null;
-                if(mapLayout[row][col] != -1) currentTile = tileArray.get(mapLayout[row][col]);
+                if(mapLayout[row][col] != -1) currentTile = new Tile(tileArray.get(mapLayout[row][col]));
                 MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile, row, col);
-                if(currentTile == null) {
-                    int iconWidth = tileArray.get(0).getWidth();
-                    int iconHeight = tileArray.get(0).getHeight();
-                    BufferedImage image = new BufferedImage(iconWidth, iconHeight, BufferedImage.TYPE_INT_RGB);
-                    Graphics g = image.createGraphics();
-                    g.setColor(Color.lightGray);
-                    g.fillRect (0, 0, iconWidth, iconHeight);
-                    Dimension tileSize = new Dimension(iconWidth, iconHeight);
-                    mapEditorTileButton.setPreferredSize(tileSize);
-                    mapEditorTileButton.setIcon(new ImageIcon(image));
-                }
+
+                if(currentTile == null) createEmptyTileButton(tileArray.get(0).getWidth(), tileArray.get(0).getHeight(), mapEditorTileButton);
+
+                if (collisionMap[row][col]) mapEditorTileButton.setBorder(BorderFactory.createLineBorder(Color.red));
+                else mapEditorTileButton.setBorder(UIManager.getBorder("Label.border"));
 
                 mapEditorTileButton.addMouseListener(new MouseAdapter() {
                     @Override
@@ -53,6 +47,7 @@ public class MapEditorView extends JPanel {
                         editorTileClicked(mapEditorTileButton);
                     }
                 });
+
                 tilesOnScreen.add(mapEditorTileButton);
                 constraints.gridx = col;
                 constraints.gridy = row;
@@ -64,6 +59,16 @@ public class MapEditorView extends JPanel {
         repaint();
     }
 
+    private void createEmptyTileButton(int iconWidth, int iconHeight, MapEditorTileButton mapEditorTileButton) {
+        BufferedImage image = new BufferedImage(iconWidth, iconHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.createGraphics();
+        g.setColor(Color.lightGray);
+        g.fillRect (0, 0, iconWidth, iconHeight);
+        Dimension tileSize = new Dimension(iconWidth, iconHeight);
+        mapEditorTileButton.setPreferredSize(tileSize);
+        mapEditorTileButton.setIcon(new ImageIcon(image));
+    }
+
     private void editorTileClicked(MapEditorTileButton button) {
         switch(editorController.getEditorMode()) {
         case PAINT:
@@ -73,7 +78,10 @@ public class MapEditorView extends JPanel {
             }
             break;
         case COLLISION:
-            // TODO: Add multidimensional array, set row/col of tile to 1 in there. Add red border to collision tiles in this mode.
+            boolean currentVal = editorController.updateCollisionTileInMap(button.getMapRow(), button.getMapCol());
+            if (currentVal) button.setBorder(BorderFactory.createLineBorder(Color.red));
+            else button.setBorder(UIManager.getBorder("Label.border"));
+            break;
         case OBJECT:
         }
     }
