@@ -28,7 +28,6 @@ public class MapEditorMenuBar extends JMenuBar {
 
         editMenu.add(fillOption);
         this.add(editMenu);
-
     }
 
     private void setupEditorModeMenu() {
