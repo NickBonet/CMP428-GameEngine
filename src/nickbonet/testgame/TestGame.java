@@ -9,12 +9,14 @@ import javax.swing.JFrame;
 
 import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.Rect;
+import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
-	
-	private transient Pacman player = new Pacman(500, 500, "pac", 65);
+	private static final int WINDOW_HEIGHT = 768;
+	private static final int WINDOW_WIDTH = 1024;
+	private transient Pacman player = new Pacman(0, 0, "pac", 65);
 	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 	private final transient List<TileMap> maps = new ArrayList<>();
@@ -24,11 +26,6 @@ public class TestGame extends GamePanel {
 		super.paintComponent(g);
 		maps.get(0).drawMap(g);
 		player.draw(g);
-		/*redGhost.draw(g);
-		g.setColor(Color.red);
-		for (int i = 0; i < rectObjects.size(); i++) {
-			rectObjects.get(i).draw(g);
-		}*/
 	}
 
 	@Override
@@ -39,18 +36,12 @@ public class TestGame extends GamePanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*
-		Rect testRect2 = new Rect(61, 71, 50, 60);
-		Rect testRect3 = new Rect(150, 150, 70, 100);
-		Rect testRect4 = new Rect(250, 250, 50, 51);
-		Rect testRect5 = new Rect(480, 250, 50, 51);
-		rectObjects.add(testRect2);
-		rectObjects.add(testRect3);
-		rectObjects.add(testRect4);
-		rectObjects.add(testRect5);
-		rectObjects.add(redGhost.getBounds());
-		redGhost.setSpriteAnim("up");
-		*/
+
+		for (Tile[] row : maps.get(0).getTiles()) {
+			for (Tile tile : row) {
+				if(tile.isCollisionEnabled()) rectObjects.add(tile.getBoundsRect());
+			}
+		}
 	}
 	
 	@Override
@@ -106,7 +97,7 @@ public class TestGame extends GamePanel {
 		System.setProperty("sun.java2d.opengl", "true");
 		JFrame frame = new JFrame("Test Game");
 		TestGame game = new TestGame();
-		game.setPreferredSize(new Dimension(1024, 768));
+		game.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 		game.setBackground(Color.black);
 		frame.add(game);
 		frame.pack();

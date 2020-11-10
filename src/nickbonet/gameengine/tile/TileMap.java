@@ -52,4 +52,8 @@ public class TileMap {
         g.dispose();
         return resizedImg;
     }
+
+    public Tile[][] getTiles() {
+        return tiles;
+    }
 }
