@@ -50,7 +50,7 @@ public class MapEditorView extends JPanel {
                 mapEditorTileButton.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
-                        changeTile(mapEditorTileButton);
+                        editorTileClicked(mapEditorTileButton);
                     }
                 });
                 tilesOnScreen.add(mapEditorTileButton);
@@ -64,8 +64,17 @@ public class MapEditorView extends JPanel {
         repaint();
     }
 
-    private void changeTile(MapEditorTileButton button) {
-        button.setTile(editorController.getSelectedPaintModeTile());
-        editorController.updateTileInMap(button.getMapRow(), button.getMapCol());
+    private void editorTileClicked(MapEditorTileButton button) {
+        switch(editorController.getEditorMode()) {
+        case PAINT:
+            if(editorController.getSelectedPaintModeTile() != null) {
+                button.setTile(editorController.getSelectedPaintModeTile());
+                editorController.updateTileInMap(button.getMapRow(), button.getMapCol());
+            }
+            break;
+        case COLLISION:
+            // TODO: Add multidimensional array, set row/col of tile to 1 in there. Add red border to collision tiles in this mode.
+        case OBJECT:
+        }
     }
 }

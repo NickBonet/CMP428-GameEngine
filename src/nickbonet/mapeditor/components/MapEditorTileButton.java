@@ -25,10 +25,8 @@ public class MapEditorTileButton extends JLabel {
     }
 
     public void setTile(Tile tile) {
-        if (tile != null) {
-            this.tile = tile;
-            this.setIcon(new ImageIcon((this.tile.getTileImage())));
-        }
+        this.tile = tile;
+        this.setIcon(new ImageIcon((this.tile.getTileImage())));
     }
 
     public Tile getTile() {

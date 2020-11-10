@@ -1,10 +1,13 @@
 package nickbonet.mapeditor.components;
 
 import nickbonet.mapeditor.MapEditorController;
+import nickbonet.mapeditor.model.EditorMode;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -13,18 +16,52 @@ public class MapEditorMenuBar extends JMenuBar {
 
     public MapEditorMenuBar(MapEditorController controller) {
         this.editorController = controller;
+        setupFileMenu();
+        setupEditorModeMenu();
+
+        JMenu editMenu = new JMenu("Edit");
+        this.add(editMenu);
+
+    }
+
+    private void setupEditorModeMenu() {
+        JMenu editorMode = new JMenu("Editor Mode");
+        JMenuItem paintMode = new JMenuItem("Paint Editor");
+        JMenuItem collisionMode = new JMenuItem("Collision Editor");
+        JMenuItem objectMode = new JMenuItem("Object Editor");
+        editorMode.add(paintMode);
+        editorMode.add(collisionMode);
+        editorMode.add(objectMode);
+        this.add(editorMode);
+
+        KeyStroke paintShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_P,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        paintMode.setAccelerator(paintShortcut);
+        KeyStroke collisionShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_L,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        collisionMode.setAccelerator(collisionShortcut);
+        KeyStroke objectShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        objectMode.setAccelerator(objectShortcut);
+        paintMode.addActionListener((ActionEvent event) -> editorController.setEditorMode(EditorMode.PAINT));
+        collisionMode.addActionListener((ActionEvent event) -> editorController.setEditorMode(EditorMode.COLLISION));
+        objectMode.addActionListener((ActionEvent event) -> editorController.setEditorMode(EditorMode.OBJECT));
+    }
+
+    private void setupFileMenu() {
         JMenu fileMenu = new JMenu("File");
-        this.add(fileMenu);
         JMenuItem newFile = new JMenuItem("Create Map..");
         JMenuItem openFile = new JMenuItem("Open Map..");
         JMenuItem saveFile = new JMenuItem("Save Map..");
         fileMenu.add(newFile);
         fileMenu.add(openFile);
         fileMenu.add(saveFile);
-        setupActionListeners(newFile, openFile, saveFile);
-    }
+        this.add(fileMenu);
 
-    private void setupActionListeners(JMenuItem newFile, JMenuItem openFile, JMenuItem saveFile) {
+        KeyStroke newMapShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke openFileShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke saveFileShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        newFile.setAccelerator(newMapShortcut);
+        openFile.setAccelerator(openFileShortcut);
+        saveFile.setAccelerator(saveFileShortcut);
+
         newFile.addActionListener((ActionEvent event) -> new NewMapDialog(editorController));
 
         openFile.addActionListener((ActionEvent event) -> {

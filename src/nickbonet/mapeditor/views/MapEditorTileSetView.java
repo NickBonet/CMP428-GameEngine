@@ -27,6 +27,7 @@ public class MapEditorTileSetView extends JPanel {
 
     public void initTileSetView(TileSet tileSet) {
         tilesInSet.removeAll();
+        this.selectedTileButton = null;
         GridBagConstraints constraints = new GridBagConstraints();
         for (int row = 0; row < tileSet.getTileSetRows(); row++) {
             for (int col = 0; col < tileSet.getTileSetColumns(); col++) {
