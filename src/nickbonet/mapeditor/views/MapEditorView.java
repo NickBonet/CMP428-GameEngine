@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapEditorView extends JPanel {
-    private ArrayList<MapEditorTileButton> tilesOnScreen = new ArrayList<>();
+    private final ArrayList<MapEditorTileButton> tilesOnScreen = new ArrayList<>();
     private final transient MapEditorController editorController;
     private final JPanel tileButtonContainer;
 

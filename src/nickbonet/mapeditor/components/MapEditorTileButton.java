@@ -9,8 +9,8 @@ import java.awt.*;
 @SuppressWarnings("java:S110")
 public class MapEditorTileButton extends JLabel {
     private transient Tile tile;
-    private int mapRow;
-    private int mapCol;
+    private final int mapRow;
+    private final int mapCol;
 
     public MapEditorTileButton(Tile tile, int row, int col) {
         this.tile = tile;

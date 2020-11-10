@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MapEditorMenuBar extends JMenuBar {
-    private transient MapEditorController editorController;
+    private final transient MapEditorController editorController;
 
     public MapEditorMenuBar(MapEditorController controller) {
         this.editorController = controller;

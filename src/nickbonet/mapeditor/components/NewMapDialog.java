@@ -9,7 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class NewMapDialog extends JPanel {
-    private transient MapEditorController editorController;
+    private final transient MapEditorController editorController;
     private String tileSetImgFile;
 
     public NewMapDialog(MapEditorController editorController) {
