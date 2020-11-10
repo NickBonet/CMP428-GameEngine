@@ -26,9 +26,9 @@ public class MapEditorMenuBar extends JMenuBar {
 
     private void setupEditorModeMenu() {
         JMenu editorMode = new JMenu("Editor Mode");
-        JMenuItem paintMode = new JMenuItem("Paint Editor");
-        JMenuItem collisionMode = new JMenuItem("Collision Editor");
-        JMenuItem objectMode = new JMenuItem("Object Editor");
+        JMenuItem paintMode = new JMenuItem("Paint Mode");
+        JMenuItem collisionMode = new JMenuItem("Collision Mode");
+        JMenuItem objectMode = new JMenuItem("Object Mode");
         editorMode.add(paintMode);
         editorMode.add(collisionMode);
         editorMode.add(objectMode);
