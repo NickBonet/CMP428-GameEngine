@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import nickbonet.gameengine.Rect;
 
 public abstract class Sprite {
-	private static final String spriteFolder = "assets/sprites/";
+	private static final String SPRITE_FOLDER = "assets/sprites/";
 	protected int x;
 	protected int y;
 	protected Logger logger = Logger.getLogger("GameEngine", null);
@@ -90,7 +90,7 @@ public abstract class Sprite {
 	}
 	
 	public String getSpriteDir() {
-		return spriteFolder + this.getClass().getSimpleName().toLowerCase();
+		return SPRITE_FOLDER + this.getClass().getSimpleName().toLowerCase();
 	}
 
 	public void setSpriteAnim(String animIndex) {

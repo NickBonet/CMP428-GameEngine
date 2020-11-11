@@ -1,3 +1,13 @@
+package nickbonet.gameengine;
+
+import nickbonet.gameengine.tile.TileMap;
+import nickbonet.gameengine.tile.TileMapModel;
+
+import java.awt.event.*;
+import java.io.*;
+import java.util.logging.*;
+import javax.swing.JPanel;
+
 /**
  * GameApplet - where all the magic is brought together!
  * NOTE: This is simply the JPanel for the game. Must create a JFrame
@@ -6,12 +16,6 @@
  * @author Nicholas Bonet
  *
  */
-package nickbonet.gameengine;
-
-import java.awt.event.*;
-import java.util.logging.*;
-import javax.swing.JPanel;
-
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel implements KeyListener {
 	
@@ -38,7 +42,17 @@ public abstract class GamePanel extends JPanel implements KeyListener {
 			}
 		}
 	}
-	
+
+	public TileMap loadTileMap(String mapFile) {
+		try (FileInputStream fis = new FileInputStream(TileMapModel.MAP_FOLDER + mapFile); ObjectInputStream is = new ObjectInputStream(fis)) {
+			TileMapModel mapModel = (TileMapModel) is.readObject();
+			return new TileMap(mapModel);
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	/*
 	 * Main logic for the game, up to you to implement this in your game of course.
 	 */
