@@ -54,14 +54,17 @@ public class MapEditorMain {
                     JFileChooser fileChooser = new JFileChooser();
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("TileMap Files (.tilemap)", "tilemap");
                     fileChooser.setFileFilter(filter);
-                    if(editorController.getLoadedFile() != null) fileChooser.setSelectedFile(new File(editorController.getLoadedFile()));
-                    else fileChooser.setCurrentDirectory(new File(TileMapModel.MAP_FOLDER));
-                    int returnVal = fileChooser.showSaveDialog(null);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        String mapFile = fileChooser.getSelectedFile().getAbsolutePath();
-                        editorController.saveTileMap(mapFile);
-                        System.exit(0);
-                    }
+                    if(editorController.mapNeedsSaving()) {
+                        if (editorController.getLoadedFile() != null)
+                            fileChooser.setSelectedFile(new File(editorController.getLoadedFile()));
+                        else fileChooser.setCurrentDirectory(new File(TileMapModel.MAP_FOLDER));
+                        int returnVal = fileChooser.showSaveDialog(null);
+                        if (returnVal == JFileChooser.APPROVE_OPTION) {
+                            String mapFile = fileChooser.getSelectedFile().getAbsolutePath();
+                            editorController.saveTileMap(mapFile);
+                            System.exit(0);
+                        }
+                    } else System.exit(0);
                 }
             });
             frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

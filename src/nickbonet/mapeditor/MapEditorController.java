@@ -21,12 +21,14 @@ public class MapEditorController {
     private int currentHoveredRow;
     private int currentHoveredColumn;
     private String loadedFile;
+    private boolean mapNeedsSaving;
 
     public MapEditorController() {
         this.model = new MapEditorModel();
         this.mapEditorView = new MapEditorView(this);
         this.mapEditorTileSetView = new MapEditorTileSetView(this);
         this.mapEditorMenuBar = new MapEditorMenuBar(this);
+        this.mapNeedsSaving = false;
         setEditorMode(EditorMode.PAINT);
     }
 
@@ -36,6 +38,7 @@ public class MapEditorController {
             model.setMapModel(mapModel);
             initializeViews();
             loadedFile = mapFile;
+            mapNeedsSaving = true;
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
@@ -45,6 +48,7 @@ public class MapEditorController {
         model.setMapModel(new TileMapModel(file, perTileWidth, perTileHeight, mapRows, mapColumns));
         initializeViews();
         loadedFile = null;
+        mapNeedsSaving = true;
     }
 
     public void saveTileMap(String mapFile) {
@@ -177,5 +181,9 @@ public class MapEditorController {
 
     public String getLoadedFile() {
         return loadedFile;
+    }
+
+    public boolean mapNeedsSaving() {
+        return mapNeedsSaving;
     }
 }
