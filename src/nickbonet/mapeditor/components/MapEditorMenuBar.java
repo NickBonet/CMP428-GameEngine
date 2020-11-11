@@ -18,15 +18,30 @@ public class MapEditorMenuBar extends JMenuBar {
         this.editorController = controller;
         setupFileMenu();
         setupEditorModeMenu();
+        setupEditMenu();
+    }
 
+    private void setupEditMenu() {
         JMenu editMenu = new JMenu("Edit");
-        JMenuItem fillOption = new JMenuItem("Fill");
+        JMenuItem fillOption = new JMenuItem("Fill All Tiles");
         KeyStroke fillShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_A,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         fillOption.setAccelerator(fillShortcut);
 
+        JMenuItem fillRow = new JMenuItem("Fill Current Row");
+        KeyStroke fillRowShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_R,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        fillRow.setAccelerator(fillRowShortcut);
+
+        JMenuItem fillCol = new JMenuItem("Fill Current Column");
+        KeyStroke fillColShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_C,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        fillCol.setAccelerator(fillColShortcut);
+
         fillOption.addActionListener((ActionEvent event) -> editorController.fillMapWithSelectedTile());
+        fillRow.addActionListener((ActionEvent event) -> editorController.fillRowWithSelectedTile());
+        fillCol.addActionListener((ActionEvent event) -> editorController.fillColumnWithSelectedTile());
 
         editMenu.add(fillOption);
+        editMenu.add(fillRow);
+        editMenu.add(fillCol);
         this.add(editMenu);
     }
 

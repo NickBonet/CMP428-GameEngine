@@ -20,6 +20,8 @@ public class MapEditorController {
     private final MapEditorTileSetView mapEditorTileSetView;
     private Tile selectedPaintModeTile;
     private EditorMode editorMode;
+    private int currentHoveredRow;
+    private int currentHoveredColumn;
 
     public MapEditorController() {
         this.model = new MapEditorModel();
@@ -86,6 +88,22 @@ public class MapEditorController {
                 model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
     }
 
+    public void fillRowWithSelectedTile() {
+        for(int col = 0; col < model.getMapModel().getMapColumns(); col++) {
+            updateTileInMap(currentHoveredRow, col);
+        }
+        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
+                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
+    }
+
+    public void fillColumnWithSelectedTile() {
+        for(int row = 0; row < model.getMapModel().getMapRows(); row++) {
+            updateTileInMap(row, currentHoveredColumn);
+        }
+        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
+                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
+    }
+
     public MapEditorView getMapEditorView() {
         return mapEditorView;
     }
@@ -112,5 +130,13 @@ public class MapEditorController {
 
     public void setEditorMode(EditorMode editorMode) {
         this.editorMode = editorMode;
+    }
+
+    public void setCurrentHoveredRow(int currentHoveredRow) {
+        this.currentHoveredRow = currentHoveredRow;
+    }
+
+    public void setCurrentHoveredColumn(int currentHoveredColumn) {
+        this.currentHoveredColumn = currentHoveredColumn;
     }
 }

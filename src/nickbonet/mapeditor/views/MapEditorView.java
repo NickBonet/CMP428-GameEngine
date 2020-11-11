@@ -46,6 +46,13 @@ public class MapEditorView extends JPanel {
                     public void mousePressed(MouseEvent e) {
                         editorTileClicked(mapEditorTileButton);
                     }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        MapEditorTileButton button = (MapEditorTileButton) e.getSource();
+                        editorController.setCurrentHoveredRow(button.getMapRow());
+                        editorController.setCurrentHoveredColumn(button.getMapCol());
+                    }
                 });
 
                 tilesOnScreen.add(mapEditorTileButton);
