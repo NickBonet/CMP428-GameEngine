@@ -1,6 +1,6 @@
 package nickbonet.mapeditor.views;
 
-import nickbonet.gameengine.tile.Tile;
+import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.mapeditor.MapEditorController;
 import nickbonet.mapeditor.components.MapEditorTileButton;
 
@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapEditorView extends JPanel {
@@ -25,24 +24,26 @@ public class MapEditorView extends JPanel {
         this.setBackground(Color.gray);
     }
 
-    public void loadInitialMapView(int rows, int columns, List<BufferedImage> tileArray, int[][] mapLayout, boolean[][] collisionMap) {
+    public void loadInitialMapView(List<BufferedImage> tileArray, TileMapModel mapModel) {
         tileButtonContainer.removeAll();
         GridBagConstraints constraints = new GridBagConstraints();
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < columns; col++) {
-                Tile currentTile = null;
-                if(mapLayout[row][col] != -1) currentTile = new Tile(tileArray.get(mapLayout[row][col]));
-                MapEditorTileButton mapEditorTileButton = new MapEditorTileButton(currentTile, row, col);
+        for (int row = 0; row < mapModel.getMapRows(); row++) {
+            for (int col = 0; col < mapModel.getMapColumns(); col++) {
+                BufferedImage currentTileImg = null;
+                BufferedImage objectTileImg = null;
+                if(mapModel.getObjectMap()[row][col] != -1) objectTileImg = tileArray.get(mapModel.getObjectMap()[row][col]);
+                if(mapModel.getMapLayout()[row][col] != -1) currentTileImg = tileArray.get(mapModel.getMapLayout()[row][col]);
 
-                if(currentTile == null) createEmptyTileButton(tileArray.get(0).getWidth(), tileArray.get(0).getHeight(), mapEditorTileButton);
+                MapEditorTileButton button = new MapEditorTileButton(currentTileImg, objectTileImg, row, col);
+                button.setObjectImg(objectTileImg);
+                if(currentTileImg == null) createEmptyTileButton(tileArray.get(0).getWidth(), tileArray.get(0).getHeight(), button);
+                if (mapModel.getCollisionMap()[row][col]) button.setBorder(BorderFactory.createLineBorder(Color.red));
+                else button.setBorder(UIManager.getBorder("Label.border"));
 
-                if (collisionMap[row][col]) mapEditorTileButton.setBorder(BorderFactory.createLineBorder(Color.red));
-                else mapEditorTileButton.setBorder(UIManager.getBorder("Label.border"));
-
-                mapEditorTileButton.addMouseListener(new MouseAdapter() {
+                button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
-                        editorTileClicked(mapEditorTileButton);
+                        editorTileClicked((MapEditorTileButton) e.getSource());
                     }
 
                     @Override
@@ -56,28 +57,28 @@ public class MapEditorView extends JPanel {
                 constraints.gridx = col;
                 constraints.gridy = row;
                 constraints.insets = new Insets(0, 0, 1 , 1);
-                tileButtonContainer.add(mapEditorTileButton, constraints);
+                tileButtonContainer.add(button, constraints);
             }
         }
         revalidate();
         repaint();
     }
 
-    private void createEmptyTileButton(int iconWidth, int iconHeight, MapEditorTileButton mapEditorTileButton) {
+    private void createEmptyTileButton(int iconWidth, int iconHeight, MapEditorTileButton button) {
         BufferedImage image = new BufferedImage(iconWidth, iconHeight, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.createGraphics();
         g.setColor(Color.lightGray);
         g.fillRect (0, 0, iconWidth, iconHeight);
         Dimension tileSize = new Dimension(iconWidth, iconHeight);
-        mapEditorTileButton.setPreferredSize(tileSize);
-        mapEditorTileButton.setIcon(new ImageIcon(image));
+        button.setPreferredSize(tileSize);
+        button.setIcon(new ImageIcon(image));
     }
 
     private void editorTileClicked(MapEditorTileButton button) {
         switch(editorController.getEditorMode()) {
         case PAINT:
-            if(editorController.getSelectedPaintModeTile() != null) {
-                button.setTile(editorController.getSelectedPaintModeTile());
+            if(editorController.getSelectedTile() != null) {
+                button.setTileImage(editorController.getSelectedTile());
                 editorController.updateTileInMap(button.getMapRow(), button.getMapCol());
             }
             break;
@@ -87,6 +88,10 @@ public class MapEditorView extends JPanel {
             else button.setBorder(UIManager.getBorder("Label.border"));
             break;
         case OBJECT:
+            if(editorController.getSelectedTile() != null) {
+                button.setObjectImg(editorController.getSelectedTile());
+                editorController.updateTileInObjectMap(button.getMapRow(), button.getMapCol());
+            }
             break;
         }
     }

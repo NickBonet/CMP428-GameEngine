@@ -2,7 +2,6 @@ package nickbonet.mapeditor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.gameengine.tile.TileSet;
 import nickbonet.mapeditor.model.EditorMode;
@@ -11,6 +10,7 @@ import nickbonet.mapeditor.components.MapEditorMenuBar;
 import nickbonet.mapeditor.views.MapEditorTileSetView;
 import nickbonet.mapeditor.model.MapEditorModel;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class MapEditorController {
@@ -18,7 +18,7 @@ public class MapEditorController {
     private final MapEditorView mapEditorView;
     private final MapEditorMenuBar mapEditorMenuBar;
     private final MapEditorTileSetView mapEditorTileSetView;
-    private Tile selectedPaintModeTile;
+    private BufferedImage selectedTile;
     private EditorMode editorMode;
     private int currentHoveredRow;
     private int currentHoveredColumn;
@@ -61,21 +61,25 @@ public class MapEditorController {
     private void initializeViews() {
         model.setTileSet(new TileSet(model.getMapModel().getPerTileWidth(), model.getMapModel().getPerTileHeight(),
                 model.getMapModel().getTileSetFile()));
-        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
-                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
+        mapEditorView.loadInitialMapView(
+                model.getTileSet().getTileImageList(), model.getMapModel());
         mapEditorTileSetView.initTileSetView(model.getTileSet());
         this.editorMode = EditorMode.PAINT;
-        this.selectedPaintModeTile = null;
+        this.selectedTile = null;
     }
 
     public void updateTileInMap(int row, int col) {
-        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedPaintModeTile.getTileImage());
+        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedTile);
     }
 
     public boolean updateCollisionTileInMap(int row, int col) {
         boolean currentValue = model.getMapModel().getCollisionMap()[row][col];
         model.getMapModel().getCollisionMap()[row][col] = !currentValue;
         return !currentValue;
+    }
+
+    public void updateTileInObjectMap(int row, int col) {
+        model.getMapModel().getObjectMap()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedTile);
     }
 
     public void fillMapWithSelectedTile() {
@@ -91,8 +95,8 @@ public class MapEditorController {
                 }
             }
         }
-        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
-                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
+        mapEditorView.loadInitialMapView(
+                model.getTileSet().getTileImageList(), model.getMapModel());
     }
 
     public void fillRowBasedOnEditorMode() {
@@ -108,8 +112,8 @@ public class MapEditorController {
                 break;
             }
         }
-        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
-                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
+        mapEditorView.loadInitialMapView(
+                model.getTileSet().getTileImageList(), model.getMapModel());
     }
 
     public void fillColumnBasedOnEditorMode() {
@@ -125,8 +129,8 @@ public class MapEditorController {
                 break;
             }
         }
-        mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
-                model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
+        mapEditorView.loadInitialMapView(
+                model.getTileSet().getTileImageList(), model.getMapModel());
     }
 
     public MapEditorView getMapEditorView() {
@@ -141,12 +145,12 @@ public class MapEditorController {
         return mapEditorTileSetView;
     }
 
-    public Tile getSelectedPaintModeTile() {
-        return selectedPaintModeTile;
+    public BufferedImage getSelectedTile() {
+        return selectedTile;
     }
 
-    public void setSelectedPaintModeTile(Tile selectedPaintModeTile) {
-        this.selectedPaintModeTile = selectedPaintModeTile;
+    public void setSelectedTile(BufferedImage selectedTile) {
+        this.selectedTile = selectedTile;
     }
 
     public EditorMode getEditorMode() {

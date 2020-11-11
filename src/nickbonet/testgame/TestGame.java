@@ -31,13 +31,13 @@ public class TestGame extends GamePanel {
 	@Override
 	protected void initObjects() {
 		try {
-			maps.add(loadTileMap("emerald test map.json"));
+			maps.add(loadTileMap("test.json"));
 			maps.get(0).initializeMap();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		for (Tile[] row : maps.get(0).getTiles()) {
+		for (Tile[] row : maps.get(0).getMainLayerTiles()) {
 			for (Tile tile : row) {
 				if(tile.isCollisionEnabled()) rectObjects.add(tile.getBoundsRect());
 			}
