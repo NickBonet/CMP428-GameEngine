@@ -6,42 +6,40 @@ import java.awt.image.BufferedImage;
 
 @SuppressWarnings("java:S110")
 public class MapEditorTileButton extends JLabel {
-    private transient BufferedImage tileImg;
-    private transient BufferedImage objectImg;
+    private transient BufferedImage tileImage;
+    private transient BufferedImage objectImage;
     private final int mapRow;
     private final int mapCol;
 
-    public MapEditorTileButton(BufferedImage tileImg, BufferedImage objectImg, int row, int col) {
-        this.tileImg = tileImg;
-        this.objectImg = objectImg;
+    public MapEditorTileButton(BufferedImage tileImage, int row, int col) {
+        this.tileImage = tileImage;
         this.mapRow = row;
         this.mapCol = col;
-        if(tileImg != null) {
-            this.drawIcon();
-            this.setPreferredSize(new Dimension(this.tileImg.getWidth(), this.tileImg.getHeight()));
-        } else {
-            this.setIcon(new ImageIcon());
+        this.drawIcon();
+        if(tileImage != null) {
+            this.setPreferredSize(new Dimension(this.tileImage.getWidth(), this.tileImage.getHeight()));
         }
     }
 
     public void drawIcon() {
-        if(this.objectImg != null) {
-            BufferedImage layeredImg = new BufferedImage(tileImg.getWidth(), tileImg.getHeight(), tileImg.getType());
-            Graphics test = layeredImg.getGraphics();
-            test.drawImage(this.tileImg, 0, 0, null);
-            test.drawImage(this.objectImg, 0, 0, null);
-            this.setIcon(new ImageIcon(layeredImg));
+        if(this.tileImage != null) {
+            if(this.objectImage != null) {
+                BufferedImage layeredImage = new BufferedImage(tileImage.getWidth(), tileImage.getHeight(), tileImage.getType());
+                Graphics g = layeredImage.getGraphics();
+                g.drawImage(this.tileImage, 0, 0, null);
+                g.drawImage(this.objectImage, 0, 0, null);
+                this.setIcon(new ImageIcon(layeredImage));
+            } else this.setIcon(new ImageIcon(tileImage));
         }
-        else this.setIcon(new ImageIcon(tileImg));
     }
 
-    public void setTileImage(BufferedImage tileImg) {
-        this.tileImg = tileImg;
+    public void setTileImage(BufferedImage tileImage) {
+        this.tileImage = tileImage;
         this.drawIcon();
     }
 
     public BufferedImage getTileImage() {
-        return tileImg;
+        return tileImage;
     }
 
     public int getMapRow() {
@@ -52,10 +50,12 @@ public class MapEditorTileButton extends JLabel {
         return mapCol;
     }
 
-    public void setObjectImg(BufferedImage objectImg) {
-        if(objectImg != null) {
-            this.objectImg = objectImg;
-            this.drawIcon();
-        }
+    public void setObjectImage(BufferedImage objectImage) {
+        this.objectImage = objectImage;
+        this.drawIcon();
+    }
+
+    public BufferedImage getObjectImage() {
+        return objectImage;
     }
 }

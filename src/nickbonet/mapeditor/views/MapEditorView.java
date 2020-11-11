@@ -29,21 +29,22 @@ public class MapEditorView extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
         for (int row = 0; row < mapModel.getMapRows(); row++) {
             for (int col = 0; col < mapModel.getMapColumns(); col++) {
-                BufferedImage currentTileImg = null;
-                BufferedImage objectTileImg = null;
-                if(mapModel.getObjectMap()[row][col] != -1) objectTileImg = tileArray.get(mapModel.getObjectMap()[row][col]);
-                if(mapModel.getMapLayout()[row][col] != -1) currentTileImg = tileArray.get(mapModel.getMapLayout()[row][col]);
+                BufferedImage tileImage = null;
+                BufferedImage objectTileImage = null;
+                if(mapModel.getObjectMap()[row][col] != -1) objectTileImage = tileArray.get(mapModel.getObjectMap()[row][col]);
+                if(mapModel.getMapLayout()[row][col] != -1) tileImage = tileArray.get(mapModel.getMapLayout()[row][col]);
 
-                MapEditorTileButton button = new MapEditorTileButton(currentTileImg, objectTileImg, row, col);
-                button.setObjectImg(objectTileImg);
-                if(currentTileImg == null) createEmptyTileButton(tileArray.get(0).getWidth(), tileArray.get(0).getHeight(), button);
-                if (mapModel.getCollisionMap()[row][col]) button.setBorder(BorderFactory.createLineBorder(Color.red));
+                MapEditorTileButton button = new MapEditorTileButton(tileImage, row, col);
+                button.setObjectImage(objectTileImage);
+                if(tileImage == null) createEmptyTileButton(tileArray.get(0).getWidth(), tileArray.get(0).getHeight(), button);
+                if(mapModel.getCollisionMap()[row][col]) button.setBorder(BorderFactory.createLineBorder(Color.red));
                 else button.setBorder(UIManager.getBorder("Label.border"));
 
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
-                        editorTileClicked((MapEditorTileButton) e.getSource());
+                        if(SwingUtilities.isLeftMouseButton(e)) editorTileLeftClicked((MapEditorTileButton) e.getSource());
+                        else if(SwingUtilities.isRightMouseButton(e)) editorTileRightClicked((MapEditorTileButton) e.getSource());
                     }
 
                     @Override
@@ -74,12 +75,12 @@ public class MapEditorView extends JPanel {
         button.setIcon(new ImageIcon(image));
     }
 
-    private void editorTileClicked(MapEditorTileButton button) {
+    private void editorTileLeftClicked(MapEditorTileButton button) {
         switch(editorController.getEditorMode()) {
         case PAINT:
             if(editorController.getSelectedTile() != null) {
                 button.setTileImage(editorController.getSelectedTile());
-                editorController.updateTileInMap(button.getMapRow(), button.getMapCol());
+                editorController.updateTileInMap(button.getMapRow(), button.getMapCol(), false);
             }
             break;
         case COLLISION:
@@ -88,10 +89,34 @@ public class MapEditorView extends JPanel {
             else button.setBorder(UIManager.getBorder("Label.border"));
             break;
         case OBJECT:
-            if(editorController.getSelectedTile() != null) {
-                button.setObjectImg(editorController.getSelectedTile());
-                editorController.updateTileInObjectMap(button.getMapRow(), button.getMapCol());
+            if(editorController.getSelectedTile() != null && button.getTileImage() != null) {
+                button.setObjectImage(editorController.getSelectedTile());
+                editorController.updateTileInObjectMap(button.getMapRow(), button.getMapCol(), false);
             }
+            break;
+        }
+    }
+
+    private void editorTileRightClicked(MapEditorTileButton button) {
+        switch(editorController.getEditorMode()) {
+        case PAINT:
+            if(button.getTileImage() != null) {
+                int iconWidth = button.getTileImage().getWidth();
+                int iconHeight = button.getTileImage().getHeight();
+                button.setTileImage(null);
+                button.setObjectImage(null);
+                createEmptyTileButton(iconWidth, iconHeight, button);
+                editorController.updateTileInMap(button.getMapRow(), button.getMapCol(), true);
+                editorController.updateTileInObjectMap(button.getMapRow(), button.getMapCol(), true);
+            }
+            break;
+        case OBJECT:
+            if(button.getObjectImage() != null) {
+                button.setObjectImage(null);
+                editorController.updateTileInObjectMap(button.getMapRow(), button.getMapCol(), true);
+            }
+            break;
+        case COLLISION:
             break;
         }
     }

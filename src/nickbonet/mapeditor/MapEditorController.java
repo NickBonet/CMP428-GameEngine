@@ -28,7 +28,7 @@ public class MapEditorController {
         this.mapEditorView = new MapEditorView(this);
         this.mapEditorTileSetView = new MapEditorTileSetView(this);
         this.mapEditorMenuBar = new MapEditorMenuBar(this);
-        this.editorMode = EditorMode.PAINT;
+        setEditorMode(EditorMode.PAINT);
     }
 
     public void loadTileMapJson(String mapJson) throws FileNotFoundException {
@@ -64,12 +64,18 @@ public class MapEditorController {
         mapEditorView.loadInitialMapView(
                 model.getTileSet().getTileImageList(), model.getMapModel());
         mapEditorTileSetView.initTileSetView(model.getTileSet());
-        this.editorMode = EditorMode.PAINT;
+        setEditorMode(EditorMode.PAINT);
         this.selectedTile = null;
     }
 
-    public void updateTileInMap(int row, int col) {
-        model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedTile);
+    public void updateTileInMap(int row, int col, boolean setEmpty) {
+        if(!setEmpty) model.getMapModel().getMapLayout()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedTile);
+        else model.getMapModel().getMapLayout()[row][col] = -1;
+    }
+
+    public void updateTileInObjectMap(int row, int col, boolean setEmpty) {
+        if(!setEmpty) model.getMapModel().getObjectMap()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedTile);
+        else model.getMapModel().getObjectMap()[row][col] = -1;
     }
 
     public boolean updateCollisionTileInMap(int row, int col) {
@@ -78,16 +84,12 @@ public class MapEditorController {
         return !currentValue;
     }
 
-    public void updateTileInObjectMap(int row, int col) {
-        model.getMapModel().getObjectMap()[row][col] = model.getTileSet().getTileImageList().indexOf(selectedTile);
-    }
-
     public void fillMapWithSelectedTile() {
         for(int row = 0; row < model.getMapModel().getMapRows(); row++) {
             for(int col = 0; col < model.getMapModel().getMapColumns(); col++) {
                 switch(editorMode) {
                 case PAINT:
-                    updateTileInMap(row, col);
+                    updateTileInMap(row, col, false);
                     break;
                 case COLLISION:
                 case OBJECT:
@@ -103,12 +105,13 @@ public class MapEditorController {
         for(int col = 0; col < model.getMapModel().getMapColumns(); col++) {
             switch (editorMode) {
             case PAINT:
-                updateTileInMap(currentHoveredRow, col);
+                updateTileInMap(currentHoveredRow, col, false);
                 break;
             case COLLISION:
                 updateCollisionTileInMap(currentHoveredRow, col);
                 break;
             case OBJECT:
+                updateTileInObjectMap(currentHoveredRow, col, false);
                 break;
             }
         }
@@ -120,12 +123,13 @@ public class MapEditorController {
         for(int row = 0; row < model.getMapModel().getMapRows(); row++) {
             switch (editorMode) {
             case PAINT:
-                updateTileInMap(row, currentHoveredColumn);
+                updateTileInMap(row, currentHoveredColumn, false);
                 break;
             case COLLISION:
                 updateCollisionTileInMap(row, currentHoveredColumn);
                 break;
             case OBJECT:
+                updateTileInObjectMap(row, currentHoveredColumn, false);
                 break;
             }
         }
@@ -159,6 +163,7 @@ public class MapEditorController {
 
     public void setEditorMode(EditorMode editorMode) {
         this.editorMode = editorMode;
+        MapEditorMenuBar.setEditorMenuStatus(editorMode);
     }
 
     public void setCurrentHoveredRow(int currentHoveredRow) {

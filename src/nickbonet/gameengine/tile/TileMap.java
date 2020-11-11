@@ -23,8 +23,8 @@ public class TileMap {
     public void initializeMap() {
         for (int row = 0; row < mapModel.getMapRows(); row++) {
             for (int col = 0; col < mapModel.getMapColumns(); col++) {
-                BufferedImage tileImg = tileSet.getTileImageList().get(mapModel.getMapLayout()[row][col]);
-                Tile currentTile = new Tile(tileImg);
+                BufferedImage tileImage = tileSet.getTileImageList().get(mapModel.getMapLayout()[row][col]);
+                Tile currentTile = new Tile(tileImage);
                 currentTile.setCollisionEnabled(mapModel.getCollisionMap()[row][col]);
                 if(mapModel.getObjectMap()[row][col] != -1) {
                     Tile objectTile = new Tile(tileSet.getTileImageList().get(mapModel.getObjectMap()[row][col]));
@@ -54,12 +54,12 @@ public class TileMap {
     }
 
     public static BufferedImage resizeBufferedImage(BufferedImage image, int width, int height) {
-        Image tempImg = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage resizedImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = resizedImg.createGraphics();
-        g.drawImage(tempImg, 0, 0, null);
+        Image tempImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = resizedImage.createGraphics();
+        g.drawImage(tempImage, 0, 0, null);
         g.dispose();
-        return resizedImg;
+        return resizedImage;
     }
 
     public Tile[][] getMainLayerTiles() {

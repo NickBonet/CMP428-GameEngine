@@ -13,12 +13,35 @@ import java.io.IOException;
 
 public class MapEditorMenuBar extends JMenuBar {
     private final transient MapEditorController editorController;
+    private static JCheckBoxMenuItem paintMode = new JCheckBoxMenuItem("Paint Mode");
+    private static JCheckBoxMenuItem collisionMode = new JCheckBoxMenuItem("Collision Mode");
+    private static JCheckBoxMenuItem objectMode = new JCheckBoxMenuItem("Object Mode");
 
     public MapEditorMenuBar(MapEditorController controller) {
         this.editorController = controller;
         setupFileMenu();
         setupEditorModeMenu();
         setupEditMenu();
+    }
+
+    public static void setEditorMenuStatus(EditorMode status) {
+        switch(status) {
+        case PAINT:
+            paintMode.setSelected(true);
+            collisionMode.setSelected(false);
+            objectMode.setSelected(false);
+            break;
+        case OBJECT:
+            paintMode.setSelected(false);
+            collisionMode.setSelected(false);
+            objectMode.setSelected(true);
+            break;
+        case COLLISION:
+            paintMode.setSelected(false);
+            collisionMode.setSelected(true);
+            objectMode.setSelected(false);
+            break;
+        }
     }
 
     private void setupEditMenu() {
@@ -47,9 +70,6 @@ public class MapEditorMenuBar extends JMenuBar {
 
     private void setupEditorModeMenu() {
         JMenu editorMode = new JMenu("Editor Mode");
-        JMenuItem paintMode = new JMenuItem("Paint Mode");
-        JMenuItem collisionMode = new JMenuItem("Collision Mode");
-        JMenuItem objectMode = new JMenuItem("Object Mode");
         editorMode.add(paintMode);
         editorMode.add(collisionMode);
         editorMode.add(objectMode);

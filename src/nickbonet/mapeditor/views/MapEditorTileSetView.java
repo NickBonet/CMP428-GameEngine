@@ -31,7 +31,7 @@ public class MapEditorTileSetView extends JPanel {
         for (int row = 0; row < tileSet.getTileSetRows(); row++) {
             for (int col = 0; col < tileSet.getTileSetColumns(); col++) {
                 int tileIndex = (row * tileSet.getTileSetColumns()) + col;
-                MapEditorTileButton button = new MapEditorTileButton(tileSet.getTileImageList().get(tileIndex), null, row, col);
+                MapEditorTileButton button = new MapEditorTileButton(tileSet.getTileImageList().get(tileIndex), row, col);
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {

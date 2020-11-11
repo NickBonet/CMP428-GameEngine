@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class NewMapDialog extends JPanel {
     private final transient MapEditorController editorController;
-    private String tileSetImgFile;
+    private String tileSetImageFile;
 
     public NewMapDialog(MapEditorController editorController) {
         this.editorController = editorController;
@@ -34,7 +34,7 @@ public class NewMapDialog extends JPanel {
         int result = JOptionPane.showConfirmDialog(null, this, "Create Map", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if(result == JOptionPane.OK_OPTION)
             try {
-                this.editorController.createTileMap(tileSetImgFile, Integer.parseInt(tileWidth.getText()),
+                this.editorController.createTileMap(tileSetImageFile, Integer.parseInt(tileWidth.getText()),
                         Integer.parseInt(tileHeight.getText()), Integer.parseInt(mapRows.getText()), Integer.parseInt(mapColumns.getText()));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Parameters missing or invalid. Try again.",
@@ -95,8 +95,8 @@ public class NewMapDialog extends JPanel {
                 fileChooser.setFileFilter(filter);
                 int returnVal = fileChooser.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    tileSetImgFile = fileChooser.getSelectedFile().getName();
-                    openFileButton.setText(tileSetImgFile);
+                    tileSetImageFile = fileChooser.getSelectedFile().getName();
+                    openFileButton.setText(tileSetImageFile);
                 }
             }
         });
