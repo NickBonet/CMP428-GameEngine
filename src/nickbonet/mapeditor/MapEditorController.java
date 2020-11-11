@@ -81,24 +81,49 @@ public class MapEditorController {
     public void fillMapWithSelectedTile() {
         for(int row = 0; row < model.getMapModel().getMapRows(); row++) {
             for(int col = 0; col < model.getMapModel().getMapColumns(); col++) {
-                updateTileInMap(row, col);
+                switch(editorMode) {
+                case PAINT:
+                    updateTileInMap(row, col);
+                    break;
+                case COLLISION:
+                case OBJECT:
+                    break;
+                }
             }
         }
         mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
                 model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
     }
 
-    public void fillRowWithSelectedTile() {
+    public void fillRowBasedOnEditorMode() {
         for(int col = 0; col < model.getMapModel().getMapColumns(); col++) {
-            updateTileInMap(currentHoveredRow, col);
+            switch (editorMode) {
+            case PAINT:
+                updateTileInMap(currentHoveredRow, col);
+                break;
+            case COLLISION:
+                updateCollisionTileInMap(currentHoveredRow, col);
+                break;
+            case OBJECT:
+                break;
+            }
         }
         mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
                 model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());
     }
 
-    public void fillColumnWithSelectedTile() {
+    public void fillColumnBasedOnEditorMode() {
         for(int row = 0; row < model.getMapModel().getMapRows(); row++) {
-            updateTileInMap(row, currentHoveredColumn);
+            switch (editorMode) {
+            case PAINT:
+                updateTileInMap(row, currentHoveredColumn);
+                break;
+            case COLLISION:
+                updateCollisionTileInMap(row, currentHoveredColumn);
+                break;
+            case OBJECT:
+                break;
+            }
         }
         mapEditorView.loadInitialMapView(model.getMapModel().getMapRows(), model.getMapModel().getMapColumns(),
                 model.getTileSet().getTileImageList(), model.getMapModel().getMapLayout(), model.getMapModel().getCollisionMap());

@@ -36,8 +36,8 @@ public class MapEditorMenuBar extends JMenuBar {
         fillCol.setAccelerator(fillColShortcut);
 
         fillOption.addActionListener((ActionEvent event) -> editorController.fillMapWithSelectedTile());
-        fillRow.addActionListener((ActionEvent event) -> editorController.fillRowWithSelectedTile());
-        fillCol.addActionListener((ActionEvent event) -> editorController.fillColumnWithSelectedTile());
+        fillRow.addActionListener((ActionEvent event) -> editorController.fillRowBasedOnEditorMode());
+        fillCol.addActionListener((ActionEvent event) -> editorController.fillColumnBasedOnEditorMode());
 
         editMenu.add(fillOption);
         editMenu.add(fillRow);
