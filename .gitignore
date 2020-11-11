@@ -1,2 +1,4 @@
 /bin/
-/.idea/
+/classes/
+/.idea/sonarlint/*
+/.idea/discord.xml

@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5b6694db-f8a5-42ed-ac94-2ece4c7965fc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="master" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="tile-engine" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1jnfzJz5fzELUHC5jj81u0bhJw4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/maps" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Kerri\IdeaProjects\CMP428-GameEngine\assets\maps" />
+      <recent name="C:\Users\Kerri\IdeaProjects\CMP428-GameEngine\assets\tiles" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="nickbonet.mapeditor.views" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Kerri\IdeaProjects\CMP428-GameEngine\assets\maps" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.TestGame">
+    <configuration name="MapEditorMain" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="nickbonet.mapeditor.MapEditorMain" />
+      <module name="CMP428-GameEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nickbonet.mapeditor.views.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="nickbonet.testgame.TestGame" />
+      <module name="CMP428-GameEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nickbonet.testgame.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.MapEditorMain" />
+      <item itemvalue="Application.TestGame" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TestGame" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5b6694db-f8a5-42ed-ac94-2ece4c7965fc" name="Default Changelist" comment="" />
+      <created>1604445037320</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604445037320</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Add IDEA project settings and GSON lib.">
+      <created>1604506939894</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604506939894</updated>
+    </task>
+    <task id="LOCAL-00002" summary="First test version of a tile map engine, can load tiles from a given image given width and height per tile. Maps are stored into a JSON format and deserialized with the GSON library for ease of use.">
+      <created>1604507376277</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604507376277</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Beginnings of the tile map editor, and lots of lint fixes.">
+      <created>1604536910900</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1604536910900</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added the menuBar for the editor, and an open file dialog. Able to load different JSON files and have the MapEditorView refresh now.&#10;Few fixes here and there to make the editor fall more in line with an MVC like pattern.">
+      <created>1604571796989</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1604571796989</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Basic tile map saving has been added.">
+      <created>1604573024932</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1604573024932</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Refactor class names for the map editor, add the beginnings of the tile set view along with split pane setup.">
+      <created>1604592768175</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1604592768175</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Tile set view is mostly done, just need to setup button click actions and what not. Same deal for the map edit view.">
+      <created>1604597738231</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1604597738231</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Modified the tile set view to show the tiles just as they appear in the tile set image.">
+      <created>1604626398767</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1604626398767</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Now able to actually edit the map with the editor.">
+      <created>1604632014310</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604632014310</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update IDEA project files">
+      <created>1604640230925</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1604640230925</updated>
+    </task>
+    <task id="LOCAL-00011" summary="testing out the editor on one of my map file configs.">
+      <created>1604641208964</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1604641208964</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed button border in relation to whether it's being hovered over or not. Does not affect selected tile border now.">
+      <created>1604755818878</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1604755818878</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Change look and feel of the editor.">
+      <created>1604896520562</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1604896520562</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Many fixes here and there. Also added new map dialog.&#10;- JLabel borders removed, settling for using insets in layout.&#10;- Save map now appends .json extension as needed.&#10;- Empty tiles are now rendered as empty light gray squares, to see inset borders.">
+      <created>1604948997047</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1604948997047</updated>
+    </task>
+    <task id="LOCAL-00015" summary="IDEA/sonarlint file changes.">
+      <created>1604949028175</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1604949028175</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fix number input verifier, none of the numbers should be &lt;= 0.">
+      <created>1604949466819</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1604949466819</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Very minor fixes.">
+      <created>1604954519952</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1604954519952</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Refactor selectedTile to selectedPaintModeTile.">
+      <created>1604954804862</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1604954804862</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Beginning ground work for different editor modes. &#10;Some bug fixes and refactors as well.">
+      <created>1604968735668</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1604968735668</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Auto fixes from IntelliJ.">
+      <created>1605018477936</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1605018477936</updated>
+    </task>
+    <task id="LOCAL-00021" summary="simple text edits.">
+      <created>1605021716923</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1605021716923</updated>
+    </task>
+    <task id="LOCAL-00022" summary="remove these old maps.">
+      <created>1605027428069</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1605027428069</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Fair bit of refactoring work, but collision mode added to editor.&#10;Reworked how TileSets work, they only generate a list of BufferedImages now.">
+      <created>1605028849021</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1605028849021</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Formatting fix.">
+      <created>1605028901078</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1605028901078</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Hook up collision settings for tiles into the game.">
+      <created>1605035879088</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1605035879088</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Added fill row/column with tile options.">
+      <created>1605057051983</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1605057051983</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Can now modify entire rows/columns as collision tiles as well.">
+      <created>1605058369764</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1605058369764</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Minor change to edit menu text.">
+      <created>1605058435823</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1605058435823</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Minor fixes, and removing .idea folder from repo.">
+      <created>1605060353120</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1605060353120</updated>
+    </task>
+    <task id="LOCAL-00030" summary="More repo cleaning.">
+      <created>1605060579847</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1605060579847</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Lots of refactoring and bug fixing, and added object edit mode.">
+      <created>1605129103174</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1605129103174</updated>
+    </task>
+    <task id="LOCAL-00032" summary="More refactoring, added right click delete options for object and paint tile modes. Also added editor menu status, shows which mode is currently activated.">
+      <created>1605132560263</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1605132560263</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Removed GSON dependency from the project, opting to use object serialization instead. Added many quality of life changes to the file dialogs as well.">
+      <created>1605135855321</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1605135855321</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Add save dialog on exit.">
+      <created>1605137847075</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1605137847075</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Fix for when the save dialog should show up.">
+      <created>1605138289238</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1605138289238</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Change look and feel of the editor." />
+    <MESSAGE value="Many fixes here and there. Also added new map dialog.&#10;- JLabel borders removed, settling for using insets in layout.&#10;- Save map now appends .json extension as needed.&#10;- Empty tiles are now rendered as empty light gray squares, to see inset borderings." />
+    <MESSAGE value="Many fixes here and there. Also added new map dialog.&#10;- JLabel borders removed, settling for using insets in layout.&#10;- Save map now appends .json extension as needed.&#10;- Empty tiles are now rendered as empty light gray squares, to see inset borders." />
+    <MESSAGE value="IDEA/sonarlint file changes." />
+    <MESSAGE value="Fix number input verifier, none of the numbers should be &lt;= 0." />
+    <MESSAGE value="Very minor fixes." />
+    <MESSAGE value="Refactor selectedTile to selectedPaintModeTile." />
+    <MESSAGE value="Beginning ground work for different editor modes. &#10;Some bug fixes and refactors as well." />
+    <MESSAGE value="Auto fixes from IntelliJ." />
+    <MESSAGE value="simple text edits." />
+    <MESSAGE value="remove these old maps." />
+    <MESSAGE value="Fair bit of refactoring work, but collision mode added to editor.&#10;Reworked how TileSets work, they only generate a list of BufferedImages now." />
+    <MESSAGE value="Formatting fix." />
+    <MESSAGE value="Hook up collision settings for tiles into the game." />
+    <MESSAGE value="Added fill row/column with tile options." />
+    <MESSAGE value="Can now modify entire rows/columns as collision tiles as well." />
+    <MESSAGE value="Minor change to edit menu text." />
+    <MESSAGE value="Minor fixes, and removing .idea folder from repo." />
+    <MESSAGE value="More repo cleaning." />
+    <MESSAGE value="Lots of refactoring and bug fixing, and added object edit mode." />
+    <MESSAGE value="More refactoring, added right click delete options for object and paint tile modes. Also added editor menu status, shows which mode is currently activated." />
+    <MESSAGE value="Removing GSON from the project, opting for object serialization. Many quality of life improvements for the file dialogs as well." />
+    <MESSAGE value="Removed GSON dependency from the project, opting to use object serialization instead. Added many quality of life changes to the file dialogs as well." />
+    <MESSAGE value="Add save dialog on exit." />
+    <MESSAGE value="Fix for when the save dialog should show up." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix for when the save dialog should show up." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2510" y="209" key="#Code_Cleanup_Inspections" timestamp="1604981411331">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2510" y="209" key="#Code_Cleanup_Inspections/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604981411331" />
+    <state x="2679" y="229" key="#JSON" timestamp="1604457016879">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2679" y="229" key="#JSON/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604457016879" />
+    <state x="2620" y="388" key="#Project_Settings" timestamp="1604536586323">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2620" y="388" key="#Project_Settings/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604536586323" />
+    <state x="440" y="94" key="#Project_Structure" timestamp="1605138632727">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138632727" />
+    <state x="2360" y="94" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604501183653" />
+    <state x="2510" y="226" key="#VisualVM_Launcher" timestamp="1604502972107">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2510" y="226" key="#VisualVM_Launcher/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604502972107" />
+    <state x="414" y="175" width="1092" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605138498608">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" width="1092" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138498608" />
+    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604934875593" />
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1605138019515">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138019515" />
+    <state x="2685" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605134285382" />
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1604631318120" />
+    <state x="2685" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605118695114" />
+    <state x="2610" y="299" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1604937110251">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2610" y="299" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604937110251" />
+    <state x="689" y="346" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605138496752">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="346" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138496752" />
+    <state x="2729" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1604963801718">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2729" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604963801718" />
+    <state x="2663" y="414" width="433" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604937111517">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2663" y="414" width="433" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604937111517" />
+    <state x="2596" y="338" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog" timestamp="1604963807178">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2596" y="338" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604963807178" />
+    <state x="2389" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605130897175">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2389" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605130897175" />
+    <state x="2389" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605027456046" />
+    <state x="2627" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1605061112872">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2627" y="375" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605061112872" />
+    <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1604502969839">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604502969839" />
+    <state width="1340" height="218" key="GridCell.Tab.0.bottom" timestamp="1605138662889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1340" height="218" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138662889" />
+    <state width="1877" height="216" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605134690122" />
+    <state width="1877" height="218" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605113305186" />
+    <state width="1877" height="218" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605122309532" />
+    <state width="1340" height="218" key="GridCell.Tab.0.center" timestamp="1605138662889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1340" height="218" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138662889" />
+    <state width="1877" height="216" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605134690122" />
+    <state width="1877" height="218" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605113305185" />
+    <state width="1877" height="218" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605122309531" />
+    <state width="1340" height="218" key="GridCell.Tab.0.left" timestamp="1605138662889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1340" height="218" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138662889" />
+    <state width="1877" height="216" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605134690122" />
+    <state width="1877" height="218" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605113305185" />
+    <state width="1877" height="218" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605122309531" />
+    <state width="1340" height="218" key="GridCell.Tab.0.right" timestamp="1605138662889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1340" height="218" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138662889" />
+    <state width="1877" height="216" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605134690122" />
+    <state width="1877" height="218" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605113305186" />
+    <state width="1877" height="218" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605122309531" />
+    <state width="1877" height="243" key="GridCell.Tab.1.bottom" timestamp="1605135728359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="243" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605135728359" />
+    <state width="1877" height="243" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605127817540" />
+    <state width="1877" height="243" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605064518988" />
+    <state width="1877" height="243" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605121636492" />
+    <state width="1877" height="243" key="GridCell.Tab.1.center" timestamp="1605135728359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="243" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605135728359" />
+    <state width="1877" height="243" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605127817540" />
+    <state width="1877" height="243" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605064518988" />
+    <state width="1877" height="243" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605121636492" />
+    <state width="1877" height="243" key="GridCell.Tab.1.left" timestamp="1605135728359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="243" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605135728359" />
+    <state width="1877" height="243" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605127817540" />
+    <state width="1877" height="243" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605064518988" />
+    <state width="1877" height="243" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605121636491" />
+    <state width="1877" height="243" key="GridCell.Tab.1.right" timestamp="1605135728359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="243" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605135728359" />
+    <state width="1877" height="243" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605127817540" />
+    <state width="1877" height="243" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605064518988" />
+    <state width="1877" height="243" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605121636492" />
+    <state x="2695" y="454" key="ReplaceDuplicatesPrompt" timestamp="1604966760151">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2695" y="454" key="ReplaceDuplicatesPrompt/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604966760151" />
+    <state x="680" y="222" key="RollbackChangesDialog" timestamp="1605136803014">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="680" y="222" key="RollbackChangesDialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605136803014" />
+    <state x="2600" y="222" key="RollbackChangesDialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605129004570" />
+    <state x="680" y="222" key="RollbackChangesDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605111636346" />
+    <state x="2600" y="222" key="RollbackChangesDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605061198029" />
+    <state x="2360" y="94" key="SettingsEditor" timestamp="1604502944509">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2360" y="94" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604502944509" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1605138290935">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138290935" />
+    <state x="2472" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605132564106" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605058378133" />
+    <state x="2472" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605060582733" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1605121442208">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605121442208" />
+    <state x="2584" y="411" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1604456385276">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2584" y="411" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604456385276" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605138362435">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605138362435" />
+    <state x="2425" y="256" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1604448861214">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2425" y="256" width="909" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604448861214" />
+    <state x="2584" y="412" key="extract.method.dialog" timestamp="1605128616080">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2584" y="412" key="extract.method.dialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605128616080" />
+    <state x="664" y="412" key="extract.method.dialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605056827157" />
+    <state x="2584" y="412" key="extract.method.dialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605027776038" />
+    <state x="667" y="119" width="585" height="801" key="find.popup" timestamp="1605135572623">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605135572623" />
+    <state x="2587" y="119" width="585" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605134130398" />
+    <state x="2587" y="119" width="585" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605119190327" />
+    <state x="3100" y="202" key="refactoring.ChangeSignatureDialog" timestamp="1605130918786">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3100" y="202" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605130918786" />
+    <state x="2580" y="277" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605027205280" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605129567089">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@1920.0.1920.1040" timestamp="1605129567089" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605039530890" />
+    <state x="2602" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1604509872642">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2602" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604509872642" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="nickbonet.mapeditor.views.MapEditorView" memberName="tileButtonContainer" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((java.util.ArrayList)((TileSet)this).tileArrayList).get(18)" custom="nickbonet.gameengine.tile.TileSet,java.util.ArrayList" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
