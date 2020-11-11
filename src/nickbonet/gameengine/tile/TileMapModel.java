@@ -1,6 +1,8 @@
 package nickbonet.gameengine.tile;
 
-public class TileMapModel {
+import java.io.Serializable;
+
+public class TileMapModel implements Serializable {
     public static final String MAP_FOLDER = "assets/maps/";
     private final String tileSetFile;
     private final int perTileWidth;

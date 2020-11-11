@@ -1,7 +1,5 @@
 package nickbonet.mapeditor;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.gameengine.tile.TileSet;
 import nickbonet.mapeditor.model.EditorMode;
@@ -22,6 +20,7 @@ public class MapEditorController {
     private EditorMode editorMode;
     private int currentHoveredRow;
     private int currentHoveredColumn;
+    private String loadedFile;
 
     public MapEditorController() {
         this.model = new MapEditorModel();
@@ -31,31 +30,33 @@ public class MapEditorController {
         setEditorMode(EditorMode.PAINT);
     }
 
-    public void loadTileMapJson(String mapJson) throws FileNotFoundException {
-        Gson gson = new Gson();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(mapJson));
-            model.setMapModel(gson.fromJson(reader, TileMapModel.class));
+    public void loadTileMap(String mapFile) {
+        try (FileInputStream fis = new FileInputStream(mapFile); ObjectInputStream is = new ObjectInputStream(fis)) {
+            TileMapModel mapModel = (TileMapModel) is.readObject();
+            model.setMapModel(mapModel);
             initializeViews();
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("JSON file not found.");
+            loadedFile = mapFile;
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
     }
 
     public void createTileMap(String file, int perTileWidth, int perTileHeight, int mapRows, int mapColumns) {
         model.setMapModel(new TileMapModel(file, perTileWidth, perTileHeight, mapRows, mapColumns));
         initializeViews();
+        loadedFile = null;
     }
 
-    public void saveTileMapJson(String mapJson) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        if(!mapJson.endsWith(".json")) {
-            mapJson += ".json";
+    public void saveTileMap(String mapFile) {
+        if(!mapFile.endsWith(".tilemap")) {
+            mapFile += ".tilemap";
         }
-        Writer writer = new FileWriter(mapJson);
-        gson.toJson(model.getMapModel(), writer);
-        writer.flush();
-        writer.close();
+        try (FileOutputStream fos = new FileOutputStream(mapFile); ObjectOutputStream os = new ObjectOutputStream(fos)) {
+            os.writeObject(model.getMapModel());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loadedFile = mapFile;
     }
 
     private void initializeViews() {
@@ -172,5 +173,9 @@ public class MapEditorController {
 
     public void setCurrentHoveredColumn(int currentHoveredColumn) {
         this.currentHoveredColumn = currentHoveredColumn;
+    }
+
+    public String getLoadedFile() {
+        return loadedFile;
     }
 }

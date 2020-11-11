@@ -1,5 +1,6 @@
 package nickbonet.mapeditor.components;
 
+import nickbonet.gameengine.tile.TileMapModel;
 import nickbonet.mapeditor.MapEditorController;
 import nickbonet.mapeditor.model.EditorMode;
 
@@ -8,8 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.File;
 
 public class MapEditorMenuBar extends JMenuBar {
     private final transient MapEditorController editorController;
@@ -107,31 +107,25 @@ public class MapEditorMenuBar extends JMenuBar {
 
         openFile.addActionListener((ActionEvent event) -> {
             JFileChooser fileChooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files (.json)", "json");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TileMap Files (.tilemap)", "tilemap");
             fileChooser.setFileFilter(filter);
+            fileChooser.setCurrentDirectory(new File(TileMapModel.MAP_FOLDER));
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                String jsonFile = fileChooser.getSelectedFile().getAbsolutePath();
-                try {
-                    editorController.loadTileMapJson(jsonFile);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                String mapFile = fileChooser.getSelectedFile().getAbsolutePath();
+                editorController.loadTileMap(mapFile);
             }
         });
 
         saveFile.addActionListener((ActionEvent event) -> {
             JFileChooser fileChooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files (.json)", "json");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TileMap Files (.tilemap)", "tilemap");
             fileChooser.setFileFilter(filter);
+            if(editorController.getLoadedFile() != null) fileChooser.setSelectedFile(new File(editorController.getLoadedFile()));
             int returnVal = fileChooser.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                String jsonFile = fileChooser.getSelectedFile().getAbsolutePath();
-                try {
-                    editorController.saveTileMapJson(jsonFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String mapFile = fileChooser.getSelectedFile().getAbsolutePath();
+                editorController.saveTileMap(mapFile);
             }
         });
     }

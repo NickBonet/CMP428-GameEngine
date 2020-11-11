@@ -1,5 +1,6 @@
 package nickbonet.mapeditor.components;
 
+import nickbonet.gameengine.tile.TileSet;
 import nickbonet.mapeditor.MapEditorController;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class NewMapDialog extends JPanel {
     private final transient MapEditorController editorController;
@@ -93,6 +95,7 @@ public class NewMapDialog extends JPanel {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files (.jpg, .png, .gif, .bmp)",
                         "jpg", "png", "gif", "bmp");
                 fileChooser.setFileFilter(filter);
+                fileChooser.setCurrentDirectory(new File(TileSet.TILE_FOLDER));
                 int returnVal = fileChooser.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     tileSetImageFile = fileChooser.getSelectedFile().getName();

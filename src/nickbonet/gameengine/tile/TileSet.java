@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileSet {
-    private static final String TILE_FOLDER = "assets/tiles/";
+    public static final String TILE_FOLDER = "assets/tiles/";
     private final ArrayList<BufferedImage> tileImageList = new ArrayList<>();
     private final int perTileHeight;
     private final int perTileWidth;
