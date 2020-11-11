@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapEditorView extends JPanel {
-    private final ArrayList<MapEditorTileButton> tilesOnScreen = new ArrayList<>();
     private final transient MapEditorController editorController;
     private final JPanel tileButtonContainer;
 
@@ -28,7 +27,6 @@ public class MapEditorView extends JPanel {
 
     public void loadInitialMapView(int rows, int columns, List<BufferedImage> tileArray, int[][] mapLayout, boolean[][] collisionMap) {
         tileButtonContainer.removeAll();
-        tilesOnScreen.clear();
         GridBagConstraints constraints = new GridBagConstraints();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
@@ -55,7 +53,6 @@ public class MapEditorView extends JPanel {
                     }
                 });
 
-                tilesOnScreen.add(mapEditorTileButton);
                 constraints.gridx = col;
                 constraints.gridy = row;
                 constraints.insets = new Insets(0, 0, 1 , 1);
@@ -90,6 +87,7 @@ public class MapEditorView extends JPanel {
             else button.setBorder(UIManager.getBorder("Label.border"));
             break;
         case OBJECT:
+            break;
         }
     }
 }
