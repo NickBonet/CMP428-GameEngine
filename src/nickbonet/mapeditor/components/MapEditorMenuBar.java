@@ -23,7 +23,7 @@ public class MapEditorMenuBar extends JMenuBar {
 
     private void setupEditMenu() {
         JMenu editMenu = new JMenu("Edit");
-        JMenuItem fillOption = new JMenuItem("Fill All Tiles");
+        JMenuItem fillOption = new JMenuItem("Paint All Tiles");
         KeyStroke fillShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_A,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         fillOption.setAccelerator(fillShortcut);
 
