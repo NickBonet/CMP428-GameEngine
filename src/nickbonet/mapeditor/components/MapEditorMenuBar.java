@@ -122,6 +122,7 @@ public class MapEditorMenuBar extends JMenuBar {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("TileMap Files (.tilemap)", "tilemap");
             fileChooser.setFileFilter(filter);
             if(editorController.getLoadedFile() != null) fileChooser.setSelectedFile(new File(editorController.getLoadedFile()));
+            else fileChooser.setCurrentDirectory(new File(TileMapModel.MAP_FOLDER));
             int returnVal = fileChooser.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String mapFile = fileChooser.getSelectedFile().getAbsolutePath();
