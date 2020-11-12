@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CMP428-GameEngine.iml" filepath="$PROJECT_DIR$/.idea/CMP428-GameEngine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CMP428-GameEngine.iml" filepath="$PROJECT_DIR$/CMP428-GameEngine.iml" />
     </modules>
   </component>
 </project>
