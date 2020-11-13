@@ -15,7 +15,7 @@ import nickbonet.gameengine.tile.TileMap;
 public class TestGame extends GamePanel {
 	private static final int WINDOW_HEIGHT = 768;
 	private static final int WINDOW_WIDTH = 672;
-	private transient Pacman player = new Pacman(9, 17, "pac", 65);
+	private final transient Pacman player = new Pacman(9, 17, "pac", 65);
 	//private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private final transient List<TileMap> maps = new ArrayList<>();
 	
