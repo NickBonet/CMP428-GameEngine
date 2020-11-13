@@ -53,14 +53,12 @@ public class TileMap {
         g.drawImage(map, 0, 0, null);
     }
 
-    // For debug use, shows 4 immediate tiles around a given X/Y position. (up/down/left/right)
-    public void drawSurroundingTiles(Graphics g, int x, int y) {
+    public Tile[] getSurroundingTiles(int x, int y) {
         int row = y / 8;
         int col = x / 8;
-        mainLayerTiles[row-1][col].drawBoundsRect(g);
-        mainLayerTiles[row+1][col].drawBoundsRect(g);
-        mainLayerTiles[row][col-1].drawBoundsRect(g);
-        mainLayerTiles[row][col+1].drawBoundsRect(g);
+        Tile[] surroundingTiles = {mainLayerTiles[row-1][col], mainLayerTiles[row+1][col],
+                mainLayerTiles[row][col-1], mainLayerTiles[row][col+1]};
+        return surroundingTiles;
     }
 
     public static BufferedImage resizeBufferedImage(BufferedImage image, int width, int height) {

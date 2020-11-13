@@ -2,6 +2,7 @@ package nickbonet.testgame;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,17 +16,24 @@ import nickbonet.gameengine.tile.TileMap;
 @SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
 	private static final int WINDOW_HEIGHT = 768;
-	private static final int WINDOW_WIDTH = 1024;
+	private static final int WINDOW_WIDTH = 672;
 	private transient Pacman player = new Pacman(0, 0, "pac", 65);
 	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 	private final transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
+	// Paints all the components onto a base image, then that image is upscaled 3x (very roughly for now.).
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		maps.get(0).drawMap(g);
-		player.draw(g);
+		BufferedImage frame = new BufferedImage(224, 256, BufferedImage.TYPE_INT_RGB);
+		Graphics test = frame.createGraphics();
+		super.paintComponent(test);
+		maps.get(0).drawMap(test);
+		player.draw(test);
+		for(Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY()))
+			tile.drawBoundsRect(test);
+		test.dispose();
+		g.drawImage(frame, 0, 0, 672, 768, null);
 	}
 
 	@Override
@@ -35,12 +43,6 @@ public class TestGame extends GamePanel {
 			maps.get(0).initializeMap();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
-		for (Tile[] row : maps.get(0).getMainLayerTiles()) {
-			for (Tile tile : row) {
-				if(tile.isCollisionEnabled()) rectObjects.add(tile.getBoundsRect());
-			}
 		}
 	}
 	
@@ -58,11 +60,13 @@ public class TestGame extends GamePanel {
 		
 		if (pressedKey[KeyEvent.VK_W]) {
 			dy = -1;
+			dx = 0;
 			player.setSpriteAnim("up");
 		}
 		
 		if (pressedKey[KeyEvent.VK_S]) {
 			dy = 1;
+			dx = 0;
 			player.setSpriteAnim("down");
 		}
 		
@@ -77,14 +81,13 @@ public class TestGame extends GamePanel {
 			dy = 0;
 			player.setSpriteAnim("right");
 		}
-		dx *= 2;
-		dy *= 2;
 		checkPlayerCollision(dx, dy);
 	}
 	
 	private void checkPlayerCollision(int dx, int dy) {
-		for (Rect rectObject : rectObjects) {
-			if (player.getBounds().overlaps(rectObject, dx, dy)) {
+		Tile[] collisionTiles = maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY());
+		for (Tile tile : collisionTiles) {
+			if (tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), dx, dy)) {
 				dx = 0;
 				dy = 0;
 				logger.log(Level.INFO, "Player collision detected!");
@@ -102,6 +105,7 @@ public class TestGame extends GamePanel {
 		frame.add(game);
 		frame.pack();
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		game.runGame();
 	}

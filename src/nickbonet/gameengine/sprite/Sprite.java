@@ -49,12 +49,13 @@ public abstract class Sprite {
 	
 	// Draws the sprite's current image based on its current state.
 	public void draw(Graphics g) {
+		/*
 		if (animDict.containsKey(spriteCurrentAnim)) {
 			g.drawImage(animDict.get(spriteCurrentAnim).getCurrentFrame(), x, y, null);
 		} else {
 			Animation firstAnim = getFirstAnimation();
 			g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
-		}
+		}*/
 		
 		// For debug purposes, draw the bounding box of the sprite.
 		g.setColor(Color.blue);
