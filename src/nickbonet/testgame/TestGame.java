@@ -2,30 +2,41 @@ package nickbonet.testgame;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.swing.JFrame;
 
 import nickbonet.gameengine.GamePanel;
-import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
 	private static final int WINDOW_HEIGHT = 768;
-	private static final int WINDOW_WIDTH = 1024;
-	private transient Pacman player = new Pacman(0, 0, "pac", 65);
-	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
-	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
+	private static final int WINDOW_WIDTH = 672;
+	private final transient Pacman player = new Pacman(9, 17, "pac", 65);
+	//private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
 	private final transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
+	// Paints all the components onto a base image, then that image is upscaled 3x (very roughly for now.).
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		maps.get(0).drawMap(g);
-		player.draw(g);
+		BufferedImage frame = new BufferedImage(224, 256, BufferedImage.TYPE_INT_RGB);
+		Graphics test = frame.createGraphics();
+		super.paintComponent(test);
+		if (!maps.isEmpty()) {
+			maps.get(0).drawMap(test);
+			for (int i = 0; i < 3; i++) {
+				maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "right")[i].drawBoundsRect(test);
+				maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "down")[i].drawBoundsRect(test);
+				maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "up")[i].drawBoundsRect(test);
+				maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "left")[i].drawBoundsRect(test);
+			}
+		}
+		player.draw(test);
+		test.dispose();
+		g.drawImage(frame, 0, 0, 672, 768, null);
 	}
 
 	@Override
@@ -36,61 +47,73 @@ public class TestGame extends GamePanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		for (Tile[] row : maps.get(0).getMainLayerTiles()) {
-			for (Tile tile : row) {
-				if(tile.isCollisionEnabled()) rectObjects.add(tile.getBoundsRect());
-			}
-		}
 	}
 	
 	@Override
 	protected void mainGameLogic() {
 		playerMovement();
-		if (redGhost.getX() >= 400 && redGhost.getY() > 50) {
-			redGhost.move(0, -2);
-		}
 	}
 	
 	private void playerMovement() {
-		int dx = 0;
-		int dy = 0;
-		
-		if (pressedKey[KeyEvent.VK_W]) {
-			dy = -1;
-			player.setSpriteAnim("up");
+		String direction = player.getSpriteDirection();
+		boolean allowMove = false;
+
+		if (pressedKey[KeyEvent.VK_W] && !isPlayerColliding("up")) {
+			direction = "up";
+			allowMove = true;
+		}
+
+		if (pressedKey[KeyEvent.VK_S] && !isPlayerColliding("down")) {
+			direction = "down";
+			allowMove = true;
+		}
+
+		if (pressedKey[KeyEvent.VK_A] && !isPlayerColliding("left")) {
+			direction = "left";
+			allowMove = true;
 		}
 		
-		if (pressedKey[KeyEvent.VK_S]) {
-			dy = 1;
-			player.setSpriteAnim("down");
+		if (pressedKey[KeyEvent.VK_D] && !isPlayerColliding("right")) {
+			direction = "right";
+			allowMove = true;
 		}
-		
-		if (pressedKey[KeyEvent.VK_A]) { 
-			dx = -1;
-			dy = 0;
-			player.setSpriteAnim("left");
+
+		if(allowMove || !isPlayerColliding(direction)) {
+			player.setSpriteDirection(direction);
+			player.move();
 		}
-		
-		if (pressedKey[KeyEvent.VK_D]) {
-			dx = 1;
-			dy = 0;
-			player.setSpriteAnim("right");
-		}
-		dx *= 2;
-		dy *= 2;
-		checkPlayerCollision(dx, dy);
 	}
 	
-	private void checkPlayerCollision(int dx, int dy) {
-		for (Rect rectObject : rectObjects) {
-			if (player.getBounds().overlaps(rectObject, dx, dy)) {
-				dx = 0;
-				dy = 0;
-				logger.log(Level.INFO, "Player collision detected!");
-			}
+	private boolean isPlayerColliding(String direction) {
+		boolean isColliding = false;
+		int velocity = player.getVelocity();
+
+		switch(direction) {
+		case "right":
+			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "right"))
+				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), velocity, 0))
+					isColliding = true;
+			break;
+		case "left":
+			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "left"))
+				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), -velocity, 0))
+					isColliding = true;
+			break;
+		case "up":
+			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "up"))
+				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), 0, -velocity))
+					isColliding = true;
+			break;
+		case "down":
+			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "down"))
+				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), 0, velocity))
+					isColliding = true;
+			break;
+		default:
+			break;
 		}
-		player.move(dx, dy);
+
+		return isColliding;
 	}
 	
 	public static void main(String[] args) {
@@ -102,6 +125,7 @@ public class TestGame extends GamePanel {
 		frame.add(game);
 		frame.pack();
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		game.runGame();
 	}
