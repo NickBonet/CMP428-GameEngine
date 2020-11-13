@@ -19,7 +19,6 @@ public class TestGame extends GamePanel {
 	private static final int WINDOW_WIDTH = 672;
 	private transient Pacman player = new Pacman(0, 0, "pac", 65);
 	private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
-	private transient List<Rect> rectObjects = new ArrayList<>(); // keep all the rectangles in a neat list for iteration purposes
 	private final transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
