@@ -25,7 +25,7 @@ public class TestGame extends GamePanel {
 		BufferedImage frame = new BufferedImage(224, 256, BufferedImage.TYPE_INT_RGB);
 		Graphics test = frame.createGraphics();
 		super.paintComponent(test);
-		if (maps.size() != 0) {
+		if (!maps.isEmpty()) {
 			maps.get(0).drawMap(test);
 			for (int i = 0; i < 3; i++) {
 				maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "right")[i].drawBoundsRect(test);
@@ -58,32 +58,24 @@ public class TestGame extends GamePanel {
 		String direction = player.getSpriteDirection();
 		boolean allowMove = false;
 
-		if (pressedKey[KeyEvent.VK_W]) {
-			if(!isPlayerColliding("up")) {
-				direction = "up";
-				allowMove = true;
-			}
+		if (pressedKey[KeyEvent.VK_W] && !isPlayerColliding("up")) {
+			direction = "up";
+			allowMove = true;
 		}
 
-		if (pressedKey[KeyEvent.VK_S]) {
-			if(!isPlayerColliding("down")) {
-				direction = "down";
-				allowMove = true;
-			}
+		if (pressedKey[KeyEvent.VK_S] && !isPlayerColliding("down")) {
+			direction = "down";
+			allowMove = true;
 		}
 
-		if (pressedKey[KeyEvent.VK_A]) {
-			if(!isPlayerColliding("left")) {
-				direction = "left";
-				allowMove = true;
-			}
+		if (pressedKey[KeyEvent.VK_A] && !isPlayerColliding("left")) {
+			direction = "left";
+			allowMove = true;
 		}
 		
-		if (pressedKey[KeyEvent.VK_D]) {
-			if(!isPlayerColliding("right")) {
-				direction = "right";
-				allowMove = true;
-			}
+		if (pressedKey[KeyEvent.VK_D] && !isPlayerColliding("right")) {
+			direction = "right";
+			allowMove = true;
 		}
 
 		if(allowMove || !isPlayerColliding(direction)) {
@@ -116,6 +108,8 @@ public class TestGame extends GamePanel {
 			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "down"))
 				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), 0, velocity))
 					isColliding = true;
+			break;
+		default:
 			break;
 		}
 
