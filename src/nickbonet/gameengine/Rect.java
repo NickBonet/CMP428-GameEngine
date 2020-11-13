@@ -39,4 +39,12 @@ public class Rect {
 	public void draw(Graphics g) {
 		g.drawRect(x, y, width, height);
 	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
 }
