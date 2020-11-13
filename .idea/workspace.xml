@@ -21,6 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8e605016-649a-4069-9353-27307a59f405" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nickbonet/gameengine/sprite/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nickbonet/gameengine/sprite/Sprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nickbonet/gameengine/tile/TileMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nickbonet/gameengine/tile/TileMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/nickbonet/testgame/TestGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nickbonet/testgame/TestGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605288439100</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Don't need this array list anymore. (shouldn't anyway)">
+      <created>1605288862141</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1605288862141</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,57 +126,66 @@
     <MESSAGE value="Actual Pac-Man maze created via tilemap (mostly, still need to plot pellets).&#10;Implementing basics to detect surrounding tiles around a given position." />
     <MESSAGE value="Quick refactor, these were bugging me." />
     <MESSAGE value="Beginning ground work for improved collision detection with regard to the tilemap and 4-way movement." />
-    <option name="LAST_COMMIT_MESSAGE" value="Beginning ground work for improved collision detection with regard to the tilemap and 4-way movement." />
+    <MESSAGE value="Don't need this array list anymore. (shouldn't anyway)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Don't need this array list anymore. (shouldn't anyway)" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser" timestamp="1605284395914">
+    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser" timestamp="1605291754483">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605284395914" />
+    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605291754483" />
+    <state x="465" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605304452220">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="465" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605304452220" />
     <state x="184" y="86" key="DiffContextDialog" timestamp="1605288179989">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="184" y="86" key="DiffContextDialog/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605288179989" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1605288685825">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1605307769449">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605140853657" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605288685825" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1605288685824">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307769449" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1605307769448">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605140853656" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605288685824" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1605288685824">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307769448" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1605307769448">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605140853656" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605288685824" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1605288685824">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307769448" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1605307769448">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040/955.1080.1920.1040@0.0.1920.1040" timestamp="1605140853657" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605288685824" />
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1605286587184">
+    <state width="1877" height="282" key="GridCell.Tab.0.right/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307769448" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1605307368069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605286587184" />
-    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1605286587184">
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307368069" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1605307368069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.center/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605286587184" />
-    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1605286587184">
+    <state width="1877" height="348" key="GridCell.Tab.1.center/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307368069" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1605307368069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.left/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605286587184" />
-    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1605286587184">
+    <state width="1877" height="348" key="GridCell.Tab.1.left/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307368069" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1605307368069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.right/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605286587184" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605307368069" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1605288535005">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605288535005" />
+    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1605293984257">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="253" width="585" height="534" key="find.popup/955.1080.1920.1040/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1605293984257" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
