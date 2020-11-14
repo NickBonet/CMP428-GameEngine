@@ -17,7 +17,7 @@ public class TestGame extends GamePanel {
 	private static final int WINDOW_HEIGHT = 768;
 	private static final int WINDOW_WIDTH = 672;
 	private final transient Pacman player = new Pacman(4, 12);
-	private transient Ghost redGhost = new Ghost(80, 12, "red", 100);
+	private final transient Ghost redGhost = new Ghost(80, 12, "red", 100);
 	private final transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
@@ -60,34 +60,34 @@ public class TestGame extends GamePanel {
 		String direction = player.getSpriteDirection();
 		boolean allowMove = false;
 
-		if (pressedKey[KeyEvent.VK_W] && !isSpriteColliding(player, "up")) {
+		if (pressedKey[KeyEvent.VK_W] && !isSpriteCollidingWithMap(player, "up")) {
 			direction = "up";
 			allowMove = true;
 		}
 
-		if (pressedKey[KeyEvent.VK_S] && !isSpriteColliding(player, "down")) {
+		if (pressedKey[KeyEvent.VK_S] && !isSpriteCollidingWithMap(player, "down")) {
 			direction = "down";
 			allowMove = true;
 		}
 
-		if (pressedKey[KeyEvent.VK_A] && !isSpriteColliding(player, "left")) {
+		if (pressedKey[KeyEvent.VK_A] && !isSpriteCollidingWithMap(player, "left")) {
 			direction = "left";
 			allowMove = true;
 		}
 		
-		if (pressedKey[KeyEvent.VK_D] && !isSpriteColliding(player, "right")) {
+		if (pressedKey[KeyEvent.VK_D] && !isSpriteCollidingWithMap(player, "right")) {
 			direction = "right";
 			allowMove = true;
 		}
 
-		if(allowMove || !isSpriteColliding(player, direction)) {
+		if(allowMove || !isSpriteCollidingWithMap(player, direction)) {
 			player.setSpriteDirection(direction);
 			player.move();
 		}
 	}
 
 	// Basic collision detection based on the 8 map tiles surrounding a sprite.
-	private boolean isSpriteColliding(Sprite sprite, String direction) {
+	private boolean isSpriteCollidingWithMap(Sprite sprite, String direction) {
 		boolean isColliding = false;
 		int velocity = sprite.getVelocity();
 
