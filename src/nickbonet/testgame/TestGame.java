@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import nickbonet.gameengine.GamePanel;
+import nickbonet.gameengine.sprite.Sprite;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 
@@ -15,8 +16,8 @@ import nickbonet.gameengine.tile.TileMap;
 public class TestGame extends GamePanel {
 	private static final int WINDOW_HEIGHT = 768;
 	private static final int WINDOW_WIDTH = 672;
-	private final transient Pacman player = new Pacman(9, 17, "pac", 65);
-	//private transient Ghost redGhost = new Ghost(400, 500, "redghost", 100);
+	private final transient Pacman player = new Pacman(4, 12);
+	private transient Ghost redGhost = new Ghost(80, 12, "red", 100);
 	private final transient List<TileMap> maps = new ArrayList<>();
 	
 	@Override
@@ -35,6 +36,7 @@ public class TestGame extends GamePanel {
 			}
 		}
 		player.draw(test);
+		redGhost.draw((test));
 		test.dispose();
 		g.drawImage(frame, 0, 0, 672, 768, null);
 	}
@@ -58,55 +60,56 @@ public class TestGame extends GamePanel {
 		String direction = player.getSpriteDirection();
 		boolean allowMove = false;
 
-		if (pressedKey[KeyEvent.VK_W] && !isPlayerColliding("up")) {
+		if (pressedKey[KeyEvent.VK_W] && !isSpriteColliding(player, "up")) {
 			direction = "up";
 			allowMove = true;
 		}
 
-		if (pressedKey[KeyEvent.VK_S] && !isPlayerColliding("down")) {
+		if (pressedKey[KeyEvent.VK_S] && !isSpriteColliding(player, "down")) {
 			direction = "down";
 			allowMove = true;
 		}
 
-		if (pressedKey[KeyEvent.VK_A] && !isPlayerColliding("left")) {
+		if (pressedKey[KeyEvent.VK_A] && !isSpriteColliding(player, "left")) {
 			direction = "left";
 			allowMove = true;
 		}
 		
-		if (pressedKey[KeyEvent.VK_D] && !isPlayerColliding("right")) {
+		if (pressedKey[KeyEvent.VK_D] && !isSpriteColliding(player, "right")) {
 			direction = "right";
 			allowMove = true;
 		}
 
-		if(allowMove || !isPlayerColliding(direction)) {
+		if(allowMove || !isSpriteColliding(player, direction)) {
 			player.setSpriteDirection(direction);
 			player.move();
 		}
 	}
-	
-	private boolean isPlayerColliding(String direction) {
+
+	// Basic collision detection based on the 8 map tiles surrounding a sprite.
+	private boolean isSpriteColliding(Sprite sprite, String direction) {
 		boolean isColliding = false;
-		int velocity = player.getVelocity();
+		int velocity = sprite.getVelocity();
 
 		switch(direction) {
 		case "right":
-			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "right"))
-				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), velocity, 0))
+			for (Tile tile : maps.get(0).getSurroundingTiles(sprite.getBounds().getX(), sprite.getBounds().getY(), "right"))
+				if(tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), velocity, 0))
 					isColliding = true;
 			break;
 		case "left":
-			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "left"))
-				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), -velocity, 0))
+			for (Tile tile : maps.get(0).getSurroundingTiles(sprite.getBounds().getX(), sprite.getBounds().getY(), "left"))
+				if(tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), -velocity, 0))
 					isColliding = true;
 			break;
 		case "up":
-			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "up"))
-				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), 0, -velocity))
+			for (Tile tile : maps.get(0).getSurroundingTiles(sprite.getBounds().getX(), sprite.getBounds().getY(), "up"))
+				if(tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), 0, -velocity))
 					isColliding = true;
 			break;
 		case "down":
-			for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "down"))
-				if(tile.isCollisionEnabled() && player.getBounds().overlaps(tile.getBoundsRect(), 0, velocity))
+			for (Tile tile : maps.get(0).getSurroundingTiles(sprite.getBounds().getX(), sprite.getBounds().getY(), "down"))
+				if(tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), 0, velocity))
 					isColliding = true;
 			break;
 		default:

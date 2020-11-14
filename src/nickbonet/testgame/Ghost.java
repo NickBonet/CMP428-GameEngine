@@ -1,18 +1,18 @@
-/**
- * Ghost - Little ghost enemies!
- * @author Nicholas Bonet
- *
- */
 package nickbonet.testgame;
 
 import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.sprite.Sprite;
 
+/**
+ * Ghost - Little ghost enemies!
+ * @author Nicholas Bonet
+ *
+ */
 public class Ghost extends Sprite {
 
 	public Ghost(int x, int y, String spritePrefix, int delay) {
 		super(x, y, spritePrefix, delay);
-		this.boundsRect = new Rect(this.x, this.y, 40, 40);
+		this.boundsRect = new Rect(x+4, y+5, 6, 6);
 	}
 
 	@Override

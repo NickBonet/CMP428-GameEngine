@@ -1,17 +1,17 @@
-/**
- * Pacman - The main player sprite.
- * @author Nicholas Bonet
- *
- */
 package nickbonet.testgame;
 
 import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.sprite.Sprite;
 
+/**
+ * Pacman - The main player sprite.
+ * @author Nicholas Bonet
+ *
+ */
 public class Pacman extends Sprite {
-	public Pacman(int x, int y, String spritePrefix, int delay) {
-		super(x, y, spritePrefix, delay);
-		this.boundsRect = new Rect(9, 17, 6, 6);
+	public Pacman(int x, int y) {
+		super(x, y, "pac", 65);
+		this.boundsRect = new Rect(x+5, y+5, 6, 6);
 	}
 	
 	@Override
