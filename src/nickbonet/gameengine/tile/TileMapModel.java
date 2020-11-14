@@ -3,6 +3,8 @@ package nickbonet.gameengine.tile;
 import java.io.Serializable;
 
 public class TileMapModel implements Serializable {
+    // Constant serialization UID so that maps can be deserialized despite running JVM version.
+    private static final long serialVersionUID = 010020L;
     public static final String MAP_FOLDER = "assets/maps/";
     private final String tileSetFile;
     private final int perTileWidth;
