@@ -11,7 +11,7 @@ import nickbonet.gameengine.sprite.Sprite;
 public class Pacman extends Sprite {
 	public Pacman(int x, int y) {
 		super(x, y, "pac", 65);
-		this.boundsRect = new Rect(x+5, y+5, 6, 6);
+		this.boundsRect = new Rect(x+5, y+5, 8, 8);
 	}
 	
 	@Override
