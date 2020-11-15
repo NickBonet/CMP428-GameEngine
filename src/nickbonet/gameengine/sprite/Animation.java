@@ -17,18 +17,17 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class Animation {
-	private Logger logger = Logger.getLogger("GameEngine", null);
-	private List<BufferedImage> frames = new ArrayList<>();
-	private Timer timer;
-	private int delay = 500; 
+	private static final Logger logger = Logger.getLogger("GameEngine", null);
+	private final List<BufferedImage> frames = new ArrayList<>();
+	private final Timer timer;
+	private final int delay;
 	private int currentFrame = 0;
 
 	public Animation(int delay, String prefix, String directory) {
 		this.delay = delay;
 		loadFrames(prefix, directory);
 		timer = new Timer();
-		AnimateTask task = new AnimateTask();
-		timer.scheduleAtFixedRate(task, 0, this.delay);
+		startAnimation();
 	}
 	
 	public void loadFrames(String prefix, String folder) {
@@ -42,7 +41,7 @@ public class Animation {
 		}
 	}
 	
-	public void addFrame(File frame) {
+	private void addFrame(File frame) {
 		try {
 			frames.add(ImageIO.read(frame));
 			logger.log(Level.INFO, "Loaded image file {0}.", frame.getName());
@@ -50,6 +49,15 @@ public class Animation {
 			logger.log(Level.SEVERE, "Error loading image for animation frame.");
 		}
 	}
+
+	public void stopAnimation() {
+	    timer.cancel();
+    }
+
+    public void startAnimation() {
+        AnimateTask task = new AnimateTask();
+        timer.scheduleAtFixedRate(task, 0, this.delay);
+    }
 	
 	public BufferedImage getCurrentFrame() {
 		try {
