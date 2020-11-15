@@ -58,6 +58,10 @@ public abstract class Sprite {
         }
     }
 
+    public String getSpriteDirectory() {
+        return SPRITE_FOLDER + this.getClass().getSimpleName().toLowerCase();
+    }
+
     // Draws the sprite's current image based on its current state.
     public void draw(Graphics g) {
         if (animDict.containsKey(currentDirection)) {
@@ -93,10 +97,6 @@ public abstract class Sprite {
         default:
             break;
         }
-    }
-
-    public String getSpriteDirectory() {
-        return SPRITE_FOLDER + this.getClass().getSimpleName().toLowerCase();
     }
 
     public Rect getBounds() {

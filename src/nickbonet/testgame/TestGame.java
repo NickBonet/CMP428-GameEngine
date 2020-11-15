@@ -52,11 +52,6 @@ public class TestGame extends GamePanel {
     }
 
     @Override
-    protected void mainGameLogic() {
-        playerMovement();
-    }
-
-    @Override
     protected void initObjects() {
         try {
             maps.add(loadTileMap("test.tilemap"));
@@ -64,6 +59,11 @@ public class TestGame extends GamePanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void mainGameLogic() {
+        playerMovement();
     }
 
     private void playerMovement() {
