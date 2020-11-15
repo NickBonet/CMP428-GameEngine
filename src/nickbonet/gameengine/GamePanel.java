@@ -47,6 +47,16 @@ public abstract class GamePanel extends JPanel implements KeyListener {
         }
     }
 
+    /*
+     * Every game requires objects of some sort, implement that logic in this method.
+     */
+    protected abstract void initObjects();
+
+    /*
+     * Main logic for the game, up to you to implement this in your game of course.
+     */
+    protected abstract void mainGameLogic();
+
     public TileMap loadTileMap(String mapFile) {
         try (FileInputStream fis = new FileInputStream(TileMapModel.MAP_FOLDER + mapFile); ObjectInputStream is = new ObjectInputStream(fis)) {
             TileMapModel mapModel = (TileMapModel) is.readObject();
@@ -56,16 +66,6 @@ public abstract class GamePanel extends JPanel implements KeyListener {
         }
         return null;
     }
-
-    /*
-     * Main logic for the game, up to you to implement this in your game of course.
-     */
-    protected abstract void mainGameLogic();
-
-    /*
-     * Every game requires objects of some sort, implement that logic in this method.
-     */
-    protected abstract void initObjects();
 
     @Override
     public void keyTyped(KeyEvent e) {

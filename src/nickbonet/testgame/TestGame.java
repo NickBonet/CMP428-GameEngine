@@ -52,6 +52,11 @@ public class TestGame extends GamePanel {
     }
 
     @Override
+    protected void mainGameLogic() {
+        playerMovement();
+    }
+
+    @Override
     protected void initObjects() {
         try {
             maps.add(loadTileMap("test.tilemap"));
@@ -59,11 +64,6 @@ public class TestGame extends GamePanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void mainGameLogic() {
-        playerMovement();
     }
 
     private void playerMovement() {
@@ -103,16 +103,16 @@ public class TestGame extends GamePanel {
 
         switch (direction) {
         case "right":
-            isColliding = isColliding(sprite, direction, velocity, 0);
+            isColliding = isCollidingInDirection(sprite, direction, velocity, 0);
             break;
         case "left":
-            isColliding = isColliding(sprite, direction, -velocity, 0);
+            isColliding = isCollidingInDirection(sprite, direction, -velocity, 0);
             break;
         case "up":
-            isColliding = isColliding(sprite, direction, 0, -velocity);
+            isColliding = isCollidingInDirection(sprite, direction, 0, -velocity);
             break;
         case "down":
-            isColliding = isColliding(sprite, direction, 0, velocity);
+            isColliding = isCollidingInDirection(sprite, direction, 0, velocity);
             break;
         default:
             break;
@@ -121,7 +121,7 @@ public class TestGame extends GamePanel {
         return isColliding;
     }
 
-    private boolean isColliding(Sprite sprite, String direction, int dx, int dy) {
+    private boolean isCollidingInDirection(Sprite sprite, String direction, int dx, int dy) {
         boolean isColliding = false;
         for (Tile tile : maps.get(0).getSurroundingTiles(sprite.getBounds().getX(), sprite.getBounds().getY(), direction))
             if (tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), dx, dy))

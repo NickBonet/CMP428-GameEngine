@@ -42,22 +42,13 @@ public class Animation {
         }
     }
 
-    private void addFrame(File frame) {
-        try {
-            frames.add(ImageIO.read(frame));
-            logger.log(Level.INFO, "Loaded image file {0}.", frame.getName());
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error loading image for animation frame.");
-        }
+    public void startAnimation() {
+        AnimateTask task = new AnimateTask();
+        timer.scheduleAtFixedRate(task, 0, this.delay);
     }
 
     public void stopAnimation() {
         timer.cancel();
-    }
-
-    public void startAnimation() {
-        AnimateTask task = new AnimateTask();
-        timer.scheduleAtFixedRate(task, 0, this.delay);
     }
 
     public BufferedImage getCurrentFrame() {
@@ -66,6 +57,15 @@ public class Animation {
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "No image files loaded for the current animation!");
             return null;
+        }
+    }
+
+    private void addFrame(File frame) {
+        try {
+            frames.add(ImageIO.read(frame));
+            logger.log(Level.INFO, "Loaded image file {0}.", frame.getName());
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error loading image for animation frame.");
         }
     }
 

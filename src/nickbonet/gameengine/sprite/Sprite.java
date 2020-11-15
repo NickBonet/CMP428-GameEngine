@@ -35,9 +35,6 @@ public abstract class Sprite {
                 getFirstAnimation().getCurrentFrame().getHeight());
     }
 
-    // For initializing anymore animations besides 4 basic ones for the sprite.
-    protected abstract void initAnimations();
-
     // Takes care of initializing animations for the 4 basic directions the sprite would face.
     // Can always override this to fit the needs of your sprite.
     protected void loadBaseAnimations(String prefix, int delay) {
@@ -45,6 +42,19 @@ public abstract class Sprite {
         for (String direction : directions) {
             Animation anim = new Animation(delay, String.join("_", prefix, direction), getSpriteDirectory());
             animDict.put(direction, anim);
+        }
+    }
+
+    // For initializing anymore animations besides 4 basic ones for the sprite.
+    protected abstract void initAnimations();
+
+    private Animation getFirstAnimation() {
+        Optional<Animation> firstAnim = animDict.values().stream().findFirst();
+        if (firstAnim.isPresent()) {
+            return firstAnim.get();
+        } else {
+            logger.log(Level.SEVERE, "No animations created for {0}!", this.getClass().getSimpleName());
+            throw new NoSuchElementException();
         }
     }
 
@@ -60,16 +70,6 @@ public abstract class Sprite {
         // For debug purposes, draw the bounding box of the sprite.
         g.setColor(Color.blue);
         boundsRect.draw(g);
-    }
-
-    private Animation getFirstAnimation() {
-        Optional<Animation> firstAnim = animDict.values().stream().findFirst();
-        if (firstAnim.isPresent()) {
-            return firstAnim.get();
-        } else {
-            logger.log(Level.SEVERE, "No animations created for {0}!", this.getClass().getSimpleName());
-            throw new NoSuchElementException();
-        }
     }
 
     public void move() {
@@ -95,12 +95,12 @@ public abstract class Sprite {
         }
     }
 
-    public Rect getBounds() {
-        return boundsRect;
-    }
-
     public String getSpriteDirectory() {
         return SPRITE_FOLDER + this.getClass().getSimpleName().toLowerCase();
+    }
+
+    public Rect getBounds() {
+        return boundsRect;
     }
 
     public String getSpriteDirection() {
