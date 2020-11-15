@@ -11,11 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
+// Suppress deprecation warnings, since SonarLint seems to think the project is set to Java 10+.
+@SuppressWarnings("java:S1874")
 public class MapEditorMenuBar extends JMenuBar {
-    private final transient MapEditorController editorController;
     private static JCheckBoxMenuItem paintMode = new JCheckBoxMenuItem("Paint Mode");
     private static JCheckBoxMenuItem collisionMode = new JCheckBoxMenuItem("Collision Mode");
     private static JCheckBoxMenuItem objectMode = new JCheckBoxMenuItem("Object Mode");
+    private final transient MapEditorController editorController;
 
     public MapEditorMenuBar(MapEditorController controller) {
         this.editorController = controller;
@@ -25,7 +27,7 @@ public class MapEditorMenuBar extends JMenuBar {
     }
 
     public static void setEditorMenuStatus(EditorMode status) {
-        switch(status) {
+        switch (status) {
         case PAINT:
             paintMode.setSelected(true);
             collisionMode.setSelected(false);
@@ -41,21 +43,23 @@ public class MapEditorMenuBar extends JMenuBar {
             collisionMode.setSelected(true);
             objectMode.setSelected(false);
             break;
+        default:
+            break;
         }
     }
 
     private void setupEditMenu() {
         JMenu editMenu = new JMenu("Edit");
         JMenuItem fillOption = new JMenuItem("Paint All Tiles");
-        KeyStroke fillShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_A,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke fillShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         fillOption.setAccelerator(fillShortcut);
 
         JMenuItem fillRow = new JMenuItem("Fill Current Row");
-        KeyStroke fillRowShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_R,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke fillRowShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         fillRow.setAccelerator(fillRowShortcut);
 
         JMenuItem fillCol = new JMenuItem("Fill Current Column");
-        KeyStroke fillColShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_C,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke fillColShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         fillCol.setAccelerator(fillColShortcut);
 
         fillOption.addActionListener((ActionEvent event) -> editorController.fillMapWithSelectedTile());
@@ -75,11 +79,11 @@ public class MapEditorMenuBar extends JMenuBar {
         editorMode.add(objectMode);
         this.add(editorMode);
 
-        KeyStroke paintShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_P,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke paintShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         paintMode.setAccelerator(paintShortcut);
-        KeyStroke collisionShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_L,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke collisionShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_L, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         collisionMode.setAccelerator(collisionShortcut);
-        KeyStroke objectShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke objectShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         objectMode.setAccelerator(objectShortcut);
         paintMode.addActionListener((ActionEvent event) -> editorController.setEditorMode(EditorMode.PAINT));
         collisionMode.addActionListener((ActionEvent event) -> editorController.setEditorMode(EditorMode.COLLISION));
@@ -121,7 +125,7 @@ public class MapEditorMenuBar extends JMenuBar {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("TileMap Files (.tilemap)", "tilemap");
             fileChooser.setFileFilter(filter);
-            if(editorController.mapNeedsSaving()) {
+            if (editorController.mapNeedsSaving()) {
                 if (editorController.getLoadedFile() != null)
                     fileChooser.setSelectedFile(new File(editorController.getLoadedFile()));
                 else fileChooser.setCurrentDirectory(new File(TileMapModel.MAP_FOLDER));
