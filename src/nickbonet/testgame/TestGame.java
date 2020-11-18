@@ -10,7 +10,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
@@ -59,11 +61,45 @@ public class TestGame extends GamePanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        redGhost.setSpriteDirection("left");
     }
 
     @Override
     protected void mainGameLogic() {
         playerMovement();
+        ghostMovement();
+        System.out.println("Player box X: "+ player.getBounds().getX() +" Y:" + player.getBounds().getY());
+    }
+
+    private void ghostMovement() {
+        String direction = redGhost.getSpriteDirection();
+        if (!isSpriteCollidingWithMap(redGhost, redGhost.getSpriteDirection())) {
+            redGhost.setSpriteDirection(direction);
+            redGhost.move();
+        } else {
+            // See which directions are available to move in at the ghost's current position.
+            // BESIDES the direction it came from.
+            ArrayList<String> possibleDirections = new ArrayList<>(Arrays.asList("left", "right", "up", "down"));
+            switch(direction) {
+            case "left":
+                possibleDirections.remove("right");
+                break;
+            case "right":
+                possibleDirections.remove("left");
+                break;
+            case "up":
+                possibleDirections.remove("down");
+                break;
+            case "down":
+                possibleDirections.remove("up");
+                break;
+            }
+            possibleDirections.removeIf(d -> isSpriteCollidingWithMap(redGhost, d));
+            Random random = new Random();
+            int randDirIndex = random.nextInt(possibleDirections.size());
+            redGhost.setSpriteDirection(possibleDirections.get(randDirIndex));
+            redGhost.move();
+        }
     }
 
     private void playerMovement() {
@@ -99,7 +135,7 @@ public class TestGame extends GamePanel {
     // Basic collision detection based on the 8 map tiles surrounding a sprite.
     private boolean isSpriteCollidingWithMap(Sprite sprite, String direction) {
         boolean isColliding = false;
-        int velocity = sprite.getVelocity();
+        int velocity = (int) Math.ceil(sprite.getVelocity());
 
         switch (direction) {
         case "right":
