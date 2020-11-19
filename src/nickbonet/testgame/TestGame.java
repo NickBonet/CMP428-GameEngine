@@ -68,7 +68,7 @@ public class TestGame extends GamePanel {
     protected void mainGameLogic() {
         playerMovement();
         ghostMovement();
-        System.out.println("Player box X: "+ player.getBounds().getX() +" Y:" + player.getBounds().getY());
+        //System.out.println("Player box X: "+ player.getBounds().getX() +" Y:" + player.getBounds().getY());
     }
 
     private void ghostMovement() {
