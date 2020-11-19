@@ -135,7 +135,7 @@ public class TestGame extends GamePanel {
     // Basic collision detection based on the 8 map tiles surrounding a sprite.
     private boolean isSpriteCollidingWithMap(Sprite sprite, String direction) {
         boolean isColliding = false;
-        int velocity = (int) Math.ceil(sprite.getVelocity());
+        int velocity = sprite.getVelocity();
 
         switch (direction) {
         case "right":
