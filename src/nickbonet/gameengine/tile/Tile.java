@@ -6,14 +6,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Tile {
+    private final int width;
+    private final int height;
+    private final BufferedImage tileImage;
     private int x;
     private int y;
     private Rect boundsRect;
-    private final int width;
-    private final int height;
     private boolean collisionEnabled = false;
     private boolean isObject = false;
-    private final BufferedImage tileImage;
 
     public Tile(BufferedImage image) {
         this.tileImage = image;
@@ -26,7 +26,7 @@ public class Tile {
     }
 
     public void drawBoundsRect(Graphics g) {
-        if(collisionEnabled) g.setColor(Color.red);
+        if (collisionEnabled) g.setColor(Color.red);
         else g.setColor(Color.green);
         boundsRect.draw(g);
     }
