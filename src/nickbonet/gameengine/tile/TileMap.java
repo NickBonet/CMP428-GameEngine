@@ -35,6 +35,11 @@ public class TileMap {
                     objectTile.setX(mapModel.getPerTileWidth() * col);
                     objectTile.setY(mapModel.getPerTileHeight() * row);
                     objectLayerTiles[row][col] = objectTile;
+                } else if (!currentTile.isCollisionEnabled()) {
+                    Tile pelletTile = new Tile(tileSet.getTileImageList().get(404));
+                    pelletTile.setX(mapModel.getPerTileWidth() * col);
+                    pelletTile.setY(mapModel.getPerTileHeight() * row);
+                    objectLayerTiles[row][col] = pelletTile;
                 }
                 currentTile.setX(mapModel.getPerTileWidth() * col);
                 currentTile.setY(mapModel.getPerTileHeight() * row);
