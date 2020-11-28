@@ -16,8 +16,9 @@ import java.util.Random;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
-    private static final int WINDOW_HEIGHT = 768;
+    private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
+    private static final Random random = new Random();
     private final transient Pacman player = new Pacman(3, 11);
     private final transient Ghost redGhost = new Ghost(80, 11, "red", 100);
     private final transient Ghost blueGhost = new Ghost(64, 11, "blue", 100);
@@ -43,7 +44,7 @@ public class TestGame extends GamePanel {
     @Override
     // Paints all the components onto a base image, then that image is upscaled 3x (very roughly for now.).
     public void paintComponent(Graphics g) {
-        BufferedImage frame = new BufferedImage(224, 256, BufferedImage.TYPE_INT_RGB);
+        BufferedImage frame = new BufferedImage(224, 288, BufferedImage.TYPE_INT_RGB);
         Graphics base = frame.createGraphics();
         super.paintComponent(base);
         if (!maps.isEmpty()) {
@@ -57,7 +58,7 @@ public class TestGame extends GamePanel {
         pinkGhost.draw(base);
         orangeGhost.draw(base);
         base.dispose();
-        g.drawImage(frame, 0, 0, 672, 768, null);
+        g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
     }
 
     @Override
@@ -108,7 +109,6 @@ public class TestGame extends GamePanel {
                         break;
                 }
                 possibleDirections.removeIf(d -> isSpriteCollidingWithMap(ghost, d));
-                Random random = new Random();
                 int randDirIndex = random.nextInt(possibleDirections.size());
                 ghost.setSpriteDirection(possibleDirections.get(randDirIndex));
                 if (!ghost.isScared()) ghost.setCurrentAnimation(possibleDirections.get(randDirIndex));
