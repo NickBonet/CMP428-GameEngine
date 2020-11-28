@@ -20,6 +20,7 @@ public abstract class Sprite {
     protected int y;
     protected Logger logger = Logger.getLogger("GameEngine", null);
     protected String currentDirection = "";
+    protected String currentAnimation = "";
     protected HashMap<String, Animation> animDict = new HashMap<>();
     protected Rect boundsRect;
     protected int velocity;
@@ -64,8 +65,8 @@ public abstract class Sprite {
 
     // Draws the sprite's current image based on its current state.
     public void draw(Graphics g) {
-        if (animDict.containsKey(currentDirection)) {
-            g.drawImage(animDict.get(currentDirection).getCurrentFrame(), x, y, null);
+        if (animDict.containsKey(currentAnimation)) {
+            g.drawImage(animDict.get(currentAnimation).getCurrentFrame(), x, y, null);
         } else {
             Animation firstAnim = getFirstAnimation();
             g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
@@ -121,5 +122,9 @@ public abstract class Sprite {
 
     public int getY() {
         return y;
+    }
+
+    public void setCurrentAnimation(String currentAnimation) {
+        this.currentAnimation = currentAnimation;
     }
 }

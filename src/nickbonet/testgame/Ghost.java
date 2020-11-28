@@ -1,6 +1,7 @@
 package nickbonet.testgame;
 
 import nickbonet.gameengine.Rect;
+import nickbonet.gameengine.sprite.Animation;
 import nickbonet.gameengine.sprite.Sprite;
 
 /**
@@ -9,6 +10,7 @@ import nickbonet.gameengine.sprite.Sprite;
  * @author Nicholas Bonet
  */
 public class Ghost extends Sprite {
+    private boolean isScared = false;
 
     public Ghost(int x, int y, String spritePrefix, int delay) {
         super(x, y, spritePrefix, delay);
@@ -17,8 +19,15 @@ public class Ghost extends Sprite {
 
     @Override
     protected void initAnimations() {
-        /*
-         * Not needed currently.
-         */
+        Animation scaredAnim = new Animation(100, "scared_", getSpriteDirectory());
+        animDict.put("scared", scaredAnim);
+    }
+
+    public boolean isScared() {
+        return isScared;
+    }
+
+    public void setScared(boolean scared) {
+        isScared = scared;
     }
 }
