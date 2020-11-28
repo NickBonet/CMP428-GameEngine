@@ -106,13 +106,20 @@ public class MapEditorMenuBar extends JMenuBar {
         KeyStroke fillColShortcut = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
         fillCol.setAccelerator(fillColShortcut);
 
+        JMenuItem addRowToTop = new JMenuItem("Add Row to Top");
+        JMenuItem addRowToBottom = new JMenuItem("Add Row to Bottom");
+
         fillOption.addActionListener((ActionEvent event) -> editorController.fillMapWithSelectedTile());
         fillRow.addActionListener((ActionEvent event) -> editorController.fillRowBasedOnEditorMode());
         fillCol.addActionListener((ActionEvent event) -> editorController.fillColumnBasedOnEditorMode());
+        addRowToTop.addActionListener((ActionEvent event) -> editorController.addRowToLayout("top"));
+        addRowToBottom.addActionListener((ActionEvent event) -> editorController.addRowToLayout("bottom"));
 
         editMenu.add(fillOption);
         editMenu.add(fillRow);
         editMenu.add(fillCol);
+        editMenu.add(addRowToTop);
+        editMenu.add(addRowToBottom);
         this.add(editMenu);
     }
 

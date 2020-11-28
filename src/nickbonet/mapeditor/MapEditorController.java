@@ -144,6 +144,34 @@ public class MapEditorController {
                 model.getTileSet().getTileImageList(), model.getMapModel());
     }
 
+    public void addRowToLayout(String location) {
+        int[][] currentMapLayout = model.getMapModel().getMapLayout();
+        boolean[][] currentCollisionMap = model.getMapModel().getCollisionMap();
+        int[][] currentObjectMap = model.getMapModel().getObjectMap();
+        int newRowCount = model.getMapModel().getMapRows() + 1;
+        int colCount = model.getMapModel().getMapColumns();
+
+        int[][] newMapLayout = new int[newRowCount][colCount];
+        boolean[][] newCollisionMap = new boolean[newRowCount][colCount];
+        int[][] newObjectMap = new int[newRowCount][colCount];
+
+        int offset = location.equals("top") ? 1 : 0;
+        for (int row = location.equals("top") ? 1 : 0 ; row < model.getMapModel().getMapRows() + offset; row++) {
+            for (int col = 0; col < model.getMapModel().getMapColumns(); col++) {
+                newMapLayout[row][col] = currentMapLayout[row - offset][col];
+                newCollisionMap[row][col] = currentCollisionMap[row - offset][col];
+                newObjectMap[row][col] = currentObjectMap[row - offset][col];
+            }
+        }
+
+        model.getMapModel().setMapRows(newRowCount);
+        model.getMapModel().setMapLayout(newMapLayout);
+        model.getMapModel().setCollisionMap(newCollisionMap);
+        model.getMapModel().setObjectMap(newObjectMap);
+        mapEditorView.loadInitialMapView(
+                model.getTileSet().getTileImageList(), model.getMapModel());
+    }
+
     public MapEditorView getMapEditorView() {
         return mapEditorView;
     }

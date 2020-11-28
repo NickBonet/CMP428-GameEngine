@@ -9,11 +9,11 @@ public class TileMapModel implements Serializable {
     private final String tileSetFile;
     private final int perTileWidth;
     private final int perTileHeight;
-    private final int mapRows;
+    private int mapRows;
     private final int mapColumns;
-    private final int[][] mapLayout;
-    private final boolean[][] collisionMap;
-    private final int[][] objectMap;
+    private int[][] mapLayout;
+    private boolean[][] collisionMap;
+    private int[][] objectMap;
 
     public TileMapModel(String file, int perTileWidth, int perTileHeight, int mapRows, int mapColumns) {
         this.tileSetFile = file;
@@ -64,5 +64,21 @@ public class TileMapModel implements Serializable {
 
     public int[][] getObjectMap() {
         return objectMap;
+    }
+
+    public void setMapRows(int mapRows) {
+        this.mapRows = mapRows;
+    }
+
+    public void setMapLayout(int[][] mapLayout) {
+        this.mapLayout = mapLayout;
+    }
+
+    public void setCollisionMap(boolean[][] collisionMap) {
+        this.collisionMap = collisionMap;
+    }
+
+    public void setObjectMap(int[][] objectMap) {
+        this.objectMap = objectMap;
     }
 }

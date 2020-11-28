@@ -19,11 +19,11 @@ public class TestGame extends GamePanel {
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
     private static final Random random = new Random();
-    private final transient Pacman player = new Pacman(3, 11);
-    private final transient Ghost redGhost = new Ghost(80, 11, "red", 100);
-    private final transient Ghost blueGhost = new Ghost(64, 11, "blue", 100);
-    private final transient Ghost pinkGhost = new Ghost(48, 11, "pink", 100);
-    private final transient Ghost orangeGhost = new Ghost(32, 11, "orange", 100);
+    private final transient Pacman player = new Pacman(3, 27);
+    private final transient Ghost redGhost = new Ghost(80, 27, "red", 100);
+    private final transient Ghost blueGhost = new Ghost(64, 27, "blue", 100);
+    private final transient Ghost pinkGhost = new Ghost(48, 27, "pink", 100);
+    private final transient Ghost orangeGhost = new Ghost(32, 27, "orange", 100);
     private final transient List<Ghost> ghostList = new ArrayList<>();
     private final transient List<TileMap> maps = new ArrayList<>();
 
