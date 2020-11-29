@@ -25,7 +25,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
 
     protected final transient Logger logger = Logger.getLogger("GameEngine", null);
     protected final boolean[] pressedKey = new boolean[255];
-    private boolean isRunning = true;
+    private final boolean isRunning = true;
 
     public GamePanel() {
         setFocusable(true);

@@ -9,8 +9,8 @@ public class TileMapModel implements Serializable {
     private final String tileSetFile;
     private final int perTileWidth;
     private final int perTileHeight;
-    private int mapRows;
     private final int mapColumns;
+    private int mapRows;
     private int[][] mapLayout;
     private boolean[][] collisionMap;
     private int[][] objectMap;
@@ -50,6 +50,10 @@ public class TileMapModel implements Serializable {
         return mapRows;
     }
 
+    public void setMapRows(int mapRows) {
+        this.mapRows = mapRows;
+    }
+
     public int getMapColumns() {
         return mapColumns;
     }
@@ -58,24 +62,20 @@ public class TileMapModel implements Serializable {
         return mapLayout;
     }
 
-    public boolean[][] getCollisionMap() {
-        return collisionMap;
-    }
-
-    public int[][] getObjectMap() {
-        return objectMap;
-    }
-
-    public void setMapRows(int mapRows) {
-        this.mapRows = mapRows;
-    }
-
     public void setMapLayout(int[][] mapLayout) {
         this.mapLayout = mapLayout;
     }
 
+    public boolean[][] getCollisionMap() {
+        return collisionMap;
+    }
+
     public void setCollisionMap(boolean[][] collisionMap) {
         this.collisionMap = collisionMap;
+    }
+
+    public int[][] getObjectMap() {
+        return objectMap;
     }
 
     public void setObjectMap(int[][] objectMap) {
