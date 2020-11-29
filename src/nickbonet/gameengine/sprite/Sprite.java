@@ -19,7 +19,7 @@ public abstract class Sprite {
     protected int x;
     protected int y;
     protected Logger logger = Logger.getLogger("GameEngine", null);
-    protected String currentDirection = "";
+    protected SpriteDir currentDirection;
     protected String currentAnimation = "";
     protected HashMap<String, Animation> animDict = new HashMap<>();
     protected Rect boundsRect;
@@ -79,24 +79,24 @@ public abstract class Sprite {
 
     public void move() {
         switch (currentDirection) {
-        case "up":
-            y -= velocity;
-            boundsRect.move(0, -velocity);
-            break;
-        case "down":
-            y += velocity;
-            boundsRect.move(0, +velocity);
-            break;
-        case "left":
-            x -= velocity;
-            boundsRect.move(-velocity, 0);
-            break;
-        case "right":
-            x += velocity;
-            boundsRect.move(velocity, 0);
-            break;
-        default:
-            break;
+            case UP:
+                y -= velocity;
+                boundsRect.move(0, -velocity);
+                break;
+            case DOWN:
+                y += velocity;
+                boundsRect.move(0, +velocity);
+                break;
+            case LEFT:
+                x -= velocity;
+                boundsRect.move(-velocity, 0);
+                break;
+            case RIGHT:
+                x += velocity;
+                boundsRect.move(velocity, 0);
+                break;
+            default:
+                break;
         }
     }
 
@@ -104,11 +104,11 @@ public abstract class Sprite {
         return boundsRect;
     }
 
-    public String getSpriteDirection() {
+    public SpriteDir getSpriteDirection() {
         return currentDirection;
     }
 
-    public void setSpriteDirection(String currentDirection) {
+    public void setSpriteDirection(SpriteDir currentDirection) {
         this.currentDirection = currentDirection;
     }
 

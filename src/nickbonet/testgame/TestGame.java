@@ -2,6 +2,7 @@ package nickbonet.testgame;
 
 import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.sprite.Sprite;
+import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 
@@ -46,7 +47,7 @@ public class TestGame extends GamePanel {
         super.paintComponent(base);
         if (!maps.isEmpty()) {
             maps.get(0).drawMap(base);
-            for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), "all"))
+            for (Tile tile : maps.get(0).getSurroundingTiles(player.getBounds().getX(), player.getBounds().getY(), SpriteDir.ALL))
                 tile.drawBoundsRect(base);
         }
         player.draw(base);
@@ -71,9 +72,10 @@ public class TestGame extends GamePanel {
         ghostList.add(pinkGhost);
         ghostList.add(orangeGhost);
         for (Ghost ghost : ghostList) {
-            ghost.setSpriteDirection("left");
-            ghost.setCurrentAnimation("left");
+            ghost.setSpriteDirection(SpriteDir.LEFT);
+            ghost.setCurrentAnimation(SpriteDir.LEFT.toString());
         }
+        player.setSpriteDirection(SpriteDir.LEFT);
     }
 
     @Override
@@ -82,15 +84,15 @@ public class TestGame extends GamePanel {
         ghostMovement();
     }
 
-    private int directionPriority(String direction) {
+    private int directionPriority(SpriteDir direction) {
         switch (direction) {
-            case "up":
+            case UP:
                 return 0;
-            case "left":
+            case LEFT:
                 return 1;
-            case "down":
+            case DOWN:
                 return 2;
-            case "right":
+            case RIGHT:
                 return 3;
             default:
                 throw new IllegalStateException("Unexpected value: " + direction);
@@ -108,44 +110,45 @@ public class TestGame extends GamePanel {
 
     private void ghostMovement() {
         for (Ghost ghost : ghostList) {
-            String currentDirection = ghost.getSpriteDirection();
+            SpriteDir currentDirection = ghost.getSpriteDirection();
             // See which directions are available to move in at the ghost's current position.
             // BESIDES the direction it came from.
-            ArrayList<String> possibleDirections = new ArrayList<>(Arrays.asList("left", "right", "up", "down"));
+            ArrayList<SpriteDir> possibleDirections = new ArrayList<>(Arrays.asList(SpriteDir.values()));
             switch (currentDirection) {
-                case "left":
-                    possibleDirections.remove("right");
+                case LEFT:
+                    possibleDirections.remove(SpriteDir.RIGHT);
                     break;
-                case "right":
-                    possibleDirections.remove("left");
+                case RIGHT:
+                    possibleDirections.remove(SpriteDir.LEFT);
                     break;
-                case "up":
-                    possibleDirections.remove("down");
+                case UP:
+                    possibleDirections.remove(SpriteDir.DOWN);
                     break;
-                case "down":
-                    possibleDirections.remove("up");
+                case DOWN:
+                    possibleDirections.remove(SpriteDir.UP);
                     break;
             }
+            possibleDirections.remove(SpriteDir.ALL);
             possibleDirections.removeIf(d -> isSpriteCollidingWithMap(ghost, d));
 
-            String directionToMove = null;
+            SpriteDir directionToMove = null;
             int prevDistanceChecked = -1;
             int prevDirectionPriority = -1;
             Tile targetTile = maps.get(0).getTileAtPoint(ghost.getTargetX(), ghost.getTargetY());
 
-            for (String d : possibleDirections) {
+            for (SpriteDir d : possibleDirections) {
                 Tile inspectingTile;
                 switch (d) {
-                    case "left":
+                    case LEFT:
                         inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX() - 8, ghost.getBounds().getY());
                         break;
-                    case "right":
+                    case RIGHT:
                         inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX() + 8, ghost.getBounds().getY());
                         break;
-                    case "up":
+                    case UP:
                         inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX(), ghost.getBounds().getY() - 8);
                         break;
-                    case "down":
+                    case DOWN:
                         inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX(), ghost.getBounds().getY() + 8);
                         break;
                     default:
@@ -166,68 +169,68 @@ public class TestGame extends GamePanel {
             }
 
             ghost.setSpriteDirection(directionToMove);
-            if (!ghost.isScared()) ghost.setCurrentAnimation(directionToMove);
+            if (!ghost.isScared()) ghost.setCurrentAnimation(directionToMove.toString());
             ghost.move();
         }
     }
 
     private void playerMovement() {
-        String direction = player.getSpriteDirection();
+        SpriteDir direction = player.getSpriteDirection();
         boolean allowMove = false;
 
-        if (pressedKey[KeyEvent.VK_W] && !isSpriteCollidingWithMap(player, "up")) {
-            direction = "up";
+        if (pressedKey[KeyEvent.VK_W] && !isSpriteCollidingWithMap(player, SpriteDir.UP)) {
+            direction = SpriteDir.UP;
             allowMove = true;
         }
 
-        if (pressedKey[KeyEvent.VK_S] && !isSpriteCollidingWithMap(player, "down")) {
-            direction = "down";
+        if (pressedKey[KeyEvent.VK_S] && !isSpriteCollidingWithMap(player, SpriteDir.DOWN)) {
+            direction = SpriteDir.DOWN;
             allowMove = true;
         }
 
-        if (pressedKey[KeyEvent.VK_A] && !isSpriteCollidingWithMap(player, "left")) {
-            direction = "left";
+        if (pressedKey[KeyEvent.VK_A] && !isSpriteCollidingWithMap(player, SpriteDir.LEFT)) {
+            direction = SpriteDir.LEFT;
             allowMove = true;
         }
 
-        if (pressedKey[KeyEvent.VK_D] && !isSpriteCollidingWithMap(player, "right")) {
-            direction = "right";
+        if (pressedKey[KeyEvent.VK_D] && !isSpriteCollidingWithMap(player, SpriteDir.RIGHT)) {
+            direction = SpriteDir.RIGHT;
             allowMove = true;
         }
 
         if (allowMove || !isSpriteCollidingWithMap(player, direction)) {
             player.setSpriteDirection(direction);
-            player.setCurrentAnimation(direction);
+            player.setCurrentAnimation(direction.toString());
             player.move();
         }
     }
 
     // Basic collision detection based on the 8 map tiles surrounding a sprite.
-    private boolean isSpriteCollidingWithMap(Sprite sprite, String direction) {
+    private boolean isSpriteCollidingWithMap(Sprite sprite, SpriteDir direction) {
         boolean isColliding = false;
         int velocity = sprite.getVelocity();
 
         switch (direction) {
-        case "right":
-            isColliding = isCollidingInDirection(sprite, direction, velocity, 0);
-            break;
-        case "left":
-            isColliding = isCollidingInDirection(sprite, direction, -velocity, 0);
-            break;
-        case "up":
-            isColliding = isCollidingInDirection(sprite, direction, 0, -velocity);
-            break;
-        case "down":
-            isColliding = isCollidingInDirection(sprite, direction, 0, velocity);
-            break;
-        default:
-            break;
+            case RIGHT:
+                isColliding = isCollidingInDirection(sprite, direction, velocity, 0);
+                break;
+            case LEFT:
+                isColliding = isCollidingInDirection(sprite, direction, -velocity, 0);
+                break;
+            case UP:
+                isColliding = isCollidingInDirection(sprite, direction, 0, -velocity);
+                break;
+            case DOWN:
+                isColliding = isCollidingInDirection(sprite, direction, 0, velocity);
+                break;
+            default:
+                break;
         }
 
         return isColliding;
     }
 
-    private boolean isCollidingInDirection(Sprite sprite, String direction, int dx, int dy) {
+    private boolean isCollidingInDirection(Sprite sprite, SpriteDir direction, int dx, int dy) {
         boolean isColliding = false;
         for (Tile tile : maps.get(0).getSurroundingTiles(sprite.getBounds().getX(), sprite.getBounds().getY(), direction))
             if (tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), dx, dy))

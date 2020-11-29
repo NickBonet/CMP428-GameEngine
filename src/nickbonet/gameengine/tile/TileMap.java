@@ -1,5 +1,7 @@
 package nickbonet.gameengine.tile;
 
+import nickbonet.gameengine.sprite.SpriteDir;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -57,43 +59,43 @@ public class TileMap {
         g.drawImage(map, 0, 0, null);
     }
 
-    public List<Tile> getSurroundingTiles(int x, int y, String direction) {
+    public List<Tile> getSurroundingTiles(int x, int y, SpriteDir direction) {
         int row = y / mapModel.getPerTileHeight();
         int col = x / mapModel.getPerTileWidth();
         List<Tile> tiles = new ArrayList<>();
         switch (direction) {
-        case "up":
-            for (int i : new int[]{col, col + 1, col - 1})
-                tiles.add(getMainLayerTileAt(row - 1, i));
-            break;
-        case "down":
-            for (int i : new int[]{col, col + 1, col - 1})
-                tiles.add(getMainLayerTileAt(row + 1, i));
-            break;
-        case "left":
-            for (int i : new int[]{row - 1, row, row + 1})
-                tiles.add(getMainLayerTileAt(i, col - 1));
-            break;
-        case "right":
-            for (int i : new int[]{row - 1, row, row + 1})
-                tiles.add(getMainLayerTileAt(i, col + 1));
-            break;
-        case "all":
-            for (int i : new int[]{row - 1, row + 1}) {
-                tiles.add(getMainLayerTileAt(i, col));
-                tiles.add(getMainLayerTileAt(i, col + 1));
-                tiles.add(getMainLayerTileAt(i, col - 1));
-            }
-            for (int i : new int[]{col - 1, col + 1})
-                tiles.add(getMainLayerTileAt(row, i));
-            break;
-        default:
-            break;
+            case UP:
+                for (int i : new int[]{col, col + 1, col - 1})
+                    tiles.add(getMainLayerTileAt(row - 1, i));
+                break;
+            case DOWN:
+                for (int i : new int[]{col, col + 1, col - 1})
+                    tiles.add(getMainLayerTileAt(row + 1, i));
+                break;
+            case LEFT:
+                for (int i : new int[]{row - 1, row, row + 1})
+                    tiles.add(getMainLayerTileAt(i, col - 1));
+                break;
+            case RIGHT:
+                for (int i : new int[]{row - 1, row, row + 1})
+                    tiles.add(getMainLayerTileAt(i, col + 1));
+                break;
+            case ALL:
+                for (int i : new int[]{row - 1, row + 1}) {
+                    tiles.add(getMainLayerTileAt(i, col));
+                    tiles.add(getMainLayerTileAt(i, col + 1));
+                    tiles.add(getMainLayerTileAt(i, col - 1));
+                }
+                for (int i : new int[]{col - 1, col + 1})
+                    tiles.add(getMainLayerTileAt(row, i));
+                break;
+            default:
+                break;
         }
         return tiles.parallelStream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    public Tile getTileAtPoint(int x , int y) {
+    public Tile getTileAtPoint(int x, int y) {
         int row = y / mapModel.getPerTileHeight();
         int col = x / mapModel.getPerTileWidth();
         return getMainLayerTileAt(row, col);
