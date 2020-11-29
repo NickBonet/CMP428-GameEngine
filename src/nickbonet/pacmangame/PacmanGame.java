@@ -4,9 +4,8 @@ import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
-import nickbonet.pacmangame.entity.Ghost;
+import nickbonet.pacmangame.entity.ghosts.*;
 import nickbonet.pacmangame.entity.Pacman;
-import nickbonet.pacmangame.entity.RedGhost;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +23,9 @@ public class PacmanGame extends GamePanel {
     private static final int WINDOW_WIDTH = 672;
     private final transient Pacman player = new Pacman(3, 27);
     private final transient RedGhost redGhost = new RedGhost(80, 27, 100, 207, 0);
-    private final transient Ghost blueGhost = new Ghost(64, 27, "blue", 100, 223, 287);
-    private final transient Ghost pinkGhost = new Ghost(48, 27, "pink", 100, 16, 0);
-    private final transient Ghost orangeGhost = new Ghost(32, 27, "orange", 100, 0, 287);
+    private final transient BlueGhost blueGhost = new BlueGhost(64, 27, 100, 223, 287);
+    private final transient PinkGhost pinkGhost = new PinkGhost(48, 27, 100, 16, 0);
+    private final transient OrangeGhost orangeGhost = new OrangeGhost(32, 27, 100, 0, 287);
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
 

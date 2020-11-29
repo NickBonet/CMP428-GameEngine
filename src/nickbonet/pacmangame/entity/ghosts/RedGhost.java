@@ -1,4 +1,4 @@
-package nickbonet.pacmangame.entity;
+package nickbonet.pacmangame.entity.ghosts;
 
 public class RedGhost extends Ghost {
     public RedGhost(int x, int y, int delay, int scatterTargetX, int scatterTargetY) {

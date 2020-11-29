@@ -1,4 +1,4 @@
-package nickbonet.pacmangame.entity;
+package nickbonet.pacmangame.entity.ghosts;
 
 import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.sprite.Animation;
