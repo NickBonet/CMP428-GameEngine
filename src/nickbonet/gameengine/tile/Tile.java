@@ -13,7 +13,6 @@ public class Tile {
     private int y;
     private Rect boundsRect;
     private boolean collisionEnabled = false;
-    private boolean isObject = false;
 
     public Tile(BufferedImage image) {
         this.tileImage = image;
@@ -47,24 +46,20 @@ public class Tile {
         this.collisionEnabled = collisionEnabled;
     }
 
-    public boolean isObject() {
-        return isObject;
-    }
-
-    public void setObject(boolean object) {
-        isObject = object;
-    }
-
-    public BufferedImage getTileImage() {
-        return tileImage;
-    }
-
     public void setX(int x) {
         this.x = x;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public Rect getBoundsRect() {
