@@ -26,15 +26,14 @@ public class TileMap {
         this.objectLayerTiles = new Tile[mapModel.getMapRows()][mapModel.getMapColumns()];
     }
 
-    // Calculates the distance between two tiles. (from their center points)
-    // Utilizes the taxicab distance formula.
-    public static int distanceBetweenTiles(Tile firstTile, Tile secondTile) {
+    // Calculates the distance between two tiles via the Euclidean distance formula. (from their center points)
+    public static int euclideanDistanceBetweenTiles(Tile firstTile, Tile secondTile) {
         int x1 = (firstTile.getX() + (firstTile.getWidth() / 2));
         int y1 = (firstTile.getY() + (firstTile.getHeight() / 2));
         int x2 = (secondTile.getX() + (secondTile.getWidth() / 2));
         int y2 = (secondTile.getY() + (secondTile.getHeight() / 2));
 
-        return Math.abs((x2 - x1)) + Math.abs((y2 - y1));
+        return (int) Math.sqrt(Math.pow((double) x2 - x1, 2) + Math.pow((double) y2 - y1, 2));
     }
 
     public void initializeMap() {

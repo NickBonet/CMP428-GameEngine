@@ -22,7 +22,7 @@ public class PacmanGame extends GamePanel {
     private static final int WINDOW_WIDTH = 672;
     private final transient Pacman player = new Pacman(3, 27);
     private final transient Ghost redGhost = new Ghost(80, 27, "red", 100, 207, 0);
-    private final transient Ghost blueGhost = new Ghost(180, 27, "blue", 100, 223, 287);
+    private final transient Ghost blueGhost = new Ghost(64, 27, "blue", 100, 223, 287);
     private final transient Ghost pinkGhost = new Ghost(48, 27, "pink", 100, 16, 0);
     private final transient Ghost orangeGhost = new Ghost(32, 27, "orange", 100, 0, 287);
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
@@ -30,7 +30,7 @@ public class PacmanGame extends GamePanel {
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
-        JFrame frame = new JFrame("Test Game");
+        JFrame frame = new JFrame("Pac-Man");
         PacmanGame game = new PacmanGame();
         game.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         game.setBackground(Color.black);
@@ -130,10 +130,10 @@ public class PacmanGame extends GamePanel {
                         throw new IllegalStateException("Unexpected value: " + d);
                 }
 
-                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > TileMap.distanceBetweenTiles(inspectingTile, targetTile)) ||
-                        ((prevDistanceChecked == TileMap.distanceBetweenTiles(inspectingTile, targetTile)) && (prevDirectionPriority > directionPriority(d)))) {
+                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile)) ||
+                        ((prevDistanceChecked == TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile)) && (prevDirectionPriority > directionPriority(d)))) {
                     directionToMove = d;
-                    prevDistanceChecked = TileMap.distanceBetweenTiles(inspectingTile, targetTile);
+                    prevDistanceChecked = TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile);
                     prevDirectionPriority = directionPriority(d);
                 }
             }
@@ -179,27 +179,28 @@ public class PacmanGame extends GamePanel {
 
     // Basic collision detection based on the 8 map tiles surrounding a sprite.
     private boolean isSpriteCollidingWithMap(Sprite sprite, SpriteDir direction) {
-        boolean isColliding = false;
         int velocity = sprite.getVelocity();
+        int dx = 0;
+        int dy = 0;
 
         switch (direction) {
             case RIGHT:
-                isColliding = isCollidingInDirection(sprite, direction, velocity, 0);
+                dx = velocity;
                 break;
             case LEFT:
-                isColliding = isCollidingInDirection(sprite, direction, -velocity, 0);
+                dx = -velocity;
                 break;
             case UP:
-                isColliding = isCollidingInDirection(sprite, direction, 0, -velocity);
+                dy = -velocity;
                 break;
             case DOWN:
-                isColliding = isCollidingInDirection(sprite, direction, 0, velocity);
+                dy = velocity;
                 break;
             default:
                 break;
         }
 
-        return isColliding;
+        return isCollidingInDirection(sprite, direction, dx, dy);
     }
 
     private boolean isCollidingInDirection(Sprite sprite, SpriteDir direction, int dx, int dy) {
