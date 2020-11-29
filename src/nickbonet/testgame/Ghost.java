@@ -11,10 +11,14 @@ import nickbonet.gameengine.sprite.Sprite;
  */
 public class Ghost extends Sprite {
     private boolean isScared = false;
+    private int targetX;
+    private int targetY;
 
-    public Ghost(int x, int y, String spritePrefix, int delay) {
+    public Ghost(int x, int y, String spritePrefix, int delay, int targetX, int targetY) {
         super(x, y, spritePrefix, delay);
         this.boundsRect = new Rect(x + 4, y + 5, 8, 8);
+        this.targetX = targetX;
+        this.targetY = targetY;
     }
 
     @Override
@@ -29,5 +33,21 @@ public class Ghost extends Sprite {
 
     public void setScared(boolean scared) {
         isScared = scared;
+    }
+
+    public int getTargetX() {
+        return targetX;
+    }
+
+    public int getTargetY() {
+        return targetY;
+    }
+
+    public void setTargetX(int targetX) {
+        this.targetX = targetX;
+    }
+
+    public void setTargetY(int targetY) {
+        this.targetY = targetY;
     }
 }

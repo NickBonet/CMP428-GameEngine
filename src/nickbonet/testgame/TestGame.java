@@ -9,21 +9,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class TestGame extends GamePanel {
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
-    private static final Random random = new Random();
     private final transient Pacman player = new Pacman(3, 27);
-    private final transient Ghost redGhost = new Ghost(80, 27, "red", 100);
-    private final transient Ghost blueGhost = new Ghost(64, 27, "blue", 100);
-    private final transient Ghost pinkGhost = new Ghost(48, 27, "pink", 100);
-    private final transient Ghost orangeGhost = new Ghost(32, 27, "orange", 100);
+    private final transient Ghost redGhost = new Ghost(80, 27, "red", 100, 207, 0);
+    private final transient Ghost blueGhost = new Ghost(180, 27, "blue", 100, 223, 287);
+    private final transient Ghost pinkGhost = new Ghost(48, 27, "pink", 100, 16, 0);
+    private final transient Ghost orangeGhost = new Ghost(32, 27, "orange", 100, 0, 287);
     private final transient List<Ghost> ghostList = new ArrayList<>();
     private final transient List<TileMap> maps = new ArrayList<>();
 
@@ -85,34 +82,91 @@ public class TestGame extends GamePanel {
         ghostMovement();
     }
 
+    private int directionPriority(String direction) {
+        switch (direction) {
+            case "up":
+                return 0;
+            case "left":
+                return 1;
+            case "down":
+                return 2;
+            case "right":
+                return 3;
+            default:
+                throw new IllegalStateException("Unexpected value: " + direction);
+        }
+    }
+
+    private int taxiCabDistance(Tile firstTile, Tile secondTile) {
+        int x1 = (firstTile.getX() + (firstTile.getWidth() / 2));
+        int y1 = (firstTile.getY() + (firstTile.getHeight() / 2));
+        int x2 = (secondTile.getX() + (secondTile.getWidth() / 2));
+        int y2 = (secondTile.getY() + (secondTile.getHeight() / 2));
+
+        return Math.abs((x2 - x1)) + Math.abs((y2 - y1));
+    }
+
     private void ghostMovement() {
         for (Ghost ghost : ghostList) {
-            String direction = ghost.getSpriteDirection();
-            if (!isSpriteCollidingWithMap(ghost, ghost.getSpriteDirection())) {
-                ghost.setSpriteDirection(direction);
-            } else {
-                // See which directions are available to move in at the ghost's current position.
-                // BESIDES the direction it came from.
-                ArrayList<String> possibleDirections = new ArrayList<>(Arrays.asList("left", "right", "up", "down"));
-                switch (direction) {
+            String currentDirection = ghost.getSpriteDirection();
+            // See which directions are available to move in at the ghost's current position.
+            // BESIDES the direction it came from.
+            ArrayList<String> possibleDirections = new ArrayList<>(Arrays.asList("left", "right", "up", "down"));
+            switch (currentDirection) {
+                case "left":
+                    possibleDirections.remove("right");
+                    break;
+                case "right":
+                    possibleDirections.remove("left");
+                    break;
+                case "up":
+                    possibleDirections.remove("down");
+                    break;
+                case "down":
+                    possibleDirections.remove("up");
+                    break;
+            }
+            possibleDirections.removeIf(d -> isSpriteCollidingWithMap(ghost, d));
+
+            String directionToMove = null;
+            int prevDistanceChecked = -1;
+            int prevDirectionPriority = -1;
+            Tile targetTile = maps.get(0).getTileAtPoint(ghost.getTargetX(), ghost.getTargetY());
+
+            for (String d : possibleDirections) {
+                Tile inspectingTile;
+                switch (d) {
                     case "left":
-                        possibleDirections.remove("right");
+                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX() - 8, ghost.getBounds().getY());
                         break;
                     case "right":
-                        possibleDirections.remove("left");
+                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX() + 8, ghost.getBounds().getY());
                         break;
                     case "up":
-                        possibleDirections.remove("down");
+                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX(), ghost.getBounds().getY() - 8);
                         break;
                     case "down":
-                        possibleDirections.remove("up");
+                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX(), ghost.getBounds().getY() + 8);
                         break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + d);
                 }
-                possibleDirections.removeIf(d -> isSpriteCollidingWithMap(ghost, d));
-                int randDirIndex = random.nextInt(possibleDirections.size());
-                ghost.setSpriteDirection(possibleDirections.get(randDirIndex));
-                if (!ghost.isScared()) ghost.setCurrentAnimation(possibleDirections.get(randDirIndex));
+
+                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > taxiCabDistance(inspectingTile, targetTile))) {
+                    directionToMove = d;
+                    prevDistanceChecked = taxiCabDistance(inspectingTile, targetTile);
+                    prevDirectionPriority = directionPriority(d);
+                } else if (prevDistanceChecked == taxiCabDistance(inspectingTile, targetTile)) {
+                    if (prevDirectionPriority > directionPriority(d)) {
+                        directionToMove = d;
+                        prevDistanceChecked = taxiCabDistance(inspectingTile, targetTile);
+                        prevDirectionPriority = directionPriority(d);
+                    }
+                }
             }
+
+            ghost.setSpriteDirection(directionToMove);
+            if (!ghost.isScared()) ghost.setCurrentAnimation(directionToMove);
             ghost.move();
         }
     }

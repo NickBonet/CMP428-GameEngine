@@ -93,6 +93,12 @@ public class TileMap {
         return tiles.parallelStream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
+    public Tile getTileAtPoint(int x , int y) {
+        int row = y / mapModel.getPerTileHeight();
+        int col = x / mapModel.getPerTileWidth();
+        return getMainLayerTileAt(row, col);
+    }
+
     private Tile getMainLayerTileAt(int row, int col) {
         try {
             return mainLayerTiles[row][col];
