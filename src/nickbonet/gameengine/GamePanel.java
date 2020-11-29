@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel implements KeyListener {
 
+    private static final boolean IS_RUNNING = true;
     protected final transient Logger logger = Logger.getLogger("GameEngine", null);
     protected final boolean[] pressedKey = new boolean[255];
-    private final boolean isRunning = true;
 
     public GamePanel() {
         setFocusable(true);
@@ -35,7 +35,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
     protected void runGame() {
         initObjects();
 
-        while (isRunning) {
+        while (IS_RUNNING) {
             mainGameLogic();
             repaint();
             try {

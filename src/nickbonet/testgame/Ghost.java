@@ -39,12 +39,12 @@ public class Ghost extends Sprite {
         return targetX;
     }
 
-    public int getTargetY() {
-        return targetY;
-    }
-
     public void setTargetX(int targetX) {
         this.targetX = targetX;
+    }
+
+    public int getTargetY() {
+        return targetY;
     }
 
     public void setTargetY(int targetY) {

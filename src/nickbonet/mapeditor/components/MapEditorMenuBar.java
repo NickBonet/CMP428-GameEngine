@@ -14,9 +14,9 @@ import java.io.File;
 // Suppress deprecation warnings, since SonarLint seems to think the project is set to Java 10+.
 @SuppressWarnings("java:S1874")
 public class MapEditorMenuBar extends JMenuBar {
-    private static JCheckBoxMenuItem paintMode = new JCheckBoxMenuItem("Paint Mode");
-    private static JCheckBoxMenuItem collisionMode = new JCheckBoxMenuItem("Collision Mode");
-    private static JCheckBoxMenuItem objectMode = new JCheckBoxMenuItem("Object Mode");
+    private static final JCheckBoxMenuItem paintMode = new JCheckBoxMenuItem("Paint Mode");
+    private static final JCheckBoxMenuItem collisionMode = new JCheckBoxMenuItem("Collision Mode");
+    private static final JCheckBoxMenuItem objectMode = new JCheckBoxMenuItem("Object Mode");
     private final transient MapEditorController editorController;
 
     public MapEditorMenuBar(MapEditorController controller) {
@@ -24,6 +24,28 @@ public class MapEditorMenuBar extends JMenuBar {
         setupFileMenu();
         setupEditorModeMenu();
         setupEditMenu();
+    }
+
+    public static void setEditorMenuStatus(EditorMode status) {
+        switch (status) {
+            case PAINT:
+                paintMode.setSelected(true);
+                collisionMode.setSelected(false);
+                objectMode.setSelected(false);
+                break;
+            case OBJECT:
+                paintMode.setSelected(false);
+                collisionMode.setSelected(false);
+                objectMode.setSelected(true);
+                break;
+            case COLLISION:
+                paintMode.setSelected(false);
+                collisionMode.setSelected(true);
+                objectMode.setSelected(false);
+                break;
+            default:
+                break;
+        }
     }
 
     private void setupFileMenu() {
@@ -121,27 +143,5 @@ public class MapEditorMenuBar extends JMenuBar {
         editMenu.add(addRowToTop);
         editMenu.add(addRowToBottom);
         this.add(editMenu);
-    }
-
-    public static void setEditorMenuStatus(EditorMode status) {
-        switch (status) {
-        case PAINT:
-            paintMode.setSelected(true);
-            collisionMode.setSelected(false);
-            objectMode.setSelected(false);
-            break;
-        case OBJECT:
-            paintMode.setSelected(false);
-            collisionMode.setSelected(false);
-            objectMode.setSelected(true);
-            break;
-        case COLLISION:
-            paintMode.setSelected(false);
-            collisionMode.setSelected(true);
-            objectMode.setSelected(false);
-            break;
-        default:
-            break;
-        }
     }
 }

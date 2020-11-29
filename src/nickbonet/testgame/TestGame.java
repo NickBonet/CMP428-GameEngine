@@ -10,7 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings({"serial", "java:S110"})
@@ -127,6 +128,8 @@ public class TestGame extends GamePanel {
                 case DOWN:
                     possibleDirections.remove(SpriteDir.UP);
                     break;
+                default:
+                    break;
             }
             possibleDirections.remove(SpriteDir.ALL);
             possibleDirections.removeIf(d -> isSpriteCollidingWithMap(ghost, d));
@@ -155,22 +158,19 @@ public class TestGame extends GamePanel {
                         throw new IllegalStateException("Unexpected value: " + d);
                 }
 
-                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > taxiCabDistance(inspectingTile, targetTile))) {
+                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > taxiCabDistance(inspectingTile, targetTile)) ||
+                        ((prevDistanceChecked == taxiCabDistance(inspectingTile, targetTile)) && (prevDirectionPriority > directionPriority(d)))) {
                     directionToMove = d;
                     prevDistanceChecked = taxiCabDistance(inspectingTile, targetTile);
                     prevDirectionPriority = directionPriority(d);
-                } else if (prevDistanceChecked == taxiCabDistance(inspectingTile, targetTile)) {
-                    if (prevDirectionPriority > directionPriority(d)) {
-                        directionToMove = d;
-                        prevDistanceChecked = taxiCabDistance(inspectingTile, targetTile);
-                        prevDirectionPriority = directionPriority(d);
-                    }
                 }
             }
 
-            ghost.setSpriteDirection(directionToMove);
-            if (!ghost.isScared()) ghost.setCurrentAnimation(directionToMove.toString());
-            ghost.move();
+            if (directionToMove != null) {
+                ghost.setSpriteDirection(directionToMove);
+                if (!ghost.isScared()) ghost.setCurrentAnimation(directionToMove.toString());
+                ghost.move();
+            }
         }
     }
 

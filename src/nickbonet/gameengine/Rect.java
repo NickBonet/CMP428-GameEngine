@@ -8,10 +8,10 @@ import java.awt.*;
  * @author Nicholas Bonet
  */
 public class Rect {
-    private int x;
-    private int y;
     private final int width;
     private final int height;
+    private int x;
+    private int y;
     private int diagonalX;
     private int diagonalY;
 
