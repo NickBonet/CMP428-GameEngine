@@ -69,6 +69,7 @@ public class TileMap {
         g.drawImage(map, 0, 0, null);
     }
 
+    // Returns the adjacent and corner tiles in a given direction, based on the tile at a given point.
     public List<Tile> getTilesInDirection(int x, int y, SpriteDir direction) {
         int row = y / mapModel.getPerTileHeight();
         int col = x / mapModel.getPerTileWidth();
@@ -103,6 +104,24 @@ public class TileMap {
                 break;
         }
         return tiles.parallelStream().filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    // Returns the immediate adjacent tile in a given direction, based on the tile at a given point.
+    public Tile getAdjacentTile(int x, int y, SpriteDir direction) {
+        int row = y / mapModel.getPerTileHeight();
+        int col = x / mapModel.getPerTileWidth();
+        switch (direction) {
+            case UP:
+                return getMainLayerTileAt(row - 1, col);
+            case DOWN:
+                return getMainLayerTileAt(row + 1, col);
+            case LEFT:
+                return getMainLayerTileAt(row, col - 1);
+            case RIGHT:
+                return getMainLayerTileAt(row, col + 1);
+            default:
+                return null;
+        }
     }
 
     public Tile getTileAtPoint(int x, int y) {

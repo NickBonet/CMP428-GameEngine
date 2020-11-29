@@ -1,7 +1,6 @@
 package nickbonet.pacmangame;
 
 import nickbonet.gameengine.GamePanel;
-import nickbonet.gameengine.sprite.Sprite;
 import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
@@ -15,6 +14,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static nickbonet.gameengine.util.CollisionUtil.isSpriteCollidingWithMap;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class PacmanGame extends GamePanel {
@@ -81,68 +82,9 @@ public class PacmanGame extends GamePanel {
         ghostMovement();
     }
 
-    private static int directionPriority(SpriteDir direction) {
-        switch (direction) {
-            case UP:
-                return 0;
-            case LEFT:
-                return 1;
-            case DOWN:
-                return 2;
-            case RIGHT:
-                return 3;
-            default:
-                throw new IllegalStateException("Unexpected value: " + direction);
-        }
-    }
-
     private void ghostMovement() {
         for (Ghost ghost : ghostList) {
-            SpriteDir currentDirection = ghost.getSpriteDirection();
-            // See which directions are available to move in at the ghost's current position.
-            // BESIDES the direction it came from.
-            ArrayList<SpriteDir> possibleDirections = new ArrayList<>(Arrays.asList(SpriteDir.values()));
-            possibleDirections.remove(currentDirection.getOpposite());
-            possibleDirections.remove(SpriteDir.ALL); // remove the ALL enum constant
-            possibleDirections.removeIf(d -> isSpriteCollidingWithMap(ghost, d));
-
-            SpriteDir directionToMove = null;
-            int prevDistanceChecked = -1;
-            int prevDirectionPriority = -1;
-            Tile targetTile = maps.get(0).getTileAtPoint(ghost.getTargetX(), ghost.getTargetY());
-
-            for (SpriteDir d : possibleDirections) {
-                Tile inspectingTile;
-                switch (d) {
-                    case LEFT:
-                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX() - 8, ghost.getBounds().getY());
-                        break;
-                    case RIGHT:
-                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX() + 8, ghost.getBounds().getY());
-                        break;
-                    case UP:
-                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX(), ghost.getBounds().getY() - 8);
-                        break;
-                    case DOWN:
-                        inspectingTile = maps.get(0).getTileAtPoint(ghost.getBounds().getX(), ghost.getBounds().getY() + 8);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + d);
-                }
-
-                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile)) ||
-                        ((prevDistanceChecked == TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile)) && (prevDirectionPriority > directionPriority(d)))) {
-                    directionToMove = d;
-                    prevDistanceChecked = TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile);
-                    prevDirectionPriority = directionPriority(d);
-                }
-            }
-
-            if (directionToMove != null) {
-                ghost.setSpriteDirection(directionToMove);
-                if (!ghost.isScared()) ghost.setCurrentAnimation(directionToMove.toString());
-                ghost.move();
-            }
+            ghost.calculateNextMove(maps.get(0));
         }
     }
 
@@ -150,64 +92,30 @@ public class PacmanGame extends GamePanel {
         SpriteDir direction = player.getSpriteDirection();
         boolean allowMove = false;
 
-        if (pressedKey[KeyEvent.VK_W] && !isSpriteCollidingWithMap(player, SpriteDir.UP)) {
+        if (pressedKey[KeyEvent.VK_W] && !isSpriteCollidingWithMap(player, SpriteDir.UP, maps.get(0))) {
             direction = SpriteDir.UP;
             allowMove = true;
         }
 
-        if (pressedKey[KeyEvent.VK_S] && !isSpriteCollidingWithMap(player, SpriteDir.DOWN)) {
+        if (pressedKey[KeyEvent.VK_S] && !isSpriteCollidingWithMap(player, SpriteDir.DOWN, maps.get(0))) {
             direction = SpriteDir.DOWN;
             allowMove = true;
         }
 
-        if (pressedKey[KeyEvent.VK_A] && !isSpriteCollidingWithMap(player, SpriteDir.LEFT)) {
+        if (pressedKey[KeyEvent.VK_A] && !isSpriteCollidingWithMap(player, SpriteDir.LEFT, maps.get(0))) {
             direction = SpriteDir.LEFT;
             allowMove = true;
         }
 
-        if (pressedKey[KeyEvent.VK_D] && !isSpriteCollidingWithMap(player, SpriteDir.RIGHT)) {
+        if (pressedKey[KeyEvent.VK_D] && !isSpriteCollidingWithMap(player, SpriteDir.RIGHT, maps.get(0))) {
             direction = SpriteDir.RIGHT;
             allowMove = true;
         }
 
-        if (allowMove || !isSpriteCollidingWithMap(player, direction)) {
+        if (allowMove || !isSpriteCollidingWithMap(player, direction, maps.get(0))) {
             player.setSpriteDirection(direction);
             player.setCurrentAnimation(direction.toString());
             player.move();
         }
-    }
-
-    // Basic collision detection based on the 8 map tiles surrounding a sprite.
-    private boolean isSpriteCollidingWithMap(Sprite sprite, SpriteDir direction) {
-        int velocity = sprite.getVelocity();
-        int dx = 0;
-        int dy = 0;
-
-        switch (direction) {
-            case RIGHT:
-                dx = velocity;
-                break;
-            case LEFT:
-                dx = -velocity;
-                break;
-            case UP:
-                dy = -velocity;
-                break;
-            case DOWN:
-                dy = velocity;
-                break;
-            default:
-                break;
-        }
-
-        return isCollidingInDirection(sprite, direction, dx, dy);
-    }
-
-    private boolean isCollidingInDirection(Sprite sprite, SpriteDir direction, int dx, int dy) {
-        boolean isColliding = false;
-        for (Tile tile : maps.get(0).getTilesInDirection(sprite.getBounds().getX(), sprite.getBounds().getY(), direction))
-            if (tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), dx, dy))
-                isColliding = true;
-        return isColliding;
     }
 }

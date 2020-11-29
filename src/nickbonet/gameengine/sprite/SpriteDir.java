@@ -5,15 +5,15 @@ package nickbonet.gameengine.sprite;
  */
 public enum SpriteDir {
     LEFT("left"), RIGHT("right"), DOWN("down"), UP("up"), ALL("all");
-    private final String direction;
-    private SpriteDir opposite;
-
     static {
         LEFT.opposite = RIGHT;
         RIGHT.opposite = LEFT;
         UP.opposite = DOWN;
         DOWN.opposite = UP;
     }
+
+    private final String direction;
+    private SpriteDir opposite;
 
     SpriteDir(String dir) {
         this.direction = dir;
