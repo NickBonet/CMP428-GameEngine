@@ -6,6 +6,7 @@ import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 import nickbonet.pacmangame.entity.Ghost;
 import nickbonet.pacmangame.entity.Pacman;
+import nickbonet.pacmangame.entity.RedGhost;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class PacmanGame extends GamePanel {
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
     private final transient Pacman player = new Pacman(3, 27);
-    private final transient Ghost redGhost = new Ghost(80, 27, "red", 100, 207, 0);
+    private final transient RedGhost redGhost = new RedGhost(80, 27, 100, 207, 0);
     private final transient Ghost blueGhost = new Ghost(64, 27, "blue", 100, 223, 287);
     private final transient Ghost pinkGhost = new Ghost(48, 27, "pink", 100, 16, 0);
     private final transient Ghost orangeGhost = new Ghost(32, 27, "orange", 100, 0, 287);
@@ -78,6 +79,12 @@ public class PacmanGame extends GamePanel {
 
     @Override
     protected void mainGameLogic() {
+        if (pressedKey[KeyEvent.VK_0])
+            for (Ghost ghost : ghostList)
+                ghost.setState(GhostState.SCATTER);
+        if (pressedKey[KeyEvent.VK_9])
+            for (Ghost ghost : ghostList)
+                ghost.setState(GhostState.CHASE);
         playerMovement();
         ghostMovement();
     }

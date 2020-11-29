@@ -15,7 +15,8 @@ import java.util.logging.Logger;
  * @author Nicholas Bonet
  */
 public abstract class Sprite {
-    private static final String SPRITE_FOLDER = "assets/sprites/";
+    private static final String BASE_SPRITE_FOLDER = "assets/sprites/";
+    protected String spriteFolder;
     protected int x;
     protected int y;
     protected Logger logger = Logger.getLogger("GameEngine", null);
@@ -25,9 +26,10 @@ public abstract class Sprite {
     protected Rect boundsRect;
     protected int velocity;
 
-    public Sprite(int x, int y, String spritePrefix, int delay) {
+    public Sprite(int x, int y, String spritePrefix, int delay, String spriteFolder) {
         this.x = x;
         this.y = y;
+        this.spriteFolder = spriteFolder;
         velocity = 1;
         loadBaseAnimations(spritePrefix, delay);
         initAnimations();
@@ -60,7 +62,7 @@ public abstract class Sprite {
     }
 
     public String getSpriteDirectory() {
-        return SPRITE_FOLDER + this.getClass().getSimpleName().toLowerCase();
+        return BASE_SPRITE_FOLDER + spriteFolder;
     }
 
     // Draws the sprite's current image based on its current state.

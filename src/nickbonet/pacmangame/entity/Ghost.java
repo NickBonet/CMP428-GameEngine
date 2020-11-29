@@ -6,6 +6,7 @@ import nickbonet.gameengine.sprite.Sprite;
 import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
+import nickbonet.pacmangame.GhostState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,15 +20,23 @@ import static nickbonet.pacmangame.Util.directionPriority;
  * @author Nicholas Bonet
  */
 public class Ghost extends Sprite {
-    private boolean isScared = false;
-    private int targetX;
-    private int targetY;
+    private GhostState currentState = GhostState.SCATTER;
+    private final int scatterTargetX;
+    private final int scatterTargetY;
+    private int chaseTargetX = 0;
+    private int chaseTargetY = 0;
 
-    public Ghost(int x, int y, String spritePrefix, int delay, int targetX, int targetY) {
-        super(x, y, spritePrefix, delay);
+    public Ghost(int x, int y, String spritePrefix, int delay, int scatterTargetX, int scatterTargetY) {
+        super(x, y, spritePrefix, delay, "ghost");
         this.boundsRect = new Rect(x + 4, y + 5, 8, 8);
-        this.targetX = targetX;
-        this.targetY = targetY;
+        this.scatterTargetX = scatterTargetX;
+        this.scatterTargetY = scatterTargetY;
+    }
+
+    protected void updateChaseTarget() {
+        /**
+         * To be overriden for each ghost.
+         */
     }
 
     @Override
@@ -48,7 +57,7 @@ public class Ghost extends Sprite {
         SpriteDir directionToMove = null;
         int prevDistanceChecked = -1;
         int prevDirectionPriority = -1;
-        Tile targetTile = map.getTileAtPoint(targetX, targetY);
+        Tile targetTile = currentTargetTile(map);
 
         for (SpriteDir d : possibleDirections) {
             Tile inspectingTile = map.getAdjacentTile(boundsRect.getX(), boundsRect.getY(), d);
@@ -69,32 +78,25 @@ public class Ghost extends Sprite {
 
         if (directionToMove != null) {
             setSpriteDirection(directionToMove);
-            if (!isScared()) setCurrentAnimation(directionToMove.toString());
+            if (currentState != GhostState.FRIGHTENED) setCurrentAnimation(directionToMove.toString());
             move();
         }
     }
 
-    public boolean isScared() {
-        return isScared;
+    public void setState(GhostState state) {
+        currentState = state;
     }
 
-    public void setScared(boolean scared) {
-        isScared = scared;
-    }
-
-    public int getTargetX() {
-        return targetX;
-    }
-
-    public void setTargetX(int targetX) {
-        this.targetX = targetX;
-    }
-
-    public int getTargetY() {
-        return targetY;
-    }
-
-    public void setTargetY(int targetY) {
-        this.targetY = targetY;
+    // Returns the correct target tile, based on the current ghost state.
+    private Tile currentTargetTile(TileMap map) {
+        switch (currentState) {
+            case CHASE:
+                return map.getTileAtPoint(chaseTargetX, chaseTargetY);
+            case SCATTER:
+                return map.getTileAtPoint(scatterTargetX, scatterTargetY);
+            case FRIGHTENED: // TODO: implement this
+            default:
+                return null;
+        }
     }
 }
