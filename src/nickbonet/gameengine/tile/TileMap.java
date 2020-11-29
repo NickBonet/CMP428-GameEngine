@@ -26,6 +26,17 @@ public class TileMap {
         this.objectLayerTiles = new Tile[mapModel.getMapRows()][mapModel.getMapColumns()];
     }
 
+    // Calculates the distance between two tiles. (from their center points)
+    // Utilizes the taxicab distance formula.
+    public static int distanceBetweenTiles(Tile firstTile, Tile secondTile) {
+        int x1 = (firstTile.getX() + (firstTile.getWidth() / 2));
+        int y1 = (firstTile.getY() + (firstTile.getHeight() / 2));
+        int x2 = (secondTile.getX() + (secondTile.getWidth() / 2));
+        int y2 = (secondTile.getY() + (secondTile.getHeight() / 2));
+
+        return Math.abs((x2 - x1)) + Math.abs((y2 - y1));
+    }
+
     public void initializeMap() {
         for (int row = 0; row < mapModel.getMapRows(); row++) {
             for (int col = 0; col < mapModel.getMapColumns(); col++) {
@@ -59,7 +70,7 @@ public class TileMap {
         g.drawImage(map, 0, 0, null);
     }
 
-    public List<Tile> getSurroundingTiles(int x, int y, SpriteDir direction) {
+    public List<Tile> getTilesInDirection(int x, int y, SpriteDir direction) {
         int row = y / mapModel.getPerTileHeight();
         int col = x / mapModel.getPerTileWidth();
         List<Tile> tiles = new ArrayList<>();
