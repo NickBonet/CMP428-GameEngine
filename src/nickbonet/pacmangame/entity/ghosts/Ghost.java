@@ -79,6 +79,7 @@ public class Ghost extends Sprite {
 
     public void setState(GhostState state) {
         currentState = state;
+        currentDirection = currentDirection.getOpposite();
     }
 
     // Returns the correct target tile, based on the current ghost state.

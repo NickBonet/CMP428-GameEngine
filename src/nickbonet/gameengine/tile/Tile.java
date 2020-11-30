@@ -11,13 +11,15 @@ public class Tile {
     private final BufferedImage tileImage;
     private int x;
     private int y;
+    private final int tileID;
     private Rect boundsRect;
     private boolean collisionEnabled = false;
 
-    public Tile(BufferedImage image) {
+    public Tile(BufferedImage image, int tileID) {
         this.tileImage = image;
         this.width = image.getWidth();
         this.height = image.getHeight();
+        this.tileID = tileID;
     }
 
     public void draw(Graphics g) {
@@ -68,5 +70,9 @@ public class Tile {
 
     public void initBoundsRect() {
         this.boundsRect = new Rect(x, y, width, height);
+    }
+
+    public int getTileID() {
+        return tileID;
     }
 }

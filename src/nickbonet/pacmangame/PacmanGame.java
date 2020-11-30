@@ -28,6 +28,8 @@ public class PacmanGame extends GamePanel {
     private final transient OrangeGhost orangeGhost = new OrangeGhost(32, 27, 100, 0, 287);
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
+    private int pelletsLeft = 240;
+    private int score = 0;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -103,6 +105,7 @@ public class PacmanGame extends GamePanel {
                 ghost.setState(GhostState.CHASE);
         playerMovement();
         ghostMovement();
+        playerObjectCheck();
     }
 
     private void ghostMovement() {
@@ -143,6 +146,17 @@ public class PacmanGame extends GamePanel {
             player.setSpriteDirection(direction);
             player.setCurrentAnimation(direction.toString());
             player.move();
+        }
+    }
+
+    private void playerObjectCheck() {
+        if (maps.get(0).getObjectTileAtPoint(player.getBounds().getX(), player.getBounds().getY()) != null) {
+            Tile objectTile = maps.get(0).getObjectTileAtPoint(player.getBounds().getX(), player.getBounds().getY());
+            if (objectTile.getTileID() == 404) {
+                maps.get(0).removeObjectTile(objectTile.getX(), objectTile.getY());
+                pelletsLeft -= 1;
+                score += 10;
+            }
         }
     }
 }

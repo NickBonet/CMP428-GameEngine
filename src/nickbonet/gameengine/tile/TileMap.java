@@ -39,11 +39,13 @@ public class TileMap {
     public void initializeMap() {
         for (int row = 0; row < mapModel.getMapRows(); row++) {
             for (int col = 0; col < mapModel.getMapColumns(); col++) {
-                BufferedImage tileImage = tileSet.getTileImageList().get(mapModel.getMapLayout()[row][col]);
-                Tile currentTile = new Tile(tileImage);
+                int tileID = mapModel.getMapLayout()[row][col];
+                BufferedImage tileImage = tileSet.getTileImageList().get(tileID);
+                Tile currentTile = new Tile(tileImage, tileID);
                 currentTile.setCollisionEnabled(mapModel.getCollisionMap()[row][col]);
                 if (mapModel.getObjectMap()[row][col] != -1) {
-                    Tile objectTile = new Tile(tileSet.getTileImageList().get(mapModel.getObjectMap()[row][col]));
+                    int objTileID = mapModel.getObjectMap()[row][col];
+                    Tile objectTile = new Tile(tileSet.getTileImageList().get(objTileID), objTileID);
                     objectTile.setX(mapModel.getPerTileWidth() * col);
                     objectTile.setY(mapModel.getPerTileHeight() * row);
                     objectLayerTiles[row][col] = objectTile;
@@ -136,5 +138,25 @@ public class TileMap {
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    public Tile getObjectTileAtPoint(int x, int y) {
+        int row = y / mapModel.getPerTileHeight();
+        int col = x / mapModel.getPerTileWidth();
+        return getObjectLayerTileAt(row, col);
+    }
+
+    private Tile getObjectLayerTileAt(int row, int col) {
+        try {
+            return objectLayerTiles[row][col];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public void removeObjectTile(int x, int y) {
+        int row = y / mapModel.getPerTileHeight();
+        int col = x / mapModel.getPerTileWidth();
+        objectLayerTiles[row][col] = null;
     }
 }
