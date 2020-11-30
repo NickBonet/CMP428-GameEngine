@@ -16,8 +16,8 @@ public class PinkGhost extends Ghost {
         if (map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(), player.getSpriteDirection(), 4) != null) {
             Tile offsetTile = map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(),
                     player.getSpriteDirection(), 4);
-            chaseTargetX = offsetTile.getX() + (offsetTile.getWidth() / 2);
-            chaseTargetY = offsetTile.getY() + (offsetTile.getHeight() / 2);
+            chaseTargetX = offsetTile.getX();
+            chaseTargetY = offsetTile.getY();
         }
     }
 }
