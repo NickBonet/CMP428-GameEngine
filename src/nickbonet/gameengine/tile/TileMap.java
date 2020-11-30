@@ -106,19 +106,19 @@ public class TileMap {
         return tiles.parallelStream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    // Returns the immediate adjacent tile in a given direction, based on the tile at a given point.
-    public Tile getAdjacentTile(int x, int y, SpriteDir direction) {
+    // Returns a nearby tile in any of the 4 directions, with a provided offset for how far to grab a tile from the given point.
+    public Tile getNearbyTile(int x, int y, SpriteDir direction, int tileOffset) {
         int row = y / mapModel.getPerTileHeight();
         int col = x / mapModel.getPerTileWidth();
         switch (direction) {
             case UP:
-                return getMainLayerTileAt(row - 1, col);
+                return getMainLayerTileAt(row - tileOffset, col);
             case DOWN:
-                return getMainLayerTileAt(row + 1, col);
+                return getMainLayerTileAt(row + tileOffset, col);
             case LEFT:
-                return getMainLayerTileAt(row, col - 1);
+                return getMainLayerTileAt(row, col - tileOffset);
             case RIGHT:
-                return getMainLayerTileAt(row, col + 1);
+                return getMainLayerTileAt(row, col + tileOffset);
             default:
                 return null;
         }

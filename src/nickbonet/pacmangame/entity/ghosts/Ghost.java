@@ -54,7 +54,7 @@ public class Ghost extends Sprite {
         Tile targetTile = currentTargetTile(map);
 
         for (SpriteDir d : possibleDirections) {
-            Tile inspectingTile = map.getAdjacentTile(boundsRect.getX(), boundsRect.getY(), d);
+            Tile inspectingTile = map.getNearbyTile(boundsRect.getX(), boundsRect.getY(), d, 1);
             // If there's no current direction set, just set the direction to that of the current tile being checked.
             // If there is a direction set, check if the tile being checked has a shorter distance to the target tile.
             // If it does, set direction to that of the new tile.
