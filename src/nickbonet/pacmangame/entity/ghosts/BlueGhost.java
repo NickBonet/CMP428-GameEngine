@@ -5,8 +5,7 @@ public class BlueGhost extends Ghost {
         super(x, y, "blue", delay, scatterTargetX, scatterTargetY);
     }
 
-    @Override
-    protected void updateChaseTarget() {
+    public void updateChaseTarget() {
 
     }
 }

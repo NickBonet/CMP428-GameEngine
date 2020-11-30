@@ -89,6 +89,7 @@ public class PacmanGame extends GamePanel {
     }
 
     private void ghostMovement() {
+        redGhost.updateChaseTarget(player.getBounds());
         for (Ghost ghost : ghostList) {
             ghost.calculateNextMove(maps.get(0));
         }
