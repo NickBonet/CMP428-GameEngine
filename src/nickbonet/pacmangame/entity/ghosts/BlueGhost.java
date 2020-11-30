@@ -10,6 +10,11 @@ public class BlueGhost extends Ghost {
         super(x, y, "blue", delay, scatterTargetX, scatterTargetY);
     }
 
+    // For Inky's chase target tile, we start off with a tile 2 away from Pac-Man's current direction and position.
+    // Next, we check where Blinky is, and the distance between Blinky and the tile selected above. (in terms of X/Y)
+    // Then, we create coordinates for a new tile by adding the resulting distances found above to the first offset tile's
+    // X and Y coordinates. We then check if the position is a valid/existing tile, and if it is, set the ghost's target
+    // to the final X and Y calculations.
     public void updateChaseTarget(Pacman player, Rect redGhost, TileMap map) {
         if (map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(), player.getSpriteDirection(), 2) != null) {
             Tile offsetTile = map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(),
@@ -17,9 +22,11 @@ public class BlueGhost extends Ghost {
             Tile currentBlinkyTile = map.getTileAtPoint(redGhost.getX(), redGhost.getY());
             int blinkyDistFromOffsetX = offsetTile.getX() - currentBlinkyTile.getX();
             int blinkyDistFromOffsetY = offsetTile.getY() - currentBlinkyTile.getY();
-            if (map.getTileAtPoint(offsetTile.getX() + blinkyDistFromOffsetX, offsetTile.getY() + blinkyDistFromOffsetY) != null) {
-                chaseTargetX = offsetTile.getX() + blinkyDistFromOffsetX;
-                chaseTargetY = offsetTile.getY() + blinkyDistFromOffsetY;
+            int finalTileX = offsetTile.getX() + blinkyDistFromOffsetX;
+            int finalTileY = offsetTile.getY() + blinkyDistFromOffsetY;
+            if (map.getTileAtPoint(finalTileX, finalTileY) != null) {
+                chaseTargetX = finalTileX;
+                chaseTargetY = finalTileY;
             }
         }
     }
