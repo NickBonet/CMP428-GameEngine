@@ -49,16 +49,31 @@ public class PacmanGame extends GamePanel {
         BufferedImage frame = new BufferedImage(224, 288, BufferedImage.TYPE_INT_RGB);
         Graphics base = frame.createGraphics();
         super.paintComponent(base);
-        if (!maps.isEmpty()) {
-            maps.get(0).drawMap(base);
-            for (Tile tile : maps.get(0).getTilesInDirection(player.getBounds().getX(), player.getBounds().getY(), SpriteDir.ALL))
-                tile.drawBoundsRect(base);
-        }
+        if (!maps.isEmpty()) maps.get(0).drawMap(base);
         player.draw(base);
         for (Ghost ghost : ghostList)
             ghost.draw(base);
+        // Debug info/metrics
+        if (!maps.isEmpty()) {
+            paintDebugVisuals(base);
+        }
         base.dispose();
         g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
+    }
+
+    private void paintDebugVisuals(Graphics base) {
+        for (Tile tile : maps.get(0).getTilesInDirection(player.getBounds().getX(), player.getBounds().getY(), SpriteDir.ALL))
+            tile.drawBoundsRect(base);
+        base.setColor(Color.cyan);
+        base.drawOval(player.getBounds().getX() + 4 - 64, player.getBounds().getY() + 4 - 64, 128, 128);
+        base.setColor(Color.MAGENTA);
+        base.drawRect(redGhost.getChaseTargetX(), redGhost.getChaseTargetY(), 8, 8);
+        base.setColor(Color.PINK);
+        base.drawRect(maps.get(0).getTileAtPoint(pinkGhost.getChaseTargetX(), pinkGhost.getChaseTargetY()).getX(),
+                maps.get(0).getTileAtPoint(pinkGhost.getChaseTargetX(), pinkGhost.getChaseTargetY()).getY(), 8, 8);
+        base.setColor(Color.ORANGE);
+        base.drawRect(maps.get(0).getTileAtPoint(orangeGhost.getChaseTargetX(), orangeGhost.getChaseTargetY()).getX(),
+                maps.get(0).getTileAtPoint(orangeGhost.getChaseTargetX(), orangeGhost.getChaseTargetY()).getY(), 8, 8);
     }
 
     @Override
@@ -91,6 +106,7 @@ public class PacmanGame extends GamePanel {
     private void ghostMovement() {
         redGhost.updateChaseTarget(player.getBounds());
         pinkGhost.updateChaseTarget(player, maps.get(0));
+        orangeGhost.updateChaseTarget(player, maps.get(0));
         for (Ghost ghost : ghostList) {
             ghost.calculateNextMove(maps.get(0));
         }

@@ -21,8 +21,8 @@ import static nickbonet.pacmangame.Util.directionPriority;
  */
 public class Ghost extends Sprite {
     private GhostState currentState = GhostState.SCATTER;
-    private final int scatterTargetX;
-    private final int scatterTargetY;
+    protected final int scatterTargetX;
+    protected final int scatterTargetY;
     protected int chaseTargetX = 0;
     protected int chaseTargetY = 0;
 
@@ -92,5 +92,13 @@ public class Ghost extends Sprite {
             default:
                 return null;
         }
+    }
+
+    public int getChaseTargetX() {
+        return chaseTargetX;
+    }
+
+    public int getChaseTargetY() {
+        return chaseTargetY;
     }
 }

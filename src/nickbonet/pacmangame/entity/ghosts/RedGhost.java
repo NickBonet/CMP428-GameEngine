@@ -7,6 +7,7 @@ public class RedGhost extends Ghost {
         super(x, y, "red", delay, scatterTargetX, scatterTargetY);
     }
 
+    // Blinky just chases Pac-Man directly.
     public void updateChaseTarget(Rect playerBounds) {
         chaseTargetX = playerBounds.getX();
         chaseTargetY = playerBounds.getY();
