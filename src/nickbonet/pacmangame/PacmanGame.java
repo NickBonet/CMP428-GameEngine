@@ -4,8 +4,8 @@ import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
-import nickbonet.pacmangame.entity.ghosts.*;
 import nickbonet.pacmangame.entity.Pacman;
+import nickbonet.pacmangame.entity.ghosts.*;
 
 import javax.swing.*;
 import java.awt.*;

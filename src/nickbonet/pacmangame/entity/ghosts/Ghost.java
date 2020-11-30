@@ -20,11 +20,11 @@ import static nickbonet.pacmangame.Util.directionPriority;
  * @author Nicholas Bonet
  */
 public class Ghost extends Sprite {
-    private GhostState currentState = GhostState.SCATTER;
     protected final int scatterTargetX;
     protected final int scatterTargetY;
     protected int chaseTargetX = 0;
     protected int chaseTargetY = 0;
+    private GhostState currentState = GhostState.SCATTER;
 
     public Ghost(int x, int y, String spritePrefix, int delay, int scatterTargetX, int scatterTargetY) {
         super(x, y, spritePrefix, delay, "ghost");

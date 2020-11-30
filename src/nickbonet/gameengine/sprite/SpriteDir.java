@@ -5,6 +5,7 @@ package nickbonet.gameengine.sprite;
  */
 public enum SpriteDir {
     LEFT("left"), RIGHT("right"), DOWN("down"), UP("up"), ALL("all");
+
     static {
         LEFT.opposite = RIGHT;
         RIGHT.opposite = LEFT;
