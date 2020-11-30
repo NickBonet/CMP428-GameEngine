@@ -66,6 +66,8 @@ public class PacmanGame extends GamePanel {
             tile.drawBoundsRect(base);
         base.setColor(Color.cyan);
         base.drawOval(player.getBounds().getX() + 4 - 64, player.getBounds().getY() + 4 - 64, 128, 128);
+        base.drawRect(maps.get(0).getTileAtPoint(blueGhost.getChaseTargetX(), blueGhost.getChaseTargetY()).getX(),
+                maps.get(0).getTileAtPoint(blueGhost.getChaseTargetX(), blueGhost.getChaseTargetY()).getY(), 8, 8);
         base.setColor(Color.MAGENTA);
         base.drawRect(redGhost.getChaseTargetX(), redGhost.getChaseTargetY(), 8, 8);
         base.setColor(Color.PINK);
@@ -106,7 +108,8 @@ public class PacmanGame extends GamePanel {
     private void ghostMovement() {
         redGhost.updateChaseTarget(player.getBounds());
         pinkGhost.updateChaseTarget(player, maps.get(0));
-        orangeGhost.updateChaseTarget(player, maps.get(0));
+        orangeGhost.updateChaseTarget(player.getBounds(), maps.get(0));
+        blueGhost.updateChaseTarget(player, redGhost.getBounds(), maps.get(0));
         for (Ghost ghost : ghostList) {
             ghost.calculateNextMove(maps.get(0));
         }
