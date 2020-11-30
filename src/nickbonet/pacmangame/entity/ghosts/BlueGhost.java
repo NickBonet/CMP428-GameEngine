@@ -14,7 +14,7 @@ public class BlueGhost extends Ghost {
     // Next, we check where Blinky is, and the distance between Blinky and the tile selected above. (in terms of X/Y)
     // Then, we create coordinates for a new tile by adding the resulting distances found above to the first offset tile's
     // X and Y coordinates. We then check if the position is a valid/existing tile, and if it is, set the ghost's target
-    // to the final X and Y calculations.
+    // to the final X and Y calculations. (experimental) If not, use the first offset tile's X and Y.
     public void updateChaseTarget(Pacman player, Rect redGhost, TileMap map) {
         if (map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(), player.getSpriteDirection(), 2) != null) {
             Tile offsetTile = map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(),
@@ -27,6 +27,9 @@ public class BlueGhost extends Ghost {
             if (map.getTileAtPoint(finalTileX, finalTileY) != null) {
                 chaseTargetX = finalTileX;
                 chaseTargetY = finalTileY;
+            } else {
+                chaseTargetX = offsetTile.getX();
+                chaseTargetY = offsetTile.getY();
             }
         }
     }
