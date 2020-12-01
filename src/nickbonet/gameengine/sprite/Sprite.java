@@ -23,11 +23,12 @@ public abstract class Sprite {
     protected SpriteDir currentDirection;
     protected String currentAnimation = "";
     protected boolean isMoving;
+    protected boolean isVisible = true;
     protected HashMap<String, Animation> animDict = new HashMap<>();
     protected Rect boundsRect;
     protected int velocity;
 
-    public Sprite(int x, int y, String spritePrefix, int delay, String spriteFolder) {
+    protected Sprite(int x, int y, String spritePrefix, int delay, String spriteFolder) {
         this.x = x;
         this.y = y;
         this.spriteFolder = spriteFolder;
@@ -68,16 +69,19 @@ public abstract class Sprite {
 
     // Draws the sprite's current image based on its current state.
     public void draw(Graphics g) {
-        if (animDict.containsKey(currentAnimation)) {
-            g.drawImage(animDict.get(currentAnimation).getCurrentFrame(), x, y, null);
-        } else {
-            Animation firstAnim = getFirstAnimation();
-            g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
-        }
+        if (isVisible) {
+            if (animDict.containsKey(currentAnimation)) {
+                if (isMoving) g.drawImage(animDict.get(currentAnimation).getCurrentFrame(), x, y, null);
+                else g.drawImage(animDict.get(currentAnimation).getFirstFrame(), x, y, null);
+            } else {
+                Animation firstAnim = getFirstAnimation();
+                g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
+            }
 
-        // For debug purposes, draw the bounding box of the sprite.
-        g.setColor(Color.blue);
-        boundsRect.draw(g);
+            // For debug purposes, draw the bounding box of the sprite.
+            g.setColor(Color.blue);
+            boundsRect.draw(g);
+        }
     }
 
     public void move() {
@@ -134,5 +138,18 @@ public abstract class Sprite {
 
     public void setMoving(boolean moving) {
         isMoving = moving;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    public void restartAnimation(String animation) {
+        animDict.get(animation).stopAnimation();
+        animDict.get(animation).startAnimation();
+    }
+
+    public void stopAnimation(String animation) {
+        animDict.get(animation).stopAnimation();
     }
 }

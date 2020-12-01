@@ -1,6 +1,7 @@
 package nickbonet.pacmangame.entity;
 
 import nickbonet.gameengine.Rect;
+import nickbonet.gameengine.sprite.Animation;
 import nickbonet.gameengine.sprite.Sprite;
 
 /**
@@ -16,8 +17,7 @@ public class Pacman extends Sprite {
 
     @Override
     protected void initAnimations() {
-        /*
-         * Don't need anything here yet.
-         */
+        Animation diedAnim = new Animation(150, "died_", getSpriteDirectory());
+        animDict.put("died", diedAnim);
     }
 }

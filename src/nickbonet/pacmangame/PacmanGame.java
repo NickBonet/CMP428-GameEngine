@@ -9,6 +9,8 @@ import nickbonet.pacmangame.entity.ghosts.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import static nickbonet.gameengine.util.CollisionUtil.isSpriteCollidingWithMap;
 public class PacmanGame extends GamePanel {
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
-    private final transient Pacman player = new Pacman(3, 27);
+    private final transient Pacman player = new Pacman(192, 27);
     private final transient RedGhost redGhost = new RedGhost(80, 27, 100, 207, 0);
     private final transient BlueGhost blueGhost = new BlueGhost(64, 27, 100, 223, 287);
     private final transient PinkGhost pinkGhost = new PinkGhost(48, 27, 100, 16, 0);
@@ -30,6 +32,11 @@ public class PacmanGame extends GamePanel {
     private final transient List<TileMap> maps = new ArrayList<>();
     private int pelletsLeft = 240;
     private int score = 0;
+    private LevelState currentLevelState = LevelState.RUNNING;
+
+    enum LevelState {
+        RUNNING, FINISHED, PAC_HIT, PAC_DIED_ANIM;
+    }
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -56,9 +63,9 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList)
             ghost.draw(base);
         // Debug info/metrics
-        if (!maps.isEmpty()) {
-            paintDebugVisuals(base);
-        }
+        //if (!maps.isEmpty()) {
+        //    paintDebugVisuals(base);
+        //}
         base.dispose();
         g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
     }
@@ -99,16 +106,27 @@ public class PacmanGame extends GamePanel {
 
     @Override
     protected void mainGameLogic() {
-        if (pressedKey[KeyEvent.VK_0])
-            for (Ghost ghost : ghostList)
-                ghost.setState(GhostState.SCATTER);
-        if (pressedKey[KeyEvent.VK_9])
-            for (Ghost ghost : ghostList)
-                ghost.setState(GhostState.CHASE);
-        playerMovement();
-        playerEntityCollisionCheck();
-        playerObjectCheck();
-        ghostMovement();
+        switch (currentLevelState) {
+            case RUNNING:
+                if (pressedKey[KeyEvent.VK_0])
+                    for (Ghost ghost : ghostList)
+                        ghost.setState(GhostState.SCATTER);
+                if (pressedKey[KeyEvent.VK_9])
+                    for (Ghost ghost : ghostList)
+                        ghost.setState(GhostState.CHASE);
+                playerMovement();
+                playerEntityCollisionCheck();
+                playerObjectCheck();
+                ghostMovement();
+                break;
+            case PAC_HIT:
+                restartLevel();
+                break;
+            case PAC_DIED_ANIM:
+                break;
+            case FINISHED:
+                break;
+        }
     }
 
     private void ghostMovement() {
@@ -159,17 +177,40 @@ public class PacmanGame extends GamePanel {
                 maps.get(0).removeObjectTile(objectTile.getX(), objectTile.getY());
                 pelletsLeft -= 1;
                 score += 10;
+                System.out.println("Score: " + score);
             }
         }
     }
 
     private void playerEntityCollisionCheck() {
-        boolean hitGhost = false;
         for (Ghost ghost : ghostList) {
             if (ghost.getBounds().overlaps(player.getBounds(), 0, 0)) {
-                hitGhost = true;
+                currentLevelState = LevelState.PAC_HIT;
                 break;
             }
+        }
+    }
+
+    private void restartLevel() {
+        player.setMoving(false);
+        for (Ghost ghost : ghostList) ghost.setMoving(false);
+        try {
+            Thread.sleep(250);
+            for (Ghost ghost : ghostList) ghost.setVisible(false);
+            player.setCurrentAnimation("died");
+            player.setMoving(true);
+            player.restartAnimation("died");
+            // Setting this timer and letting the death animation complete seems to be offset by 2 ticks (300 delay)
+            Timer t = new Timer(1500, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    player.stopAnimation("died");
+                }
+            });
+            t.start();
+            currentLevelState = LevelState.PAC_DIED_ANIM;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
