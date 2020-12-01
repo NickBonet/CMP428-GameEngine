@@ -22,6 +22,7 @@ public abstract class Sprite {
     protected Logger logger = Logger.getLogger("GameEngine", null);
     protected SpriteDir currentDirection;
     protected String currentAnimation = "";
+    protected boolean isMoving;
     protected HashMap<String, Animation> animDict = new HashMap<>();
     protected Rect boundsRect;
     protected int velocity;
@@ -80,26 +81,27 @@ public abstract class Sprite {
     }
 
     public void move() {
-        switch (currentDirection) {
-            case UP:
-                y -= velocity;
-                boundsRect.move(0, -velocity);
-                break;
-            case DOWN:
-                y += velocity;
-                boundsRect.move(0, +velocity);
-                break;
-            case LEFT:
-                x -= velocity;
-                boundsRect.move(-velocity, 0);
-                break;
-            case RIGHT:
-                x += velocity;
-                boundsRect.move(velocity, 0);
-                break;
-            default:
-                break;
-        }
+        if (isMoving)
+            switch (currentDirection) {
+                case UP:
+                    y -= velocity;
+                    boundsRect.move(0, -velocity);
+                    break;
+                case DOWN:
+                    y += velocity;
+                    boundsRect.move(0, +velocity);
+                    break;
+                case LEFT:
+                    x -= velocity;
+                    boundsRect.move(-velocity, 0);
+                    break;
+                case RIGHT:
+                    x += velocity;
+                    boundsRect.move(velocity, 0);
+                    break;
+                default:
+                    break;
+            }
     }
 
     public Rect getBounds() {
@@ -128,5 +130,9 @@ public abstract class Sprite {
 
     public void setCurrentAnimation(String currentAnimation) {
         this.currentAnimation = currentAnimation;
+    }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
     }
 }

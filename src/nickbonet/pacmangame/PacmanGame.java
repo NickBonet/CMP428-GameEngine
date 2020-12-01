@@ -91,8 +91,10 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList) {
             ghost.setSpriteDirection(SpriteDir.LEFT);
             ghost.setCurrentAnimation(SpriteDir.LEFT.toString());
+            ghost.setMoving(true);
         }
         player.setSpriteDirection(SpriteDir.LEFT);
+        player.setMoving(true);
     }
 
     @Override
@@ -104,8 +106,9 @@ public class PacmanGame extends GamePanel {
             for (Ghost ghost : ghostList)
                 ghost.setState(GhostState.CHASE);
         playerMovement();
-        ghostMovement();
+        playerEntityCollisionCheck();
         playerObjectCheck();
+        ghostMovement();
     }
 
     private void ghostMovement() {
@@ -156,6 +159,16 @@ public class PacmanGame extends GamePanel {
                 maps.get(0).removeObjectTile(objectTile.getX(), objectTile.getY());
                 pelletsLeft -= 1;
                 score += 10;
+            }
+        }
+    }
+
+    private void playerEntityCollisionCheck() {
+        boolean hitGhost = false;
+        for (Ghost ghost : ghostList) {
+            if (ghost.getBounds().overlaps(player.getBounds(), 0, 0)) {
+                hitGhost = true;
+                break;
             }
         }
     }
