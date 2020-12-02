@@ -29,6 +29,7 @@ public abstract class Sprite {
     protected SpriteDir currentDirection;
     protected String currentAnimation = "";
     protected boolean isMoving;
+    protected boolean canTraverseOverrideTiles = false;
     protected boolean isVisible = true;
     protected HashMap<String, Animation> animDict = new HashMap<>();
     protected Rect boundsRect;
@@ -170,5 +171,13 @@ public abstract class Sprite {
 
     public void respawn() {
         setNewLocation(spawnX, spawnY);
+    }
+
+    public boolean canTraverseOverrideTiles() {
+        return canTraverseOverrideTiles;
+    }
+
+    public void setCanTraverseOverrideTiles(boolean canTraverseOverrideTiles) {
+        this.canTraverseOverrideTiles = canTraverseOverrideTiles;
     }
 }

@@ -34,7 +34,7 @@ public class PacmanGame extends GamePanel {
     private int level = 1;
     private boolean enableDebugVisuals = false;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
-
+    private final transient List<Timer> currentTimers = new ArrayList<>();
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         JFrame frame = new JFrame("Pac-Man");
@@ -191,6 +191,11 @@ public class PacmanGame extends GamePanel {
     private void newLevelStarting() {
         System.out.println("Now starting level: " + level);
         maps.get(0).initializeMap();
+        // TODO: refactor this into a method in TileMap
+        Tile doorTile1 = maps.get(0).getTileAtPoint(104, 120);
+        Tile doorTile2 = maps.get(0).getTileAtPoint(112, 120);
+        doorTile1.setCollisionOverride(true);
+        doorTile2.setCollisionOverride(true);
         pelletsLeft = PELLETS_ON_BOARD;
         redGhost.setInGhostHouse(false);
         restartLevelInProgress();
@@ -246,6 +251,8 @@ public class PacmanGame extends GamePanel {
         });
         restartTimer.setRepeats(false);
         restartTimer.start();
+        currentTimers.forEach(Timer::stop);
+        currentTimers.clear();
         currentLevelState = LevelState.PAC_DIED;
     }
 
@@ -265,6 +272,26 @@ public class PacmanGame extends GamePanel {
         player.setCurrentAnimation("left");
         currentLevelState = LevelState.LEVEL_RUNNING;
         pauseGameLoop(1500);
+        setupGhostHouseExit(pinkGhost, 3500);
+        setupGhostHouseExit(blueGhost, 5500);
+        setupGhostHouseExit(orangeGhost, 8000);
+    }
+
+    private void setupGhostHouseExit(Ghost ghost, int delay) {
+        Timer leaveHouseTimer = new Timer(delay, e -> {
+            ghost.setCanTraverseOverrideTiles(true);
+            ghost.setMoving(true);
+            Timer disableOverride = new Timer(400, f -> {
+                ghost.setInGhostHouse(false);
+                ghost.setCanTraverseOverrideTiles(false);
+            });
+            disableOverride.setRepeats(false);
+            disableOverride.start();
+            currentTimers.add(disableOverride);
+        });
+        leaveHouseTimer.setRepeats(false);
+        leaveHouseTimer.start();
+        currentTimers.add(leaveHouseTimer);
     }
 
     enum LevelState {

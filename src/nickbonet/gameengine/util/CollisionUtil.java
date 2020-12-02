@@ -43,7 +43,8 @@ public class CollisionUtil {
     private static boolean isCollidingInDirection(Sprite sprite, SpriteDir direction, int dx, int dy, TileMap map) {
         boolean isColliding = false;
         for (Tile tile : map.getTilesInDirection(sprite.getBounds().getX(), sprite.getBounds().getY(), direction))
-            if (tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), dx, dy)) {
+            if ((tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), dx, dy)) &&
+                    !(sprite.canTraverseOverrideTiles() && tile.isCollisionOverride())) {
                 isColliding = true;
                 break;
             }

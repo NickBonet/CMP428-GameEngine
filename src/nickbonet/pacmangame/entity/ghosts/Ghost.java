@@ -23,6 +23,8 @@ public class Ghost extends Sprite {
     protected final int scatterTargetY;
     protected int chaseTargetX = 0;
     protected int chaseTargetY = 0;
+    protected int ghostHouseExitX = 104;
+    protected int ghostHouseExitY = 107;
     protected boolean inGhostHouse = true;
     private GhostState currentState = GhostState.SCATTER;
 
@@ -55,7 +57,11 @@ public class Ghost extends Sprite {
         SpriteDir directionToMove = null;
         int prevDistanceChecked = -1;
         int prevDirectionPriority = -1;
-        Tile targetTile = currentTargetTile(map);
+        Tile targetTile;
+        if (!inGhostHouse) targetTile = currentTargetTile(map);
+        else {
+            targetTile = map.getTileAtPoint(ghostHouseExitX, ghostHouseExitY);
+        }
 
         for (SpriteDir d : possibleDirections) {
             Tile inspectingTile = map.getNearbyTile(boundsRect.getX(), boundsRect.getY(), d, 1);
@@ -83,7 +89,7 @@ public class Ghost extends Sprite {
 
     public void setState(GhostState state) {
         currentState = state;
-        currentDirection = currentDirection.getOpposite();
+        if (!inGhostHouse) currentDirection = currentDirection.getOpposite();
     }
 
     // Returns the correct target tile, based on the current ghost state.

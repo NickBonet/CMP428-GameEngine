@@ -1,6 +1,7 @@
 package nickbonet.pacmangame.entity.ghosts;
 
 import nickbonet.gameengine.Rect;
+import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 import nickbonet.pacmangame.entity.Pacman;
@@ -32,5 +33,12 @@ public class BlueGhost extends Ghost {
                 chaseTargetY = offsetTile.getY();
             }
         }
+    }
+
+    @Override
+    public void respawn() {
+        super.respawn();
+        currentDirection = SpriteDir.RIGHT;
+        inGhostHouse = true;
     }
 }

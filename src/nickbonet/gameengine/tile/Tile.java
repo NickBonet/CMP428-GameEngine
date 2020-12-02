@@ -13,6 +13,7 @@ public class Tile {
     private int x;
     private int y;
     private Rect boundsRect;
+    private boolean collisionOverride = false;
     private boolean collisionEnabled = false;
 
     public Tile(BufferedImage image, int tileID) {
@@ -74,5 +75,13 @@ public class Tile {
 
     public int getTileID() {
         return tileID;
+    }
+
+    public boolean isCollisionOverride() {
+        return collisionOverride;
+    }
+
+    public void setCollisionOverride(boolean collisionOverride) {
+        this.collisionOverride = collisionOverride;
     }
 }
