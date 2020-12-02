@@ -245,7 +245,7 @@ public class PacmanGame extends GamePanel {
      * Runs at the end of a level.
      */
     private void levelFinished() {
-        pauseGameLoop(1000);
+        pauseGameLoop(2000);
         player.setMoving(false);
         resetAllTimers();
         currentLevelState = LevelState.LEVEL_STARTING;
