@@ -1,6 +1,5 @@
 package nickbonet.pacmangame.entity;
 
-import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.sprite.Animation;
 import nickbonet.gameengine.sprite.Sprite;
 

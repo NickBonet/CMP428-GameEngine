@@ -1,6 +1,5 @@
 package nickbonet.pacmangame.entity.ghosts;
 
-import nickbonet.gameengine.Rect;
 import nickbonet.gameengine.sprite.Animation;
 import nickbonet.gameengine.sprite.Sprite;
 import nickbonet.gameengine.sprite.SpriteDir;

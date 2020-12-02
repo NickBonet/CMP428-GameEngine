@@ -32,10 +32,6 @@ public class PacmanGame extends GamePanel {
     private int score = 0;
     private LevelState currentLevelState = LevelState.LEVEL_RUNNING;
 
-    enum LevelState {
-        LEVEL_STARTING, LEVEL_RESTARTING, LEVEL_RUNNING, LEVEL_FINISHED, PAC_HIT, PAC_DIED;
-    }
-
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         JFrame frame = new JFrame("Pac-Man");
@@ -220,5 +216,9 @@ public class PacmanGame extends GamePanel {
         restartTimer.setRepeats(false);
         restartTimer.start();
         currentLevelState = LevelState.PAC_DIED;
+    }
+
+    enum LevelState {
+        LEVEL_STARTING, LEVEL_RESTARTING, LEVEL_RUNNING, LEVEL_FINISHED, PAC_HIT, PAC_DIED;
     }
 }

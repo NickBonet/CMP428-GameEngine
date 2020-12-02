@@ -60,6 +60,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
 
     /**
      * Loads a given tile map.
+     *
      * @param mapFile The map file to load map data from.
      * @return The instance of the map as TileMapModel.
      */
@@ -75,6 +76,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
 
     /**
      * Pauses the game loop for a length of time
+     *
      * @param delay The amount of time to pause the game loop (in ms).
      */
     protected void pauseGameLoop(int delay) {

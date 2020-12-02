@@ -1,12 +1,12 @@
 package nickbonet.gameengine.sprite;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 public class Animation {
     private static final Logger logger = Logger.getLogger("GameEngine", null);
     private final List<BufferedImage> frames = new ArrayList<>();
-    private Timer timer;
     private final int delay;
+    private Timer timer;
     private int currentFrame = 0;
 
     public Animation(int delay, String prefix, String directory) {
