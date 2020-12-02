@@ -28,7 +28,11 @@ public class Ghost extends Sprite {
 
     public Ghost(int x, int y, String spritePrefix, int delay, int scatterTargetX, int scatterTargetY) {
         super(x, y, spritePrefix, delay, "ghost");
-        this.boundsRect = new Rect(x + 4, y + 5, 8, 8);
+        boundsOffsetX = 4;
+        boundsOffsetY = 5;
+        boundsWidth = 8;
+        boundsHeight = 8;
+        initBoundsRect();
         this.scatterTargetX = scatterTargetX;
         this.scatterTargetY = scatterTargetY;
     }

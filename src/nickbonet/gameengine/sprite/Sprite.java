@@ -19,6 +19,10 @@ public abstract class Sprite {
     protected String spriteFolder;
     protected int x;
     protected int y;
+    protected int boundsOffsetX = 0;
+    protected int boundsOffsetY = 0;
+    protected int boundsWidth;
+    protected int boundsHeight;
     protected Logger logger = Logger.getLogger("GameEngine", null);
     protected SpriteDir currentDirection;
     protected String currentAnimation = "";
@@ -35,9 +39,6 @@ public abstract class Sprite {
         velocity = 1;
         loadBaseAnimations(spritePrefix, delay);
         initAnimations();
-        this.boundsRect = new Rect(this.x, this.y,
-                getFirstAnimation().getCurrentFrame().getWidth(),
-                getFirstAnimation().getCurrentFrame().getHeight());
     }
 
     // Takes care of initializing animations for the 4 basic directions the sprite would face.
@@ -52,6 +53,10 @@ public abstract class Sprite {
 
     // For initializing anymore animations besides 4 basic ones for the sprite.
     protected abstract void initAnimations();
+
+    protected void initBoundsRect() {
+        this.boundsRect = new Rect(this.x + boundsOffsetX, this.y + boundsOffsetY, boundsWidth, boundsHeight);
+    }
 
     private Animation getFirstAnimation() {
         Optional<Animation> firstAnim = animDict.values().stream().findFirst();
@@ -79,8 +84,8 @@ public abstract class Sprite {
             }
 
             // For debug purposes, draw the bounding box of the sprite.
-            //g.setColor(Color.blue);
-            //boundsRect.draw(g);
+            g.setColor(Color.blue);
+            boundsRect.draw(g);
         }
     }
 
@@ -122,6 +127,12 @@ public abstract class Sprite {
 
     public int getVelocity() {
         return velocity;
+    }
+
+    public void setNewLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
+        initBoundsRect();
     }
 
     public int getX() {
