@@ -45,6 +45,7 @@ public class PacmanGame extends GamePanel {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         game.runGame();
     }
