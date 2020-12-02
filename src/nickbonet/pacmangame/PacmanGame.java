@@ -29,12 +29,13 @@ public class PacmanGame extends GamePanel {
     private final transient OrangeGhost orangeGhost = new OrangeGhost(0, 287);
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
+    private final transient List<Timer> currentTimers = new ArrayList<>();
     private int pelletsLeft = PELLETS_ON_BOARD;
     private int score = 0;
     private int level = 1;
     private boolean enableDebugVisuals = false;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
-    private final transient List<Timer> currentTimers = new ArrayList<>();
+
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         JFrame frame = new JFrame("Pac-Man");

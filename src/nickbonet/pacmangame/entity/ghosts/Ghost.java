@@ -59,9 +59,7 @@ public class Ghost extends Sprite {
         int prevDirectionPriority = -1;
         Tile targetTile;
         if (!inGhostHouse) targetTile = currentTargetTile(map);
-        else {
-            targetTile = map.getTileAtPoint(ghostHouseExitX, ghostHouseExitY);
-        }
+        else targetTile = map.getTileAtPoint(ghostHouseExitX, ghostHouseExitY);
 
         for (SpriteDir d : possibleDirections) {
             Tile inspectingTile = map.getNearbyTile(boundsRect.getX(), boundsRect.getY(), d, 1);
