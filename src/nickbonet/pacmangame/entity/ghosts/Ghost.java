@@ -23,6 +23,7 @@ public class Ghost extends Sprite {
     protected final int scatterTargetY;
     protected int chaseTargetX = 0;
     protected int chaseTargetY = 0;
+    protected boolean inGhostHouse = true;
     private GhostState currentState = GhostState.SCATTER;
 
     public Ghost(int x, int y, String spritePrefix, int scatterTargetX, int scatterTargetY) {
@@ -104,5 +105,13 @@ public class Ghost extends Sprite {
 
     public int getChaseTargetY() {
         return chaseTargetY;
+    }
+
+    public boolean isInGhostHouse() {
+        return inGhostHouse;
+    }
+
+    public void setInGhostHouse(boolean inGhostHouse) {
+        this.inGhostHouse = inGhostHouse;
     }
 }

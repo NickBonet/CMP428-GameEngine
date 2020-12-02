@@ -6,7 +6,7 @@ import nickbonet.gameengine.tile.TileMap;
 
 public class OrangeGhost extends Ghost {
     public OrangeGhost(int scatterTargetX, int scatterTargetY) {
-        super(32, 27, "orange", scatterTargetX, scatterTargetY);
+        super(120, 131, "orange", scatterTargetX, scatterTargetY);
     }
 
     public void updateChaseTarget(Rect player, TileMap map) {

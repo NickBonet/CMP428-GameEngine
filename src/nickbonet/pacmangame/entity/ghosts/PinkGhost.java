@@ -6,7 +6,7 @@ import nickbonet.pacmangame.entity.Pacman;
 
 public class PinkGhost extends Ghost {
     public PinkGhost(int scatterTargetX, int scatterTargetY) {
-        super(104, 155, "pink", scatterTargetX, scatterTargetY);
+        super(104, 131, "pink", scatterTargetX, scatterTargetY);
     }
 
     // Pinky's chase target tile is always 4 tiles in front of Pac-Man. In the original game, there was a bug

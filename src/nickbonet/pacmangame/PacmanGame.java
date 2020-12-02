@@ -192,6 +192,7 @@ public class PacmanGame extends GamePanel {
         System.out.println("Now starting level: " + level);
         maps.get(0).initializeMap();
         pelletsLeft = PELLETS_ON_BOARD;
+        redGhost.setInGhostHouse(false);
         restartLevelInProgress();
     }
 
@@ -257,7 +258,7 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList) {
             ghost.respawn();
             ghost.setVisible(true);
-            ghost.setMoving(true);
+            ghost.setMoving(!ghost.isInGhostHouse());
         }
         player.respawn();
         player.setSpriteDirection(SpriteDir.LEFT);
