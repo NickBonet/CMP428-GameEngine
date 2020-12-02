@@ -79,8 +79,8 @@ public abstract class Sprite {
             }
 
             // For debug purposes, draw the bounding box of the sprite.
-            g.setColor(Color.blue);
-            boundsRect.draw(g);
+            //g.setColor(Color.blue);
+            //boundsRect.draw(g);
         }
     }
 

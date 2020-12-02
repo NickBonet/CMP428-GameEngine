@@ -9,8 +9,6 @@ import nickbonet.pacmangame.entity.ghosts.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -32,10 +30,10 @@ public class PacmanGame extends GamePanel {
     private final transient List<TileMap> maps = new ArrayList<>();
     private int pelletsLeft = 240;
     private int score = 0;
-    private LevelState currentLevelState = LevelState.RUNNING;
+    private LevelState currentLevelState = LevelState.LEVEL_RUNNING;
 
     enum LevelState {
-        RUNNING, FINISHED, PAC_HIT, PAC_DIED_ANIM;
+        LEVEL_STARTING, LEVEL_RESTARTING, LEVEL_RUNNING, LEVEL_FINISHED, PAC_HIT, PAC_DIED;
     }
 
     public static void main(String[] args) {
@@ -107,7 +105,7 @@ public class PacmanGame extends GamePanel {
     @Override
     protected void mainGameLogic() {
         switch (currentLevelState) {
-            case RUNNING:
+            case LEVEL_RUNNING:
                 if (pressedKey[KeyEvent.VK_0])
                     for (Ghost ghost : ghostList)
                         ghost.setState(GhostState.SCATTER);
@@ -120,11 +118,10 @@ public class PacmanGame extends GamePanel {
                 ghostMovement();
                 break;
             case PAC_HIT:
-                restartLevel();
+                handlePacmanLifeLost();
                 break;
-            case PAC_DIED_ANIM:
-                break;
-            case FINISHED:
+            case PAC_DIED:
+            default:
                 break;
         }
     }
@@ -186,31 +183,20 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList) {
             if (ghost.getBounds().overlaps(player.getBounds(), 0, 0)) {
                 currentLevelState = LevelState.PAC_HIT;
+                pauseGameLoop(250);
                 break;
             }
         }
     }
 
-    private void restartLevel() {
-        player.setMoving(false);
-        for (Ghost ghost : ghostList) ghost.setMoving(false);
-        try {
-            Thread.sleep(250);
-            for (Ghost ghost : ghostList) ghost.setVisible(false);
-            player.setCurrentAnimation("died");
-            player.setMoving(true);
-            player.restartAnimation("died");
-            // Setting this timer and letting the death animation complete seems to be offset by 2 ticks (300 delay)
-            Timer t = new Timer(1500, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    player.stopAnimation("died");
-                }
-            });
-            t.start();
-            currentLevelState = LevelState.PAC_DIED_ANIM;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void handlePacmanLifeLost() {
+        for (Ghost ghost : ghostList) ghost.setVisible(false);
+        player.setCurrentAnimation("died");
+        player.setMoving(true);
+        player.restartAnimation("died");
+        // Death animation is set to 150ms delay between each frame, 12 frames. 1800ms total
+        // Seem to need to offset by 300ms though.
+        new Timer(1500, e -> player.stopAnimation("died")).start();
+        currentLevelState = LevelState.PAC_DIED;
     }
 }
