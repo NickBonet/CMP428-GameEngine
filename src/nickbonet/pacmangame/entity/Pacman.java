@@ -9,6 +9,8 @@ import nickbonet.gameengine.sprite.Sprite;
  * @author Nicholas Bonet
  */
 public class Pacman extends Sprite {
+    private int numberOfLives = 3;
+
     public Pacman(int x, int y) {
         super(x, y, "pac", 65, "pacman");
         boundsOffsetX = 4;
@@ -22,5 +24,13 @@ public class Pacman extends Sprite {
     protected void initAnimations() {
         Animation diedAnim = new Animation(150, "died_", getSpriteDirectory());
         animDict.put("died", diedAnim);
+    }
+
+    public int getNumberOfLives() {
+        return numberOfLives;
+    }
+
+    public void changeNumberOfLives(int numberOfLives) {
+        this.numberOfLives += numberOfLives;
     }
 }

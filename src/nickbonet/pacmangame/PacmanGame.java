@@ -21,6 +21,7 @@ import static nickbonet.gameengine.util.CollisionUtil.isSpriteCollidingWithMap;
 public class PacmanGame extends GamePanel {
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
+    private static final int PELLETS_ON_BOARD = 240;
     private final transient Pacman player = new Pacman(192, 27);
     private final transient RedGhost redGhost = new RedGhost(80, 27, 100, 207, 0);
     private final transient BlueGhost blueGhost = new BlueGhost(64, 27, 100, 223, 287);
@@ -28,8 +29,9 @@ public class PacmanGame extends GamePanel {
     private final transient OrangeGhost orangeGhost = new OrangeGhost(32, 27, 100, 0, 287);
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
-    private int pelletsLeft = 240;
+    private int pelletsLeft = PELLETS_ON_BOARD;
     private int score = 0;
+    private int level = 1;
     private LevelState currentLevelState = LevelState.LEVEL_RUNNING;
 
     public static void main(String[] args) {
@@ -101,21 +103,17 @@ public class PacmanGame extends GamePanel {
     @Override
     protected void mainGameLogic() {
         switch (currentLevelState) {
+            case LEVEL_STARTING:
+                System.out.println("Now starting level: " + level);
+                maps.get(0).initializeMap();
+                pelletsLeft = PELLETS_ON_BOARD;
+                restartLevelInProgress();
+                break;
             case LEVEL_RESTARTING:
-                player.setMoving(false);
-                for (Ghost ghost : ghostList) {
-                    ghost.setVisible(true);
-                    ghost.setNewLocation(80, 27);
-                    ghost.setMoving(true);
-                }
-                player.setNewLocation(192, 27);
-                player.setSpriteDirection(SpriteDir.LEFT);
-                player.setCurrentAnimation("left");
-                pauseGameLoop(500);
-                currentLevelState = LevelState.LEVEL_RUNNING;
-                player.setMoving(true);
+                restartLevelInProgress();
                 break;
             case LEVEL_RUNNING:
+                if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;
                 if (pressedKey[KeyEvent.VK_0])
                     for (Ghost ghost : ghostList)
                         ghost.setState(GhostState.SCATTER);
@@ -127,11 +125,15 @@ public class PacmanGame extends GamePanel {
                 playerObjectCheck();
                 ghostMovement();
                 break;
+            case LEVEL_FINISHED:
+                pauseGameLoop(550);
+                level += 1;
+                currentLevelState = LevelState.LEVEL_STARTING;
+                break;
             case PAC_HIT:
                 handlePacmanLifeLost();
                 break;
             case PAC_DIED:
-            default:
                 break;
         }
     }
@@ -199,6 +201,9 @@ public class PacmanGame extends GamePanel {
         }
     }
 
+    /**
+     * Triggered whenever Pac-Man is hit. (PAC_HIT state is active)
+     */
     private void handlePacmanLifeLost() {
         for (Ghost ghost : ghostList) {
             ghost.setMoving(false);
@@ -207,6 +212,7 @@ public class PacmanGame extends GamePanel {
         player.setCurrentAnimation("died");
         player.setMoving(true);
         player.restartAnimation("died");
+        player.changeNumberOfLives(-1);
         // Death animation is set to 150ms delay between each frame, 12 frames. 1800ms total
         Timer restartTimer = new Timer(1800, e -> {
             player.stopAnimation("died");
@@ -216,6 +222,25 @@ public class PacmanGame extends GamePanel {
         restartTimer.setRepeats(false);
         restartTimer.start();
         currentLevelState = LevelState.PAC_DIED;
+    }
+
+    /**
+     * Runs when LEVEL_RESTARTING is the current state.
+     * Prepares the game to resume after Pac-Man has died/was hit.
+     */
+    private void restartLevelInProgress() {
+        if (player.getNumberOfLives() == 0) System.exit(0);
+        for (Ghost ghost : ghostList) {
+            ghost.setVisible(true);
+            ghost.setNewLocation(80, 27);
+            ghost.setMoving(true);
+        }
+        player.setNewLocation(192, 27);
+        player.setSpriteDirection(SpriteDir.LEFT);
+        player.setCurrentAnimation("left");
+        pauseGameLoop(1500);
+        currentLevelState = LevelState.LEVEL_RUNNING;
+        player.setMoving(true);
     }
 
     enum LevelState {
