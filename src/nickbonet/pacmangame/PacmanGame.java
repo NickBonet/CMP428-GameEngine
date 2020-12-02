@@ -63,17 +63,21 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList)
             ghost.draw(base);
         // Debug info/metrics
-        if (!maps.isEmpty() && enableDebugVisuals) paintDebugVisuals(base);
+        if (!maps.isEmpty() && enableDebugVisuals) drawDebugElements(base);
         base.dispose();
         g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
+        drawUIElements(g);
+    }
+
+    private void drawUIElements(Graphics g) {
         g.setColor(Color.white);
         g.setFont(gameFont);
         g.drawString("Score", 25, 35);
         g.drawString(String.valueOf(score), 25, 58);
-        g.drawString("Level:" + level, 25, 845);
+        g.drawString("Level:" + level, 25, 848);
     }
 
-    private void paintDebugVisuals(Graphics base) {
+    private void drawDebugElements(Graphics base) {
         for (Tile tile : maps.get(0).getTilesInDirection(player.getBounds().getX(), player.getBounds().getY(), SpriteDir.ALL))
             tile.drawBoundsRect(base);
         base.setColor(Color.cyan);
