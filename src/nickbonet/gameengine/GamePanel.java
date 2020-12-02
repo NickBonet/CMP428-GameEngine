@@ -79,8 +79,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
      */
     protected void pauseGameLoop(int delay) {
         isPaused = true;
-        Timer t = new Timer(delay, e -> isPaused = false);
-        t.start();
+        new Timer(delay, e -> isPaused = false).start();
     }
 
     @Override
