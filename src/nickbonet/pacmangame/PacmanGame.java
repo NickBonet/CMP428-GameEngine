@@ -55,7 +55,6 @@ public class PacmanGame extends GamePanel {
     public void paintComponent(Graphics g) {
         BufferedImage frame = new BufferedImage(224, 288, BufferedImage.TYPE_INT_RGB);
         Graphics base = frame.createGraphics();
-        super.paintComponent(base);
         if (!maps.isEmpty()) maps.get(0).drawMap(base);
         player.draw(base);
         for (Ghost ghost : ghostList)
@@ -104,39 +103,21 @@ public class PacmanGame extends GamePanel {
     protected void mainGameLogic() {
         switch (currentLevelState) {
             case LEVEL_STARTING:
-                System.out.println("Now starting level: " + level);
-                maps.get(0).initializeMap();
-                pelletsLeft = PELLETS_ON_BOARD;
-                restartLevelInProgress();
+                newLevelStarting();
                 break;
             case LEVEL_RESTARTING:
                 restartLevelInProgress();
                 break;
             case LEVEL_RUNNING:
-                if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;
-                if (pressedKey[KeyEvent.VK_0])
-                    for (Ghost ghost : ghostList)
-                        ghost.setState(GhostState.SCATTER);
-                if (pressedKey[KeyEvent.VK_9])
-                    for (Ghost ghost : ghostList)
-                        ghost.setState(GhostState.CHASE);
-                if (pressedKey[KeyEvent.VK_6]) System.out.println("Pac X: " + player.getX() + " Y: " + player.getY());
-                if (pressedKey[KeyEvent.VK_7]) enableDebugVisuals = true;
-                if (pressedKey[KeyEvent.VK_8]) enableDebugVisuals = false;
-                playerMovement();
-                playerEntityCollisionCheck();
-                playerObjectCheck();
-                ghostMovement();
+                levelInProgress();
                 break;
             case LEVEL_FINISHED:
-                pauseGameLoop(1000);
-                level += 1;
-                currentLevelState = LevelState.LEVEL_STARTING;
+                levelFinished();
                 break;
             case PAC_HIT:
                 handlePacmanLifeLost();
                 break;
-            case PAC_DIED:
+            case PAC_DIED: // Just lets the death animation finish playing.
                 break;
         }
     }
@@ -205,6 +186,46 @@ public class PacmanGame extends GamePanel {
     }
 
     /**
+     * Preps the game for a new level to start.
+     */
+    private void newLevelStarting() {
+        System.out.println("Now starting level: " + level);
+        maps.get(0).initializeMap();
+        pelletsLeft = PELLETS_ON_BOARD;
+        restartLevelInProgress();
+    }
+
+    /**
+     * Runs when there's currently a level in progress.
+     */
+    private void levelInProgress() {
+        if (pressedKey[KeyEvent.VK_0])
+            for (Ghost ghost : ghostList)
+                ghost.setState(GhostState.SCATTER);
+        if (pressedKey[KeyEvent.VK_9])
+            for (Ghost ghost : ghostList)
+                ghost.setState(GhostState.CHASE);
+        if (pressedKey[KeyEvent.VK_6]) System.out.println("Pac X: " + player.getX() + " Y: " + player.getY());
+        if (pressedKey[KeyEvent.VK_7]) enableDebugVisuals = true;
+        if (pressedKey[KeyEvent.VK_8]) enableDebugVisuals = false;
+
+        if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;
+        playerMovement();
+        playerEntityCollisionCheck();
+        playerObjectCheck();
+        ghostMovement();
+    }
+
+    /**
+     * Runs at the end of a level.
+     */
+    private void levelFinished() {
+        pauseGameLoop(1000);
+        level += 1;
+        currentLevelState = LevelState.LEVEL_STARTING;
+    }
+
+    /**
      * Triggered whenever Pac-Man is hit. (PAC_HIT state is active)
      */
     private void handlePacmanLifeLost() {
@@ -213,7 +234,6 @@ public class PacmanGame extends GamePanel {
             ghost.setVisible(false);
         }
         player.setCurrentAnimation("died");
-        player.setMoving(true);
         player.restartAnimation("died"); // makes sure the animation starts from the beginning
         player.changeNumberOfLives(-1);
         // Death animation is set to 150ms delay between each frame, 12 frames. 1800ms total
@@ -234,16 +254,15 @@ public class PacmanGame extends GamePanel {
     private void restartLevelInProgress() {
         if (player.getNumberOfLives() == 0) System.exit(0);
         for (Ghost ghost : ghostList) {
-            ghost.setVisible(true);
             ghost.respawn();
+            ghost.setVisible(true);
             ghost.setMoving(true);
         }
         player.respawn();
         player.setSpriteDirection(SpriteDir.LEFT);
         player.setCurrentAnimation("left");
-        pauseGameLoop(1500);
         currentLevelState = LevelState.LEVEL_RUNNING;
-        player.setMoving(true);
+        pauseGameLoop(1500);
     }
 
     enum LevelState {
