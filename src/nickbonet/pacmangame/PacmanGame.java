@@ -105,6 +105,20 @@ public class PacmanGame extends GamePanel {
     @Override
     protected void mainGameLogic() {
         switch (currentLevelState) {
+            case LEVEL_RESTARTING:
+                player.setMoving(false);
+                for (Ghost ghost : ghostList) {
+                    ghost.setVisible(true);
+                    ghost.setNewLocation(80, 27);
+                    ghost.setMoving(true);
+                }
+                player.setNewLocation(192, 27);
+                player.setSpriteDirection(SpriteDir.LEFT);
+                player.setCurrentAnimation("left");
+                pauseGameLoop(500);
+                currentLevelState = LevelState.LEVEL_RUNNING;
+                player.setMoving(true);
+                break;
             case LEVEL_RUNNING:
                 if (pressedKey[KeyEvent.VK_0])
                     for (Ghost ghost : ghostList)
@@ -190,13 +204,21 @@ public class PacmanGame extends GamePanel {
     }
 
     private void handlePacmanLifeLost() {
-        for (Ghost ghost : ghostList) ghost.setVisible(false);
+        for (Ghost ghost : ghostList) {
+            ghost.setMoving(false);
+            ghost.setVisible(false);
+        }
         player.setCurrentAnimation("died");
         player.setMoving(true);
         player.restartAnimation("died");
         // Death animation is set to 150ms delay between each frame, 12 frames. 1800ms total
-        // Seem to need to offset by 300ms though.
-        new Timer(1500, e -> player.stopAnimation("died")).start();
+        Timer restartTimer = new Timer(1800, e -> {
+            player.stopAnimation("died");
+            currentLevelState = LevelState.LEVEL_RESTARTING;
+            pauseGameLoop(250);
+        });
+        restartTimer.setRepeats(false);
+        restartTimer.start();
         currentLevelState = LevelState.PAC_DIED;
     }
 }
