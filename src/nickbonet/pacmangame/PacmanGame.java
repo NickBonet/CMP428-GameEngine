@@ -262,7 +262,7 @@ public class PacmanGame extends GamePanel {
      * Prepares the game to resume after Pac-Man has died/was hit.
      */
     private void restartLevelInProgress() {
-        if (player.getNumberOfLives() == 0) System.exit(0);
+        if (player.getNumberOfLives() < 0) System.exit(0);
         for (Ghost ghost : ghostList) {
             ghost.respawn();
             ghost.setVisible(true);
