@@ -25,8 +25,8 @@ public class Ghost extends Sprite {
     protected int chaseTargetY = 0;
     private GhostState currentState = GhostState.SCATTER;
 
-    public Ghost(int x, int y, String spritePrefix, int delay, int scatterTargetX, int scatterTargetY) {
-        super(x, y, spritePrefix, delay, "ghost");
+    public Ghost(int x, int y, String spritePrefix, int scatterTargetX, int scatterTargetY) {
+        super(x, y, spritePrefix, 100, "ghost");
         boundsOffsetX = 4;
         boundsOffsetY = 5;
         boundsWidth = 8;

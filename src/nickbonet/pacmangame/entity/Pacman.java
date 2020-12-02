@@ -11,8 +11,8 @@ import nickbonet.gameengine.sprite.Sprite;
 public class Pacman extends Sprite {
     private int numberOfLives = 3;
 
-    public Pacman(int x, int y) {
-        super(x, y, "pac", 65, "pacman");
+    public Pacman() {
+        super(104, 203, "pac", 65, "pacman");
         boundsOffsetX = 4;
         boundsOffsetY = 5;
         boundsWidth = 8;

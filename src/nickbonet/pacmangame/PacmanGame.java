@@ -22,17 +22,18 @@ public class PacmanGame extends GamePanel {
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
     private static final int PELLETS_ON_BOARD = 240;
-    private final transient Pacman player = new Pacman(192, 27);
-    private final transient RedGhost redGhost = new RedGhost(80, 27, 100, 207, 0);
-    private final transient BlueGhost blueGhost = new BlueGhost(64, 27, 100, 223, 287);
-    private final transient PinkGhost pinkGhost = new PinkGhost(48, 27, 100, 16, 0);
-    private final transient OrangeGhost orangeGhost = new OrangeGhost(32, 27, 100, 0, 287);
+    private final transient Pacman player = new Pacman();
+    private final transient RedGhost redGhost = new RedGhost(207, 0);
+    private final transient BlueGhost blueGhost = new BlueGhost(223, 287);
+    private final transient PinkGhost pinkGhost = new PinkGhost(16, 0);
+    private final transient OrangeGhost orangeGhost = new OrangeGhost(0, 287);
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
     private int pelletsLeft = PELLETS_ON_BOARD;
     private int score = 0;
     private int level = 1;
-    private LevelState currentLevelState = LevelState.LEVEL_RUNNING;
+    private boolean enableDebugVisuals = false;
+    private LevelState currentLevelState = LevelState.LEVEL_STARTING;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -59,9 +60,7 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList)
             ghost.draw(base);
         // Debug info/metrics
-        //if (!maps.isEmpty()) {
-        //    paintDebugVisuals(base);
-        //}
+        if (!maps.isEmpty() && enableDebugVisuals) paintDebugVisuals(base);
         base.dispose();
         g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
     }
@@ -120,13 +119,16 @@ public class PacmanGame extends GamePanel {
                 if (pressedKey[KeyEvent.VK_9])
                     for (Ghost ghost : ghostList)
                         ghost.setState(GhostState.CHASE);
+                if (pressedKey[KeyEvent.VK_6]) System.out.println("Pac X: " + player.getX() + " Y: " + player.getY());
+                if (pressedKey[KeyEvent.VK_7]) enableDebugVisuals = true;
+                if (pressedKey[KeyEvent.VK_8]) enableDebugVisuals = false;
                 playerMovement();
                 playerEntityCollisionCheck();
                 playerObjectCheck();
                 ghostMovement();
                 break;
             case LEVEL_FINISHED:
-                pauseGameLoop(550);
+                pauseGameLoop(1000);
                 level += 1;
                 currentLevelState = LevelState.LEVEL_STARTING;
                 break;
@@ -211,7 +213,7 @@ public class PacmanGame extends GamePanel {
         }
         player.setCurrentAnimation("died");
         player.setMoving(true);
-        player.restartAnimation("died");
+        player.restartAnimation("died"); // makes sure the animation starts from the beginning
         player.changeNumberOfLives(-1);
         // Death animation is set to 150ms delay between each frame, 12 frames. 1800ms total
         Timer restartTimer = new Timer(1800, e -> {
@@ -232,10 +234,10 @@ public class PacmanGame extends GamePanel {
         if (player.getNumberOfLives() == 0) System.exit(0);
         for (Ghost ghost : ghostList) {
             ghost.setVisible(true);
-            ghost.setNewLocation(80, 27);
+            ghost.respawn();
             ghost.setMoving(true);
         }
-        player.setNewLocation(192, 27);
+        player.respawn();
         player.setSpriteDirection(SpriteDir.LEFT);
         player.setCurrentAnimation("left");
         pauseGameLoop(1500);
@@ -244,6 +246,6 @@ public class PacmanGame extends GamePanel {
     }
 
     enum LevelState {
-        LEVEL_STARTING, LEVEL_RESTARTING, LEVEL_RUNNING, LEVEL_FINISHED, PAC_HIT, PAC_DIED;
+        LEVEL_STARTING, LEVEL_RESTARTING, LEVEL_RUNNING, LEVEL_FINISHED, PAC_HIT, PAC_DIED
     }
 }

@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 public abstract class Sprite {
     private static final String BASE_SPRITE_FOLDER = "assets/sprites/";
     protected String spriteFolder;
+    protected int spawnX;
+    protected int spawnY;
     protected int x;
     protected int y;
     protected int boundsOffsetX = 0;
@@ -35,6 +37,8 @@ public abstract class Sprite {
     protected Sprite(int x, int y, String spritePrefix, int delay, String spriteFolder) {
         this.x = x;
         this.y = y;
+        this.spawnX = x;
+        this.spawnY = y;
         this.spriteFolder = spriteFolder;
         velocity = 1;
         loadBaseAnimations(spritePrefix, delay);
@@ -162,5 +166,9 @@ public abstract class Sprite {
 
     public void stopAnimation(String animation) {
         animDict.get(animation).stopAnimation();
+    }
+
+    public void respawn() {
+        setNewLocation(spawnX, spawnY);
     }
 }

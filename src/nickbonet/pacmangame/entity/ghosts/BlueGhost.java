@@ -6,8 +6,8 @@ import nickbonet.gameengine.tile.TileMap;
 import nickbonet.pacmangame.entity.Pacman;
 
 public class BlueGhost extends Ghost {
-    public BlueGhost(int x, int y, int delay, int scatterTargetX, int scatterTargetY) {
-        super(x, y, "blue", delay, scatterTargetX, scatterTargetY);
+    public BlueGhost(int scatterTargetX, int scatterTargetY) {
+        super(192, 27, "blue", scatterTargetX, scatterTargetY);
     }
 
     // For Inky's chase target tile, we start off with a tile 2 away from Pac-Man's current direction and position.
