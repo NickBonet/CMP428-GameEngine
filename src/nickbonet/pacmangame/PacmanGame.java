@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,7 @@ public class PacmanGame extends GamePanel {
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
     private final transient List<Timer> currentTimers = new ArrayList<>();
+    private Font gameFont;
     private int pelletsLeft = PELLETS_ON_BOARD;
     private int score = 0;
     private int level = 1;
@@ -64,6 +66,11 @@ public class PacmanGame extends GamePanel {
         if (!maps.isEmpty() && enableDebugVisuals) paintDebugVisuals(base);
         base.dispose();
         g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
+        g.setColor(Color.white);
+        g.setFont(gameFont);
+        g.drawString("Score", 25, 35);
+        g.drawString(String.valueOf(score), 25, 58);
+        g.drawString("Level:" + level, 25, 845);
     }
 
     private void paintDebugVisuals(Graphics base) {
@@ -88,6 +95,8 @@ public class PacmanGame extends GamePanel {
         try {
             maps.add(loadTileMap("filledmap.tilemap"));
             maps.get(0).initializeMap();
+            Font uiTextFont = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/arcade.ttf"));
+            gameFont = uiTextFont.deriveFont(20f);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,7 +180,6 @@ public class PacmanGame extends GamePanel {
                 maps.get(0).removeObjectTile(objectTile.getX(), objectTile.getY());
                 pelletsLeft -= 1;
                 score += 10;
-                System.out.println("Score: " + score);
             }
         }
     }
