@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Pacman.jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Pacman_jar</output-path>
+    <root id="archive" name="CMP428-GameEngine.jar">
+      <element id="module-output" name="CMP428-GameEngine" />
+    </root>
+  </artifact>
+</component>
