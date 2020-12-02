@@ -34,7 +34,7 @@ public class PacmanGame extends GamePanel {
     private Font gameFont;
     private int pelletsLeft = PELLETS_ON_BOARD;
     private int score = 0;
-    private int level = 1;
+    private int level = 0;
     private boolean enableDebugVisuals = false;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
 
@@ -75,6 +75,9 @@ public class PacmanGame extends GamePanel {
         g.drawString("Score", 25, 35);
         g.drawString(String.valueOf(score), 25, 58);
         g.drawString("Level:" + level, 25, 848);
+        g.setColor(Color.yellow);
+        if (currentLevelState == LevelState.LEVEL_RUNNING && isPaused) g.drawString("Ready?", 275, 500);
+        if (currentLevelState == LevelState.LEVEL_STARTING && isPaused) g.drawString("Complete!", 250, 500);
     }
 
     private void drawDebugElements(Graphics base) {
@@ -202,7 +205,7 @@ public class PacmanGame extends GamePanel {
      * Preps the game for a new level to start.
      */
     private void newLevelStarting() {
-        System.out.println("Now starting level: " + level);
+        level += 1;
         maps.get(0).initializeMap();
         // TODO: refactor this into a method in TileMap
         Tile doorTile1 = maps.get(0).getTileAtPoint(104, 120);
@@ -230,10 +233,12 @@ public class PacmanGame extends GamePanel {
         if (pressedKey[KeyEvent.VK_ESCAPE]) isRunning = false;
 
         if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;
-        playerMovement();
-        playerEntityCollisionCheck();
-        playerObjectCheck();
-        ghostMovement();
+        else {
+            playerMovement();
+            playerEntityCollisionCheck();
+            playerObjectCheck();
+            ghostMovement();
+        }
     }
 
     /**
@@ -241,7 +246,8 @@ public class PacmanGame extends GamePanel {
      */
     private void levelFinished() {
         pauseGameLoop(1000);
-        level += 1;
+        player.setMoving(false);
+        resetAllTimers();
         currentLevelState = LevelState.LEVEL_STARTING;
     }
 
@@ -264,8 +270,7 @@ public class PacmanGame extends GamePanel {
         });
         restartTimer.setRepeats(false);
         restartTimer.start();
-        currentTimers.forEach(Timer::stop);
-        currentTimers.clear();
+        resetAllTimers();
         currentLevelState = LevelState.PAC_DIED;
     }
 
@@ -283,11 +288,17 @@ public class PacmanGame extends GamePanel {
         player.respawn();
         player.setSpriteDirection(SpriteDir.LEFT);
         player.setCurrentAnimation("left");
-        currentLevelState = LevelState.LEVEL_RUNNING;
         pauseGameLoop(1500);
+        player.setMoving(true);
         setupGhostHouseExit(pinkGhost, 3500);
         setupGhostHouseExit(blueGhost, 5500);
         setupGhostHouseExit(orangeGhost, 8000);
+        currentLevelState = LevelState.LEVEL_RUNNING;
+    }
+
+    private void resetAllTimers() {
+        currentTimers.forEach(Timer::stop);
+        currentTimers.clear();
     }
 
     private void setupGhostHouseExit(Ghost ghost, int delay) {
