@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel implements KeyListener {
 
-    protected static final boolean IS_RUNNING = true;
+    protected static boolean isRunning = true;
     protected final transient Logger logger = Logger.getLogger("GameEngine", null);
     protected final boolean[] pressedKey = new boolean[255];
     protected boolean isPaused = false;
@@ -36,7 +36,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
     protected void runGame() {
         initObjects();
 
-        while (IS_RUNNING) {
+        while (isRunning) {
             if (!isPaused) mainGameLogic();
             repaint();
             try {
@@ -46,6 +46,8 @@ public abstract class GamePanel extends JPanel implements KeyListener {
                 Thread.currentThread().interrupt();
             }
         }
+
+        System.exit(0);
     }
 
     /*

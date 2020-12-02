@@ -208,6 +208,7 @@ public class PacmanGame extends GamePanel {
         if (pressedKey[KeyEvent.VK_6]) System.out.println("Pac X: " + player.getX() + " Y: " + player.getY());
         if (pressedKey[KeyEvent.VK_7]) enableDebugVisuals = true;
         if (pressedKey[KeyEvent.VK_8]) enableDebugVisuals = false;
+        if (pressedKey[KeyEvent.VK_ESCAPE]) isRunning = false;
 
         if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;
         playerMovement();
