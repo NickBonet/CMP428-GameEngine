@@ -37,11 +37,11 @@ public class PacmanGame extends GamePanel {
     private int pelletsLeft = PELLETS_ON_BOARD;
     private int score = 0;
     private int level = 0;
-    private boolean enableDebugVisuals = false;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty(DEBUG_PROPERTY_NAME, "false");
         JFrame frame = new JFrame("Pac-Man");
         PacmanGame game = new PacmanGame();
         game.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -65,7 +65,7 @@ public class PacmanGame extends GamePanel {
         for (Ghost ghost : ghostList)
             ghost.draw(base);
         // Debug info/metrics
-        if (!maps.isEmpty() && enableDebugVisuals) drawDebugElements(base);
+        if (!maps.isEmpty() && System.getProperty(DEBUG_PROPERTY_NAME).equals("true")) drawDebugElements(base);
         base.dispose();
         g.drawImage(frame, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
         drawUIElements(g);
@@ -236,8 +236,8 @@ public class PacmanGame extends GamePanel {
             for (Ghost ghost : ghostList)
                 ghost.setState(GhostState.CHASE);
         if (pressedKey[KeyEvent.VK_6]) System.out.println("Pac X: " + player.getX() + " Y: " + player.getY());
-        if (pressedKey[KeyEvent.VK_7]) enableDebugVisuals = true;
-        if (pressedKey[KeyEvent.VK_8]) enableDebugVisuals = false;
+        if (pressedKey[KeyEvent.VK_7]) System.setProperty(DEBUG_PROPERTY_NAME, "true");
+        if (pressedKey[KeyEvent.VK_8]) System.setProperty(DEBUG_PROPERTY_NAME, "false");
         if (pressedKey[KeyEvent.VK_ESCAPE]) isRunning = false;
 
         if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;

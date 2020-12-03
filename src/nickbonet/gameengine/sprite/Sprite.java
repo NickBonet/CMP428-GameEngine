@@ -1,5 +1,6 @@
 package nickbonet.gameengine.sprite;
 
+import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.Rect;
 
 import java.awt.*;
@@ -89,8 +90,10 @@ public abstract class Sprite {
             }
 
             // For debug purposes, draw the bounding box of the sprite.
-            g.setColor(Color.blue);
-            boundsRect.draw(g);
+            if (System.getProperty(GamePanel.DEBUG_PROPERTY_NAME).equals("true")) {
+                g.setColor(Color.blue);
+                boundsRect.draw(g);
+            }
         }
     }
 

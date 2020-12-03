@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel implements KeyListener {
 
+    public static final String DEBUG_PROPERTY_NAME = "nickbonet.gameengine.debug";
     protected final transient Logger logger = Logger.getLogger("GameEngine", null);
     protected final boolean[] pressedKey = new boolean[255];
     protected boolean isRunning = true;
