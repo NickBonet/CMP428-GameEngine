@@ -215,11 +215,8 @@ public class PacmanGame extends GamePanel {
     private void newLevelStarting() {
         level += 1;
         maps.get(0).initializeMap();
-        // TODO: refactor this into a method in TileMap
-        Tile doorTile1 = maps.get(0).getTileAtPoint(104, 120);
-        Tile doorTile2 = maps.get(0).getTileAtPoint(112, 120);
-        doorTile1.setCollisionOverride(true);
-        doorTile2.setCollisionOverride(true);
+        maps.get(0).setCollisionOverrideOnTile(104, 120);
+        maps.get(0).setCollisionOverrideOnTile(112, 120);
         pelletsLeft = PELLETS_ON_BOARD;
         redGhost.setInGhostHouse(false);
         restartLevelInProgress();
@@ -235,7 +232,7 @@ public class PacmanGame extends GamePanel {
         if (pressedKey[KeyEvent.VK_9])
             for (Ghost ghost : ghostList)
                 ghost.setState(GhostState.CHASE);
-        if (pressedKey[KeyEvent.VK_6]) System.out.println("Pac X: " + player.getX() + " Y: " + player.getY());
+        if (pressedKey[KeyEvent.VK_6]) logger.info("Pac X: " + player.getX() + " Y: " + player.getY());
         if (pressedKey[KeyEvent.VK_7]) System.setProperty(DEBUG_PROPERTY_NAME, "true");
         if (pressedKey[KeyEvent.VK_8]) System.setProperty(DEBUG_PROPERTY_NAME, "false");
         if (pressedKey[KeyEvent.VK_ESCAPE]) isRunning = false;

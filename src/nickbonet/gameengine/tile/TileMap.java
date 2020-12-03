@@ -159,4 +159,9 @@ public class TileMap {
         int col = x / mapModel.getPerTileWidth();
         objectLayerTiles[row][col] = null;
     }
+
+    public void setCollisionOverrideOnTile(int x, int y) {
+        Tile tile = getTileAtPoint(x, y);
+        tile.setCollisionOverride(true);
+    }
 }

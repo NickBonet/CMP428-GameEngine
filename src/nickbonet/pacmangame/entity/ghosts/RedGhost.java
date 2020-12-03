@@ -14,6 +14,7 @@ public class RedGhost extends Ghost {
         chaseTargetY = playerBounds.getY();
     }
 
+    @Override
     public void respawn() {
         super.respawn();
         currentDirection = SpriteDir.LEFT;
