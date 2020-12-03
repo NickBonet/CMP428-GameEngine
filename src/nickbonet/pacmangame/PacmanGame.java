@@ -7,11 +7,13 @@ import nickbonet.gameengine.tile.TileMap;
 import nickbonet.pacmangame.entity.Pacman;
 import nickbonet.pacmangame.entity.ghosts.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,12 +74,18 @@ public class PacmanGame extends GamePanel {
     private void drawUIElements(Graphics g) {
         g.setColor(Color.white);
         g.setFont(gameFont);
-        g.drawString("Score", 25, 35);
-        g.drawString(String.valueOf(score), 25, 58);
-        g.drawString("Level:" + level, 25, 848);
+        g.drawString("Score", 50, 35);
+        g.drawString(String.valueOf(score), 50, 58);
+        g.drawString("Level:" + level, 268, 848);
         g.setColor(Color.yellow);
         if (currentLevelState == LevelState.LEVEL_RUNNING && isPaused) g.drawString("Ready?", 275, 500);
         if (currentLevelState == LevelState.LEVEL_STARTING && isPaused) g.drawString("Complete!", 250, 500);
+        try {
+            for (int i = 0; i < player.getNumberOfLives(); i++)
+                g.drawImage(ImageIO.read(new File("assets/sprites/pacman/pac_left_1.gif")), 50 + (i * 46), 815, 48, 48, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawDebugElements(Graphics base) {
