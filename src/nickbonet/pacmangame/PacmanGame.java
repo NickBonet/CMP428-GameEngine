@@ -4,6 +4,7 @@ import nickbonet.gameengine.GamePanel;
 import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
+import nickbonet.pacmangame.entity.Fruit;
 import nickbonet.pacmangame.entity.Pacman;
 import nickbonet.pacmangame.entity.ghosts.*;
 
@@ -22,22 +23,29 @@ import static nickbonet.gameengine.util.CollisionUtil.isSpriteCollidingWithMap;
 
 @SuppressWarnings({"serial", "java:S110"})
 public class PacmanGame extends GamePanel {
+    // Some constants used for the game.
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
     private static final int PELLETS_ON_BOARD = 240;
+
     private final transient Pacman player = new Pacman();
     private final transient RedGhost redGhost = new RedGhost(207, 0);
     private final transient BlueGhost blueGhost = new BlueGhost(223, 287);
     private final transient PinkGhost pinkGhost = new PinkGhost(16, 0);
     private final transient OrangeGhost orangeGhost = new OrangeGhost(0, 287);
+
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
-    private final transient List<Timer> currentTimers = new ArrayList<>();
     private Font gameFont;
-    private int pelletsLeft = PELLETS_ON_BOARD;
+    private final transient List<Timer> currentTimers = new ArrayList<>();
     private int score = 0;
     private int level = 0;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
+    // Related to current game state.
+    private int pelletsLeft = PELLETS_ON_BOARD;
+    private transient Fruit currentFruit = null;
+    private boolean firstFruitSpawned = false;
+    private boolean secondFruitSpawned = false;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -64,6 +72,7 @@ public class PacmanGame extends GamePanel {
         player.draw(base);
         for (Ghost ghost : ghostList)
             ghost.draw(base);
+        if (currentFruit != null) currentFruit.draw(base);
         // Debug info/metrics
         if (!maps.isEmpty() && System.getProperty(DEBUG_PROPERTY_NAME).equals("true")) drawDebugElements(base);
         base.dispose();
@@ -207,6 +216,11 @@ public class PacmanGame extends GamePanel {
                 break;
             }
         }
+
+        if (currentFruit != null && currentFruit.getBounds().overlaps(player.getBounds(), 0, 0)) {
+            score += currentFruit.getPointValue();
+            currentFruit = null;
+        }
     }
 
     /**
@@ -237,8 +251,26 @@ public class PacmanGame extends GamePanel {
         if (pressedKey[KeyEvent.VK_8]) System.setProperty(DEBUG_PROPERTY_NAME, "false");
         if (pressedKey[KeyEvent.VK_ESCAPE]) isRunning = false;
 
-        if (pelletsLeft == 0) currentLevelState = LevelState.LEVEL_FINISHED;
-        else {
+        switch (pelletsLeft) {
+            case 0:
+                currentLevelState = LevelState.LEVEL_FINISHED;
+                break;
+            case 70:
+                if (!secondFruitSpawned) {
+                    spawnFruit();
+                    secondFruitSpawned = true;
+                }
+                break;
+            case 170:
+                if (!firstFruitSpawned) {
+                    spawnFruit();
+                    firstFruitSpawned = true;
+                }
+                break;
+            default:
+                break;
+        }
+        if (pelletsLeft != 0) {
             playerMovement();
             playerEntityCollisionCheck();
             playerObjectCheck();
@@ -253,6 +285,9 @@ public class PacmanGame extends GamePanel {
         pauseGameLoop(2000);
         player.setMoving(false);
         resetAllTimers();
+        currentFruit = null;
+        firstFruitSpawned = false;
+        secondFruitSpawned = false;
         currentLevelState = LevelState.LEVEL_STARTING;
     }
 
@@ -264,6 +299,7 @@ public class PacmanGame extends GamePanel {
             ghost.setMoving(false);
             ghost.setVisible(false);
         }
+        currentFruit = null;
         player.setCurrentAnimation("died");
         player.restartAnimation("died"); // makes sure the animation starts from the beginning
         player.changeNumberOfLives(-1);
@@ -290,6 +326,7 @@ public class PacmanGame extends GamePanel {
             ghost.setVisible(true);
             ghost.setMoving(!ghost.isInGhostHouse());
         }
+        currentFruit = null;
         player.respawn();
         player.setSpriteDirection(SpriteDir.LEFT);
         player.setCurrentAnimation("left");
@@ -304,6 +341,18 @@ public class PacmanGame extends GamePanel {
     private void resetAllTimers() {
         currentTimers.forEach(Timer::stop);
         currentTimers.clear();
+    }
+
+    private void spawnFruit() {
+        if (currentFruit == null) {
+            currentFruit = new Fruit(level);
+            Timer fruitTimer = new Timer(7500, e -> {
+                currentFruit = null;
+            });
+            fruitTimer.setRepeats(false);
+            fruitTimer.start();
+            currentTimers.add(fruitTimer);
+        }
     }
 
     private void setupGhostHouseExit(Ghost ghost, int delay) {

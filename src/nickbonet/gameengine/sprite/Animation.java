@@ -41,16 +41,15 @@ public class Animation {
     }
 
     public void startAnimation() {
-        currentFrame = 0;
-        timer = new Timer(delay, e -> {
-            if (currentFrame < frames.size() - 1) {
-                currentFrame += 1;
-            } else {
-                currentFrame = 0;
-            }
-        });
-        timer.setRepeats(true);
-        timer.start();
+        if (delay != 0) {
+            currentFrame = 0;
+            timer = new Timer(delay, e -> {
+                if (currentFrame < frames.size() - 1) currentFrame += 1;
+                else currentFrame = 0;
+            });
+            timer.setRepeats(true);
+            timer.start();
+        }
     }
 
     private void addFrame(File frame) {
