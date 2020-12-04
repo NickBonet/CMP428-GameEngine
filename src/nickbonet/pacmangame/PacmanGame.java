@@ -6,6 +6,7 @@ import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
 import nickbonet.pacmangame.entity.Fruit;
 import nickbonet.pacmangame.entity.Pacman;
+import nickbonet.pacmangame.entity.PowerPellet;
 import nickbonet.pacmangame.entity.ghosts.*;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import static nickbonet.gameengine.util.CollisionUtil.isSpriteCollidingWithMap;
@@ -26,7 +28,7 @@ public class PacmanGame extends GamePanel {
     // Some constants used for the game.
     private static final int WINDOW_HEIGHT = 864;
     private static final int WINDOW_WIDTH = 672;
-    private static final int PELLETS_ON_BOARD = 240;
+    private static final int PELLETS_ON_BOARD = 244;
 
     private final transient Pacman player = new Pacman();
     private final transient RedGhost redGhost = new RedGhost(207, 0);
@@ -36,12 +38,12 @@ public class PacmanGame extends GamePanel {
 
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
+    private final transient List<PowerPellet> powerPelletsActive = new ArrayList<>();
     private final transient List<Timer> currentTimers = new ArrayList<>();
     private Font gameFont;
     private int score = 0;
     private int level = 0;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
-    // Related to current game state.
     private int pelletsLeft = PELLETS_ON_BOARD;
     private transient Fruit currentFruit = null;
     private boolean firstFruitSpawned = false;
@@ -69,10 +71,10 @@ public class PacmanGame extends GamePanel {
         BufferedImage frame = new BufferedImage(224, 288, BufferedImage.TYPE_INT_RGB);
         Graphics base = frame.createGraphics();
         if (!maps.isEmpty()) maps.get(0).drawMap(base);
-        player.draw(base);
-        for (Ghost ghost : ghostList)
-            ghost.draw(base);
         if (currentFruit != null) currentFruit.draw(base);
+        for (PowerPellet pellet : powerPelletsActive) pellet.draw(base);
+        player.draw(base);
+        for (Ghost ghost : ghostList) ghost.draw(base);
         // Debug info/metrics
         if (!maps.isEmpty() && System.getProperty(DEBUG_PROPERTY_NAME).equals("true")) drawDebugElements(base);
         base.dispose();
@@ -221,6 +223,16 @@ public class PacmanGame extends GamePanel {
             score += currentFruit.getPointValue();
             currentFruit = null;
         }
+
+        Iterator<PowerPellet> i = powerPelletsActive.iterator();
+        while (i.hasNext()) {
+            PowerPellet pellet = i.next();
+            if (pellet.getBounds().overlaps(player.getBounds(), 0, 0)) {
+                score += 500;
+                pelletsLeft -= 1;
+                i.remove();
+            }
+        }
     }
 
     /**
@@ -234,6 +246,10 @@ public class PacmanGame extends GamePanel {
         pelletsLeft = PELLETS_ON_BOARD;
         redGhost.setInGhostHouse(false);
         restartLevelInProgress();
+        powerPelletsActive.add(new PowerPellet(204, 203));
+        powerPelletsActive.add(new PowerPellet(4, 203));
+        powerPelletsActive.add(new PowerPellet(4, 44));
+        powerPelletsActive.add(new PowerPellet(204, 44));
     }
 
     /**
