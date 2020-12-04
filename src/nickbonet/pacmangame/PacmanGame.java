@@ -36,8 +36,8 @@ public class PacmanGame extends GamePanel {
 
     private final transient List<Ghost> ghostList = Arrays.asList(redGhost, blueGhost, pinkGhost, orangeGhost);
     private final transient List<TileMap> maps = new ArrayList<>();
-    private Font gameFont;
     private final transient List<Timer> currentTimers = new ArrayList<>();
+    private Font gameFont;
     private int score = 0;
     private int level = 0;
     private LevelState currentLevelState = LevelState.LEVEL_STARTING;
@@ -346,9 +346,7 @@ public class PacmanGame extends GamePanel {
     private void spawnFruit() {
         if (currentFruit == null) {
             currentFruit = new Fruit(level);
-            Timer fruitTimer = new Timer(7500, e -> {
-                currentFruit = null;
-            });
+            Timer fruitTimer = new Timer(7500, e -> currentFruit = null);
             fruitTimer.setRepeats(false);
             fruitTimer.start();
             currentTimers.add(fruitTimer);
