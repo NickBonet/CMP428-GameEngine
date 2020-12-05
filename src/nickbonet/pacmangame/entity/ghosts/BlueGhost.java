@@ -29,9 +29,6 @@ public class BlueGhost extends Ghost {
             if (map.getTileAtPoint(finalTileX, finalTileY) != null) {
                 chaseTargetX = finalTileX;
                 chaseTargetY = finalTileY;
-            } else {
-                chaseTargetX = offsetTile.getX();
-                chaseTargetY = offsetTile.getY();
             }
         }
     }
