@@ -95,6 +95,7 @@ public class PacmanGame extends GamePanel {
         try {
             for (int i = 0; i < player.getNumberOfLives(); i++)
                 g.drawImage(ImageIO.read(new File("assets/sprites/pacman/pac_left_1.gif")), 50 + (i * 46), 815, 48, 48, null);
+            g.drawImage(ImageIO.read(new File("assets/sprites/items/" + Fruit.getFruitName() + ".png")), 600, 815, 48, 48, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -260,6 +261,7 @@ public class PacmanGame extends GamePanel {
      */
     private void newLevelStarting() {
         level += 1;
+        Fruit.setFruitForLevel(level);
         maps.get(0).initializeMap();
         maps.get(0).setCollisionOverrideOnTile(104, 120);
         maps.get(0).setCollisionOverrideOnTile(112, 120);
@@ -383,7 +385,7 @@ public class PacmanGame extends GamePanel {
 
     private void spawnFruit() {
         if (currentFruit == null) {
-            currentFruit = new Fruit(level);
+            currentFruit = new Fruit();
             Timer fruitTimer = new Timer(7500, e -> currentFruit = null);
             fruitTimer.setRepeats(false);
             fruitTimer.start();
