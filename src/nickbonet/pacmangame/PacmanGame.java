@@ -342,7 +342,7 @@ public class PacmanGame extends GamePanel {
         player.restartAnimation("died"); // makes sure the animation starts from the beginning
         player.changeNumberOfLives(-1);
         // Death animation is set to 150ms delay between each frame, 12 frames. 1800ms total
-        Timer restartTimer = new Timer(1500, e -> {
+        Timer restartTimer = new Timer(1800, e -> {
             player.stopAnimation("died");
             currentLevelState = LevelState.LEVEL_RESTARTING;
             pauseGameLoop(250);

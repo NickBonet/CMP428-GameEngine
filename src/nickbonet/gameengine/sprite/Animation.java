@@ -1,13 +1,12 @@
 package nickbonet.gameengine.sprite;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,14 +18,13 @@ import java.util.logging.Logger;
 public class Animation {
     private static final Logger logger = Logger.getLogger("GameEngine", null);
     private final List<BufferedImage> frames = new ArrayList<>();
-    private Timer timer;
     private final int delay;
+    private Timer timer;
     private int currentFrame = 0;
 
     public Animation(int delay, String prefix, String directory) {
         this.delay = delay;
         loadFrames(prefix, directory);
-        timer = new Timer();
         startAnimation();
     }
 
@@ -43,13 +41,14 @@ public class Animation {
     }
 
     public void startAnimation() {
-        currentFrame = 0;
-        AnimateTask task = new AnimateTask();
-        try {
-            timer.scheduleAtFixedRate(task, 0, this.delay);
-        } catch (IllegalStateException e) {
-            timer = new Timer();
-            timer.scheduleAtFixedRate(task, 0, this.delay);
+        if (delay != 0) {
+            currentFrame = 0;
+            timer = new Timer(delay, e -> {
+                if (currentFrame < frames.size() - 1) currentFrame += 1;
+                else currentFrame = 0;
+            });
+            timer.setRepeats(true);
+            timer.start();
         }
     }
 
@@ -63,7 +62,7 @@ public class Animation {
     }
 
     public void stopAnimation() {
-        timer.cancel();
+        timer.stop();
     }
 
     public BufferedImage getCurrentFrame() {
@@ -81,17 +80,6 @@ public class Animation {
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "No image files loaded for the current animation!");
             return null;
-        }
-    }
-
-    private class AnimateTask extends TimerTask {
-        @Override
-        public void run() {
-            if (currentFrame < frames.size() - 1) {
-                currentFrame += 1;
-            } else {
-                currentFrame = 0;
-            }
         }
     }
 }
