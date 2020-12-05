@@ -21,8 +21,8 @@ import static nickbonet.pacmangame.Util.directionPriority;
 public class Ghost extends Sprite {
     protected final int scatterTargetX;
     protected final int scatterTargetY;
-    protected int chaseTargetX = 0;
-    protected int chaseTargetY = 0;
+    protected double chaseTargetX = 0;
+    protected double chaseTargetY = 0;
     protected int ghostHouseExitX = 104;
     protected int ghostHouseExitY = 107;
     protected boolean inGhostHouse = true;
@@ -37,12 +37,7 @@ public class Ghost extends Sprite {
         initBoundsRect();
         this.scatterTargetX = scatterTargetX;
         this.scatterTargetY = scatterTargetY;
-    }
-
-    @Override
-    protected void initAnimations() {
-        Animation scaredAnim = new Animation(100, "scared_", getSpriteDirectory());
-        animDict.put("scared", scaredAnim);
+        velocity = 0.81;
     }
 
     // Used to calculate the ghost's next move towards its currently set target tile.
@@ -63,17 +58,16 @@ public class Ghost extends Sprite {
 
         for (SpriteDir d : possibleDirections) {
             Tile inspectingTile = map.getNearbyTile(boundsRect.getX(), boundsRect.getY(), d, 1);
+            int distanceFromTileToTarget = TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile);
             // If there's no current direction set, just set the direction to that of the current tile being checked.
             // If there is a direction set, check if the tile being checked has a shorter distance to the target tile.
             // If it does, set direction to that of the new tile.
             // If the distance from the tile being checked to the target tile is tied with another tile, select a direction based on
             // direction priority. (in Pac-Man, up > left > down > right, up being most preferred).
-            if ((prevDistanceChecked == -1 && directionToMove == null) ||
-                    (prevDistanceChecked > TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile)) ||
-                    ((prevDistanceChecked == TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile)) &&
-                            (prevDirectionPriority > directionPriority(d)))) {
+            if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > distanceFromTileToTarget) ||
+                    ((prevDistanceChecked == distanceFromTileToTarget) && (prevDirectionPriority > directionPriority(d)))) {
                 directionToMove = d;
-                prevDistanceChecked = TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile);
+                prevDistanceChecked = distanceFromTileToTarget;
                 prevDirectionPriority = directionPriority(d);
             }
         }
@@ -90,6 +84,28 @@ public class Ghost extends Sprite {
         if (!inGhostHouse) currentDirection = currentDirection.getOpposite();
     }
 
+    public double getChaseTargetX() {
+        return chaseTargetX;
+    }
+
+    public double getChaseTargetY() {
+        return chaseTargetY;
+    }
+
+    public boolean isInGhostHouse() {
+        return inGhostHouse;
+    }
+
+    public void setInGhostHouse(boolean inGhostHouse) {
+        this.inGhostHouse = inGhostHouse;
+    }
+
+    @Override
+    protected void initAnimations() {
+        Animation scaredAnim = new Animation(100, "scared_", getSpriteDirectory());
+        animDict.put("scared", scaredAnim);
+    }
+
     // Returns the correct target tile, based on the current ghost state.
     private Tile currentTargetTile(TileMap map) {
         switch (currentState) {
@@ -101,21 +117,5 @@ public class Ghost extends Sprite {
             default:
                 return null;
         }
-    }
-
-    public int getChaseTargetX() {
-        return chaseTargetX;
-    }
-
-    public int getChaseTargetY() {
-        return chaseTargetY;
-    }
-
-    public boolean isInGhostHouse() {
-        return inGhostHouse;
-    }
-
-    public void setInGhostHouse(boolean inGhostHouse) {
-        this.inGhostHouse = inGhostHouse;
     }
 }

@@ -1,6 +1,7 @@
 package nickbonet.gameengine;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Rectangle - simple abstraction of a rectangle for the engine.
@@ -10,41 +11,41 @@ import java.awt.*;
 public class Rect {
     private final int width;
     private final int height;
-    private int x;
-    private int y;
-    private int diagonalX;
-    private int diagonalY;
+    private final Rectangle2D bounds;
+    private double x;
+    private double y;
 
-    public Rect(int x, int y, int width, int height) {
+    public Rect(double x, double y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.diagonalX = x + (width - 1);
-        this.diagonalY = y + (height - 1);
+        bounds = new Rectangle2D.Double(x, y, width, height);
     }
 
-    public void move(int dx, int dy) {
+    public void move(double dx, double dy) {
         x += dx;
         y += dy;
-        diagonalX += dx;
-        diagonalY += dy;
+        bounds.setRect(x, y, width, height);
     }
 
-    public boolean overlaps(Rect r, int dx, int dy) {
-        return !(this.x + dx > r.diagonalX || this.y + dy > r.diagonalY ||
-                r.x > this.diagonalX + dx || r.y > this.diagonalY + dy);
+    public boolean overlaps(Rect r, double dx, double dy) {
+        return r.getBounds().intersects(((int) x + dx), ((int) y + dy), width, height);
     }
 
     public void draw(Graphics g) {
-        g.drawRect(x, y, width, height);
+        g.drawRect((int) x, (int) y, width, height);
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
+    }
+
+    public Rectangle2D getBounds() {
+        return bounds;
     }
 }

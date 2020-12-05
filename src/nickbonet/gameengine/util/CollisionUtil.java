@@ -16,9 +16,9 @@ public class CollisionUtil {
 
     // Basic collision detection based on the 8 map tiles surrounding a sprite.
     public static boolean isSpriteCollidingWithMap(Sprite sprite, SpriteDir direction, TileMap map) {
-        int velocity = sprite.getVelocity();
-        int dx = 0;
-        int dy = 0;
+        double velocity = sprite.getVelocity();
+        double dx = 0;
+        double dy = 0;
 
         switch (direction) {
             case RIGHT:
@@ -40,14 +40,17 @@ public class CollisionUtil {
         return isCollidingInDirection(sprite, direction, dx, dy, map);
     }
 
-    private static boolean isCollidingInDirection(Sprite sprite, SpriteDir direction, int dx, int dy, TileMap map) {
+    private static boolean isCollidingInDirection(Sprite sprite, SpriteDir direction, double dx, double dy, TileMap map) {
         boolean isColliding = false;
         for (Tile tile : map.getTilesInDirection(sprite.getBounds().getX(), sprite.getBounds().getY(), direction))
             if ((tile.isCollisionEnabled() && sprite.getBounds().overlaps(tile.getBoundsRect(), dx, dy)) &&
                     !(sprite.canTraverseOverrideTiles() && tile.isCollisionOverride())) {
                 isColliding = true;
-                break;
             }
         return isColliding;
+    }
+
+    public static double euclideanDistance(double x1, double x2, double y1, double y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

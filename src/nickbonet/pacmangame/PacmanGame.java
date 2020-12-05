@@ -103,11 +103,11 @@ public class PacmanGame extends GamePanel {
         for (Tile tile : maps.get(0).getTilesInDirection(player.getBounds().getX(), player.getBounds().getY(), SpriteDir.ALL))
             tile.drawBoundsRect(base);
         base.setColor(Color.cyan);
-        base.drawOval(player.getBounds().getX() + 4 - 64, player.getBounds().getY() + 4 - 64, 128, 128);
+        base.drawOval(((int) player.getBounds().getX()) + 4 - 64, ((int) player.getBounds().getY()) + 4 - 64, 128, 128);
         base.drawRect(maps.get(0).getTileAtPoint(blueGhost.getChaseTargetX(), blueGhost.getChaseTargetY()).getX(),
                 maps.get(0).getTileAtPoint(blueGhost.getChaseTargetX(), blueGhost.getChaseTargetY()).getY(), 8, 8);
         base.setColor(Color.MAGENTA);
-        base.drawRect(redGhost.getChaseTargetX(), redGhost.getChaseTargetY(), 8, 8);
+        base.drawRect((int) redGhost.getChaseTargetX(), (int) redGhost.getChaseTargetY(), 8, 8);
         base.setColor(Color.PINK);
         base.drawRect(maps.get(0).getTileAtPoint(pinkGhost.getChaseTargetX(), pinkGhost.getChaseTargetY()).getX(),
                 maps.get(0).getTileAtPoint(pinkGhost.getChaseTargetX(), pinkGhost.getChaseTargetY()).getY(), 8, 8);
@@ -373,7 +373,7 @@ public class PacmanGame extends GamePanel {
         Timer leaveHouseTimer = new Timer(delay, e -> {
             ghost.setCanTraverseOverrideTiles(true);
             ghost.setMoving(true);
-            Timer disableOverride = new Timer(400, f -> {
+            Timer disableOverride = new Timer(550, f -> {
                 ghost.setInGhostHouse(false);
                 ghost.setCanTraverseOverrideTiles(false);
             });

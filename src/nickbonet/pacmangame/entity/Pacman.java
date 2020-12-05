@@ -18,6 +18,7 @@ public class Pacman extends Sprite {
         boundsWidth = 8;
         boundsHeight = 8;
         initBoundsRect();
+        velocity = 0.90;
     }
 
     @Override

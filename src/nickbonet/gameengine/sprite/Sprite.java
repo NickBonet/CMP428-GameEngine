@@ -17,30 +17,30 @@ import java.util.logging.Logger;
  */
 public abstract class Sprite {
     private static final String BASE_SPRITE_FOLDER = "assets/sprites/";
+    protected Logger logger = Logger.getLogger("GameEngine", null);
+    protected HashMap<String, Animation> animDict = new HashMap<>();
     protected String spriteFolder;
     protected int spawnX;
     protected int spawnY;
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
+    protected double velocity;
     protected int boundsOffsetX = 0;
     protected int boundsOffsetY = 0;
     protected int boundsWidth;
     protected int boundsHeight;
-    protected Logger logger = Logger.getLogger("GameEngine", null);
     protected SpriteDir currentDirection;
     protected String currentAnimation = "";
     protected boolean isMoving;
     protected boolean canTraverseOverrideTiles = false;
     protected boolean isVisible = true;
-    protected HashMap<String, Animation> animDict = new HashMap<>();
     protected Rect boundsRect;
-    protected int velocity;
 
-    protected Sprite(int x, int y, String spritePrefix, int delay, String spriteFolder) {
+    protected Sprite(double x, double y, String spritePrefix, int delay, String spriteFolder) {
         this.x = x;
         this.y = y;
-        this.spawnX = x;
-        this.spawnY = y;
+        this.spawnX = (int) x;
+        this.spawnY = (int) y;
         this.spriteFolder = spriteFolder;
         velocity = 1;
         loadBaseAnimations(spritePrefix, delay);
@@ -82,11 +82,11 @@ public abstract class Sprite {
     public void draw(Graphics g) {
         if (isVisible) {
             if (animDict.containsKey(currentAnimation)) {
-                if (isMoving) g.drawImage(animDict.get(currentAnimation).getCurrentFrame(), x, y, null);
-                else g.drawImage(animDict.get(currentAnimation).getFirstFrame(), x, y, null);
+                if (isMoving) g.drawImage(animDict.get(currentAnimation).getCurrentFrame(), (int) x, (int) y, null);
+                else g.drawImage(animDict.get(currentAnimation).getFirstFrame(), (int) x, (int) y, null);
             } else {
                 Animation firstAnim = getFirstAnimation();
-                g.drawImage(firstAnim.getCurrentFrame(), x, y, null);
+                g.drawImage(firstAnim.getCurrentFrame(), (int) x, (int) y, null);
             }
 
             // For debug purposes, draw the bounding box of the sprite.
@@ -106,7 +106,7 @@ public abstract class Sprite {
                     break;
                 case DOWN:
                     y += velocity;
-                    boundsRect.move(0, +velocity);
+                    boundsRect.move(0, velocity);
                     break;
                 case LEFT:
                     x -= velocity;
@@ -133,21 +133,25 @@ public abstract class Sprite {
         this.currentDirection = currentDirection;
     }
 
-    public int getVelocity() {
+    public double getVelocity() {
         return velocity;
     }
 
-    public void setNewLocation(int x, int y) {
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public void setNewLocation(double x, double y) {
         this.x = x;
         this.y = y;
         initBoundsRect();
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 

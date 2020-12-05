@@ -1,6 +1,7 @@
 package nickbonet.gameengine.tile;
 
 import nickbonet.gameengine.sprite.SpriteDir;
+import nickbonet.gameengine.util.CollisionUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,7 +34,7 @@ public class TileMap {
         int x2 = (secondTile.getX() + (secondTile.getWidth() / 2));
         int y2 = (secondTile.getY() + (secondTile.getHeight() / 2));
 
-        return (int) Math.sqrt(Math.pow((double) x2 - x1, 2) + Math.pow((double) y2 - y1, 2));
+        return (int) CollisionUtil.euclideanDistance(x1, x2, y1, y2);
     }
 
     public void initializeMap() {
@@ -72,9 +73,9 @@ public class TileMap {
     }
 
     // Returns the adjacent and corner tiles in a given direction, based on the tile at a given point.
-    public List<Tile> getTilesInDirection(int x, int y, SpriteDir direction) {
-        int row = y / mapModel.getPerTileHeight();
-        int col = x / mapModel.getPerTileWidth();
+    public List<Tile> getTilesInDirection(double x, double y, SpriteDir direction) {
+        int row = ((int) y) / mapModel.getPerTileHeight();
+        int col = ((int) x) / mapModel.getPerTileWidth();
         List<Tile> tiles = new ArrayList<>();
         switch (direction) {
             case UP:
@@ -109,9 +110,9 @@ public class TileMap {
     }
 
     // Returns a nearby tile in any of the 4 directions, with a provided offset for how far to grab a tile from the given point.
-    public Tile getNearbyTile(int x, int y, SpriteDir direction, int tileOffset) {
-        int row = y / mapModel.getPerTileHeight();
-        int col = x / mapModel.getPerTileWidth();
+    public Tile getNearbyTile(double x, double y, SpriteDir direction, int tileOffset) {
+        int row = ((int) y) / mapModel.getPerTileHeight();
+        int col = ((int) x) / mapModel.getPerTileWidth();
         switch (direction) {
             case UP:
                 return getMainLayerTileAt(row - tileOffset, col);
@@ -126,10 +127,27 @@ public class TileMap {
         }
     }
 
-    public Tile getTileAtPoint(int x, int y) {
-        int row = y / mapModel.getPerTileHeight();
-        int col = x / mapModel.getPerTileWidth();
+    public Tile getTileAtPoint(double x, double y) {
+        int row = ((int) y) / mapModel.getPerTileHeight();
+        int col = ((int) x) / mapModel.getPerTileWidth();
         return getMainLayerTileAt(row, col);
+    }
+
+    public Tile getObjectTileAtPoint(double x, double y) {
+        int row = ((int) y) / mapModel.getPerTileHeight();
+        int col = ((int) x) / mapModel.getPerTileWidth();
+        return getObjectLayerTileAt(row, col);
+    }
+
+    public void removeObjectTile(double x, double y) {
+        int row = ((int) y) / mapModel.getPerTileHeight();
+        int col = ((int) x) / mapModel.getPerTileWidth();
+        objectLayerTiles[row][col] = null;
+    }
+
+    public void setCollisionOverrideOnTile(double x, double y) {
+        Tile tile = getTileAtPoint(x, y);
+        tile.setCollisionOverride(true);
     }
 
     private Tile getMainLayerTileAt(int row, int col) {
@@ -140,28 +158,11 @@ public class TileMap {
         }
     }
 
-    public Tile getObjectTileAtPoint(int x, int y) {
-        int row = y / mapModel.getPerTileHeight();
-        int col = x / mapModel.getPerTileWidth();
-        return getObjectLayerTileAt(row, col);
-    }
-
     private Tile getObjectLayerTileAt(int row, int col) {
         try {
             return objectLayerTiles[row][col];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
-    }
-
-    public void removeObjectTile(int x, int y) {
-        int row = y / mapModel.getPerTileHeight();
-        int col = x / mapModel.getPerTileWidth();
-        objectLayerTiles[row][col] = null;
-    }
-
-    public void setCollisionOverrideOnTile(int x, int y) {
-        Tile tile = getTileAtPoint(x, y);
-        tile.setCollisionOverride(true);
     }
 }
