@@ -18,13 +18,22 @@ public class Pacman extends Sprite {
         boundsWidth = 8;
         boundsHeight = 8;
         initBoundsRect();
-        velocity = 0.90;
     }
 
     @Override
     protected void initAnimations() {
         Animation diedAnim = new Animation(150, "died_", getSpriteDirectory());
         animDict.put("died", diedAnim);
+    }
+
+    public void resetVelocity(int level) {
+        if (level < 5) velocity = 0.90;
+        else velocity = 1;
+    }
+
+    public void dotEatenVelocity() {
+        if (velocity < 1) velocity = 0.75;
+        else velocity = 0.88;
     }
 
     public int getNumberOfLives() {

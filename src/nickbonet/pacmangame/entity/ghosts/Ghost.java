@@ -37,11 +37,10 @@ public class Ghost extends Sprite {
         initBoundsRect();
         this.scatterTargetX = scatterTargetX;
         this.scatterTargetY = scatterTargetY;
-        velocity = 0.81;
     }
 
     // Used to calculate the ghost's next move towards its currently set target tile.
-    public void calculateNextMove(TileMap map) {
+    public void calculateNextMove(TileMap map, SpriteDir currentPlayerDirection) {
         // See which directions are available to move in at the ghost's current position.
         // BESIDES the direction it came from.
         ArrayList<SpriteDir> possibleDirections = new ArrayList<>(Arrays.asList(SpriteDir.values()));
@@ -56,20 +55,31 @@ public class Ghost extends Sprite {
         if (!inGhostHouse) targetTile = currentTargetTile(map);
         else targetTile = map.getTileAtPoint(ghostHouseExitX, ghostHouseExitY);
 
+        // If targetTile's null at this point, then that means Pac-Man is going through the tunnel wraparound.
+        if (targetTile == null) {
+            if (currentPlayerDirection == SpriteDir.LEFT) {
+                targetTile = map.getTileAtPoint(0, 131);
+            } else if (currentPlayerDirection == SpriteDir.RIGHT) {
+                targetTile = map.getTileAtPoint(287, 131);
+            }
+        }
+
         for (SpriteDir d : possibleDirections) {
             Tile inspectingTile = map.getNearbyTile(boundsRect.getX(), boundsRect.getY(), d, 1);
-            int distanceFromTileToTarget = TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile);
-            // If there's no current direction set, just set the direction to that of the current tile being checked.
-            // If there is a direction set, check if the tile being checked has a shorter distance to the target tile.
-            // If it does, set direction to that of the new tile.
-            // If the distance from the tile being checked to the target tile is tied with another tile, select a direction based on
-            // direction priority. (in Pac-Man, up > left > down > right, up being most preferred).
-            if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > distanceFromTileToTarget) ||
-                    ((prevDistanceChecked == distanceFromTileToTarget) && (prevDirectionPriority > directionPriority(d)))) {
-                directionToMove = d;
-                prevDistanceChecked = distanceFromTileToTarget;
-                prevDirectionPriority = directionPriority(d);
-            }
+            if (inspectingTile != null && targetTile != null) {
+                int distanceFromTileToTarget = TileMap.euclideanDistanceBetweenTiles(inspectingTile, targetTile);
+                // If there's no current direction set, just set the direction to that of the current tile being checked.
+                // If there is a direction set, check if the tile being checked has a shorter distance to the target tile.
+                // If it does, set direction to that of the new tile.
+                // If the distance from the tile being checked to the target tile is tied with another tile, select a direction based on
+                // direction priority. (in Pac-Man, up > left > down > right, up being most preferred).
+                if ((prevDistanceChecked == -1 && directionToMove == null) || (prevDistanceChecked > distanceFromTileToTarget) ||
+                        ((prevDistanceChecked == distanceFromTileToTarget) && (prevDirectionPriority > directionPriority(d)))) {
+                    directionToMove = d;
+                    prevDistanceChecked = distanceFromTileToTarget;
+                    prevDirectionPriority = directionPriority(d);
+                }
+            } else if (!isSpriteCollidingWithMap(this, currentDirection, map)) directionToMove = currentDirection;
         }
 
         if (directionToMove != null) {
@@ -98,6 +108,15 @@ public class Ghost extends Sprite {
 
     public void setInGhostHouse(boolean inGhostHouse) {
         this.inGhostHouse = inGhostHouse;
+    }
+
+    public void resetVelocity(int level) {
+        if (level == 1) velocity = 0.82;
+        else if (level > 1 && level < 5) {
+            velocity = 0.88;
+        } else if (level > 5) {
+            velocity = 0.93;
+        }
     }
 
     @Override

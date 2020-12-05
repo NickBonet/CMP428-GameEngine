@@ -17,10 +17,11 @@ public class BlueGhost extends Ghost {
     // X and Y coordinates. We then check if the position is a valid/existing tile, and if it is, set the ghost's target
     // to the final X and Y calculations. (experimental) If not, use the first offset tile's X and Y.
     public void updateChaseTarget(Pacman player, Rect redGhost, TileMap map) {
-        if (map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(), player.getSpriteDirection(), 2) != null) {
+        Tile currentBlinkyTile = map.getTileAtPoint(redGhost.getX(), redGhost.getY());
+        if (map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(), player.getSpriteDirection(), 2) != null &&
+                currentBlinkyTile != null) {
             Tile offsetTile = map.getNearbyTile(player.getBounds().getX(), player.getBounds().getY(),
                     player.getSpriteDirection(), 2);
-            Tile currentBlinkyTile = map.getTileAtPoint(redGhost.getX(), redGhost.getY());
             int blinkyDistFromOffsetX = offsetTile.getX() - currentBlinkyTile.getX();
             int blinkyDistFromOffsetY = offsetTile.getY() - currentBlinkyTile.getY();
             int finalTileX = offsetTile.getX() + blinkyDistFromOffsetX;

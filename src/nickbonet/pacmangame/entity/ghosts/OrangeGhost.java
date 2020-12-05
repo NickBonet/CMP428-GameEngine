@@ -16,14 +16,16 @@ public class OrangeGhost extends Ghost {
         // Clyde effectively checks if he's inside an 8 tile radius with Pac-Man's location
         // based as the center of the circle. If he's in the circle, he chases his scatter mode tile.
         // If he's not in the circle, he chases Pac-Man directly.
-        int radius = 8 * currentPlayerTile.getWidth();
-        int distBetweenGhostAndPac = TileMap.euclideanDistanceBetweenTiles(currentTile, currentPlayerTile);
-        if (distBetweenGhostAndPac <= radius) {
-            chaseTargetX = scatterTargetX;
-            chaseTargetY = scatterTargetY;
-        } else {
-            chaseTargetX = player.getX();
-            chaseTargetY = player.getY();
+        int radius = 64;
+        if (currentPlayerTile != null && currentTile != null) {
+            int distBetweenGhostAndPac = TileMap.euclideanDistanceBetweenTiles(currentTile, currentPlayerTile);
+            if (distBetweenGhostAndPac <= radius) {
+                chaseTargetX = scatterTargetX;
+                chaseTargetY = scatterTargetY;
+            } else {
+                chaseTargetX = player.getX();
+                chaseTargetY = player.getY();
+            }
         }
     }
 

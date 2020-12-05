@@ -1,6 +1,7 @@
 package nickbonet.pacmangame;
 
 import nickbonet.gameengine.GamePanel;
+import nickbonet.gameengine.sprite.Sprite;
 import nickbonet.gameengine.sprite.SpriteDir;
 import nickbonet.gameengine.tile.Tile;
 import nickbonet.gameengine.tile.TileMap;
@@ -164,11 +165,14 @@ public class PacmanGame extends GamePanel {
         orangeGhost.updateChaseTarget(player.getBounds(), maps.get(0));
         blueGhost.updateChaseTarget(player, redGhost.getBounds(), maps.get(0));
         for (Ghost ghost : ghostList) {
-            ghost.calculateNextMove(maps.get(0));
+            checkIfInTunnel(ghost);
+            ghost.calculateNextMove(maps.get(0), player.getSpriteDirection());
         }
     }
 
     private void playerMovement() {
+        checkIfInTunnel(player);
+
         SpriteDir direction = player.getSpriteDirection();
         boolean allowMove = false;
 
@@ -199,6 +203,21 @@ public class PacmanGame extends GamePanel {
         }
     }
 
+    private void checkIfInTunnel(Sprite sprite) {
+        if (maps.get(0).getTileAtPoint(sprite.getBounds().getX(), sprite.getBounds().getY()) == null) {
+            if (sprite.getX() < 0 && sprite.getSpriteDirection() == SpriteDir.LEFT) sprite.setNewLocation(225, 131);
+            else if (sprite.getX() > 223 && sprite.getSpriteDirection() == SpriteDir.RIGHT)
+                sprite.setNewLocation(-8, 131);
+        }
+
+        if (sprite instanceof Ghost) {
+            if ((sprite.getX() > 186 || sprite.getX() < 30) && (sprite.getY() < 146 && sprite.getY() > 129))
+                sprite.setVelocity(0.6);
+            else
+                ((Ghost) sprite).resetVelocity(level);
+        }
+    }
+
     private void playerObjectCheck() {
         if (maps.get(0).getObjectTileAtPoint(player.getBounds().getX(), player.getBounds().getY()) != null) {
             Tile objectTile = maps.get(0).getObjectTileAtPoint(player.getBounds().getX(), player.getBounds().getY());
@@ -206,8 +225,9 @@ public class PacmanGame extends GamePanel {
                 maps.get(0).removeObjectTile(objectTile.getX(), objectTile.getY());
                 pelletsLeft -= 1;
                 score += 10;
+                player.dotEatenVelocity();
             }
-        }
+        } else player.resetVelocity(level);
     }
 
     private void playerEntityCollisionCheck() {
@@ -341,9 +361,11 @@ public class PacmanGame extends GamePanel {
             ghost.respawn();
             ghost.setVisible(true);
             ghost.setMoving(!ghost.isInGhostHouse());
+            ghost.resetVelocity(level);
         }
         currentFruit = null;
         player.respawn();
+        player.resetVelocity(level);
         player.setSpriteDirection(SpriteDir.LEFT);
         player.setCurrentAnimation("left");
         pauseGameLoop(1500);
