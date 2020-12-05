@@ -35,24 +35,6 @@ public class Fruit extends Sprite {
         animDict.put("image", stillAnimation);
     }
 
-    @Override
-    protected void loadBaseAnimations(String prefix, int delay) {
-        /**
-         * Not an animated sprite.
-         */
-    }
-
-    @Override
-    protected void initAnimations() {
-        /**
-         * Executed too early for this purpose.
-         */
-    }
-
-    public int getPointValue() {
-        return pointValue;
-    }
-
     public static String setFruitForLevel(int level) {
         if (level == 1) {
             fruitName = "cherry";
@@ -76,5 +58,23 @@ public class Fruit extends Sprite {
 
     public static String getFruitName() {
         return fruitName;
+    }
+
+    @Override
+    protected void loadBaseAnimations(String prefix, int delay) {
+        /**
+         * Not an animated sprite.
+         */
+    }
+
+    @Override
+    protected void initAnimations() {
+        /**
+         * Executed too early for this purpose.
+         */
+    }
+
+    public int getPointValue() {
+        return pointValue;
     }
 }
