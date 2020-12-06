@@ -60,16 +60,12 @@ public class TileMap {
     }
 
     public void drawMap(Graphics g) {
-        BufferedImage map = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics gMap = map.getGraphics();
         for (int row = 0; row < mapModel.getMapRows(); row++) {
             for (int col = 0; col < mapModel.getMapColumns(); col++) {
-                Tile currentTile = mainLayerTiles[row][col];
-                currentTile.draw(gMap);
-                if (objectLayerTiles[row][col] != null) objectLayerTiles[row][col].draw(gMap);
+                mainLayerTiles[row][col].draw(g);
+                if (objectLayerTiles[row][col] != null) objectLayerTiles[row][col].draw(g);
             }
         }
-        g.drawImage(map, 0, 0, null);
     }
 
     // Returns the adjacent and corner tiles in a given direction, based on the tile at a given point.
