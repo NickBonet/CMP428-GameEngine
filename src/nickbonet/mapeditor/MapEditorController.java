@@ -22,6 +22,8 @@ public class MapEditorController {
     private int currentHoveredColumn;
     private String loadedFile;
     private boolean mapNeedsSaving;
+    private boolean viewCollisionTileStatus = true;
+    private double scaleFactor = 1;
 
     public MapEditorController() {
         this.model = new MapEditorModel();
@@ -201,12 +203,12 @@ public class MapEditorController {
         MapEditorMenuBar.setEditorMenuStatus(editorMode);
     }
 
-    public void setCurrentHoveredRow(int currentHoveredRow) {
-        this.currentHoveredRow = currentHoveredRow;
+    public void setCurrentHoveredRow(int clickedY) {
+        this.currentHoveredRow = clickedY / model.getMapModel().getPerTileHeight();
     }
 
-    public void setCurrentHoveredColumn(int currentHoveredColumn) {
-        this.currentHoveredColumn = currentHoveredColumn;
+    public void setCurrentHoveredColumn(int clickedX) {
+        this.currentHoveredColumn = clickedX / model.getMapModel().getPerTileWidth();
     }
 
     public String getLoadedFile() {
@@ -215,5 +217,39 @@ public class MapEditorController {
 
     public boolean mapNeedsSaving() {
         return mapNeedsSaving;
+    }
+
+    public int getTileWidth() {
+        return model.getMapModel().getPerTileWidth();
+    }
+
+    public int getTileHeight() {
+        return model.getMapModel().getPerTileHeight();
+    }
+
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
+        mapEditorView.loadInitialMapView(model.getTileSet().getTileImageList(), model.getMapModel());
+    }
+
+    public boolean isViewCollisionTileStatus() {
+        return viewCollisionTileStatus;
+    }
+
+    public void setViewCollisionTileStatus(boolean viewCollisionTileStatus) {
+        this.viewCollisionTileStatus = viewCollisionTileStatus;
+        mapEditorView.loadInitialMapView(model.getTileSet().getTileImageList(), model.getMapModel());
+    }
+
+    public int getTileAtPoint(int row, int col) {
+        return this.model.getMapModel().getMapLayout()[row][col];
+    }
+
+    public int getObjectTileAtPoint(int row, int col) {
+        return this.model.getMapModel().getObjectMap()[row][col];
     }
 }

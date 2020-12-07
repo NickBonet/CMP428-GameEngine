@@ -24,6 +24,7 @@ public class MapEditorMenuBar extends JMenuBar {
         setupFileMenu();
         setupEditorModeMenu();
         setupEditMenu();
+        setupViewMenu();
     }
 
     public static void setEditorMenuStatus(EditorMode status) {
@@ -143,5 +144,24 @@ public class MapEditorMenuBar extends JMenuBar {
         editMenu.add(addRowToTop);
         editMenu.add(addRowToBottom);
         this.add(editMenu);
+    }
+
+    private void setupViewMenu() {
+        JMenu viewMenu = new JMenu("View");
+        JMenuItem zoomIn = new JMenuItem("Zoom In");
+        JMenuItem zoomOut = new JMenuItem("Zoom Out");
+        JMenuItem viewCollisionTiles = new JMenuItem("Show Collision Tiles");
+        JMenuItem hideCollisionTiles = new JMenuItem("Hide Collision Tiles");
+
+        zoomIn.addActionListener((ActionEvent event) -> editorController.setScaleFactor(editorController.getScaleFactor() + 0.25));
+        zoomOut.addActionListener((ActionEvent event) -> editorController.setScaleFactor(editorController.getScaleFactor() - 0.25));
+        viewCollisionTiles.addActionListener((ActionEvent event) -> editorController.setViewCollisionTileStatus(true));
+        hideCollisionTiles.addActionListener((ActionEvent event) -> editorController.setViewCollisionTileStatus(false));
+
+        viewMenu.add(zoomIn);
+        viewMenu.add(zoomOut);
+        viewMenu.add(viewCollisionTiles);
+        viewMenu.add(hideCollisionTiles);
+        this.add(viewMenu);
     }
 }
