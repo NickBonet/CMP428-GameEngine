@@ -23,11 +23,13 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel implements KeyListener {
 
+    public static final String DEBUG_PROPERTY_NAME = "nickbonet.gameengine.debug";
     protected final transient Logger logger = Logger.getLogger("GameEngine", null);
     protected final boolean[] pressedKey = new boolean[255];
-    private boolean isRunning = true;
+    protected boolean isRunning = true;
+    protected boolean isPaused = false;
 
-    public GamePanel() {
+    protected GamePanel() {
         setFocusable(true);
         addKeyListener(this);
     }
@@ -36,7 +38,7 @@ public abstract class GamePanel extends JPanel implements KeyListener {
         initObjects();
 
         while (isRunning) {
-            mainGameLogic();
+            if (!isPaused) mainGameLogic();
             repaint();
             try {
                 Thread.sleep(16); // should result in 60FPS.
@@ -45,6 +47,8 @@ public abstract class GamePanel extends JPanel implements KeyListener {
                 Thread.currentThread().interrupt();
             }
         }
+
+        System.exit(0);
     }
 
     /*
@@ -57,7 +61,13 @@ public abstract class GamePanel extends JPanel implements KeyListener {
      */
     protected abstract void mainGameLogic();
 
-    public TileMap loadTileMap(String mapFile) {
+    /**
+     * Loads a given tile map.
+     *
+     * @param mapFile The map file to load map data from.
+     * @return The instance of the map as TileMapModel.
+     */
+    protected TileMap loadTileMap(String mapFile) {
         try (FileInputStream fis = new FileInputStream(TileMapModel.MAP_FOLDER + mapFile); ObjectInputStream is = new ObjectInputStream(fis)) {
             TileMapModel mapModel = (TileMapModel) is.readObject();
             return new TileMap(mapModel);
@@ -65,6 +75,18 @@ public abstract class GamePanel extends JPanel implements KeyListener {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Pauses the game loop for a length of time
+     *
+     * @param delay The amount of time to pause the game loop (in ms).
+     */
+    protected void pauseGameLoop(int delay) {
+        isPaused = true;
+        Timer pauseTimer = new Timer(delay, e -> isPaused = false);
+        pauseTimer.setRepeats(false);
+        pauseTimer.start();
     }
 
     @Override

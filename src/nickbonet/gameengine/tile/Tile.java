@@ -9,16 +9,18 @@ public class Tile {
     private final int width;
     private final int height;
     private final BufferedImage tileImage;
+    private final int tileID;
     private int x;
     private int y;
     private Rect boundsRect;
+    private boolean collisionOverride = false;
     private boolean collisionEnabled = false;
-    private boolean isObject = false;
 
-    public Tile(BufferedImage image) {
+    public Tile(BufferedImage image, int tileID) {
         this.tileImage = image;
         this.width = image.getWidth();
         this.height = image.getHeight();
+        this.tileID = tileID;
     }
 
     public void draw(Graphics g) {
@@ -47,20 +49,16 @@ public class Tile {
         this.collisionEnabled = collisionEnabled;
     }
 
-    public boolean isObject() {
-        return isObject;
-    }
-
-    public void setObject(boolean object) {
-        isObject = object;
-    }
-
-    public BufferedImage getTileImage() {
-        return tileImage;
+    public int getX() {
+        return x;
     }
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public void setY(int y) {
@@ -73,5 +71,17 @@ public class Tile {
 
     public void initBoundsRect() {
         this.boundsRect = new Rect(x, y, width, height);
+    }
+
+    public int getTileID() {
+        return tileID;
+    }
+
+    public boolean isCollisionOverride() {
+        return collisionOverride;
+    }
+
+    public void setCollisionOverride(boolean collisionOverride) {
+        this.collisionOverride = collisionOverride;
     }
 }
