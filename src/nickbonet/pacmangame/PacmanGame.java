@@ -418,7 +418,7 @@ public class PacmanGame extends GamePanel {
         Timer leaveHouseTimer = new Timer(delay, e -> {
             ghost.setCanTraverseOverrideTiles(true);
             ghost.setMoving(true);
-            Timer disableOverride = new Timer(550, f -> {
+            Timer disableOverride = new Timer(650, f -> {
                 ghost.setInGhostHouse(false);
                 ghost.setCanTraverseOverrideTiles(false);
             });
