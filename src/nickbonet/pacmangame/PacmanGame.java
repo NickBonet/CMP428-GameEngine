@@ -49,6 +49,7 @@ public class PacmanGame extends GamePanel {
     private transient Fruit currentFruit = null;
     private boolean firstFruitSpawned = false;
     private boolean secondFruitSpawned = false;
+    private int levelRunningCount = 0;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -278,13 +279,6 @@ public class PacmanGame extends GamePanel {
      * Runs when there's currently a level in progress.
      */
     private void levelInProgress() {
-        if (pressedKey[KeyEvent.VK_0])
-            for (Ghost ghost : ghostList)
-                ghost.setState(GhostState.SCATTER);
-        if (pressedKey[KeyEvent.VK_9])
-            for (Ghost ghost : ghostList)
-                ghost.setState(GhostState.CHASE);
-        if (pressedKey[KeyEvent.VK_6]) logger.info("Pac X: " + player.getX() + " Y: " + player.getY());
         if (pressedKey[KeyEvent.VK_7]) System.setProperty(DEBUG_PROPERTY_NAME, "true");
         if (pressedKey[KeyEvent.VK_8]) System.setProperty(DEBUG_PROPERTY_NAME, "false");
         if (pressedKey[KeyEvent.VK_ESCAPE]) isRunning = false;
@@ -309,6 +303,8 @@ public class PacmanGame extends GamePanel {
                 break;
         }
         if (pelletsLeft != 0) {
+            levelRunningCount += 1;
+            checkForGhostModeChange();
             playerMovement();
             playerEntityCollisionCheck();
             playerObjectCheck();
@@ -358,12 +354,14 @@ public class PacmanGame extends GamePanel {
      * Prepares the game to resume after Pac-Man has died/was hit.
      */
     private void restartLevelInProgress() {
+        levelRunningCount = 0;
         if (player.getNumberOfLives() < 0) System.exit(0);
         for (Ghost ghost : ghostList) {
             ghost.respawn();
             ghost.setVisible(true);
             ghost.setMoving(!ghost.isInGhostHouse());
             ghost.resetVelocity(level);
+            ghost.setState(GhostState.SCATTER);
         }
         currentFruit = null;
         player.respawn();
@@ -376,6 +374,29 @@ public class PacmanGame extends GamePanel {
         setupGhostHouseExit(blueGhost, 5500);
         setupGhostHouseExit(orangeGhost, 8000);
         currentLevelState = LevelState.LEVEL_RUNNING;
+    }
+
+    private void checkForGhostModeChange() {
+        switch (levelRunningCount) {
+            // There's a counter setup while the level runs, it's incremented every frame.
+            // These values below are times in frames elapsed, e.g. 420/60fps = 7 seconds.
+            case 420:
+            case 2040:
+            case 3540:
+                changeGhostMode(GhostState.CHASE);
+                break;
+            case 1620:
+            case 3240:
+                changeGhostMode(GhostState.SCATTER);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void changeGhostMode(GhostState state) {
+        for (Ghost ghost : ghostList)
+            ghost.setState(state);
     }
 
     private void resetAllTimers() {
