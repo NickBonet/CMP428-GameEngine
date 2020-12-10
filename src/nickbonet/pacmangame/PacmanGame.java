@@ -380,7 +380,7 @@ public class PacmanGame extends GamePanel {
         switch (levelRunningCount) {
             // There's a counter setup while the level runs, it's incremented every frame.
             // These values below are times in frames elapsed, e.g. 420/60fps = 7 seconds.
-            case 420:
+            case 480:
             case 2040:
             case 3540:
                 changeGhostMode(GhostState.CHASE);
@@ -418,7 +418,7 @@ public class PacmanGame extends GamePanel {
         Timer leaveHouseTimer = new Timer(delay, e -> {
             ghost.setCanTraverseOverrideTiles(true);
             ghost.setMoving(true);
-            Timer disableOverride = new Timer(650, f -> {
+            Timer disableOverride = new Timer(550, f -> {
                 ghost.setInGhostHouse(false);
                 ghost.setCanTraverseOverrideTiles(false);
             });
